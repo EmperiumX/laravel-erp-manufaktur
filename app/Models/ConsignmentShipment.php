@@ -22,4 +22,10 @@ class ConsignmentShipment extends Model
     {
         return $this->hasMany(ConsignmentItem::class);
     }
+
+    // Relasi ke Invoice (auto-generated saat DO dibuat)
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class, 'consignment_shipment_id');
+    }
 }

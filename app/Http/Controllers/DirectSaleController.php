@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Exports\SalesExport; 
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Invoice;
+use App\Models\InvoiceItem;
 
 class DirectSaleController extends Controller
 {
@@ -116,6 +118,43 @@ class DirectSaleController extends Controller
 
             // Update Total Nilai Invoice
             $sale->update(['total_amount' => $totalAmount]);
+
+            // ===== AUTO-GENERATE INVOICE PENJUALAN =====
+            $countInvToday = Invoice::where('type', 'sales')
+                ->whereDate('created_at', date('Y-m-d'))
+                ->count();
+            $invoiceNumber = 'INV-S-' . $today . '-' . str_pad($countInvToday + 1, 3, '0', STR_PAD_LEFT);
+
+            $invoice = Invoice::create([
+                'invoice_number' => $invoiceNumber,
+                'type' => 'sales',
+                'store_id' => $request->store_id,
+                'direct_sale_id' => $sale->id,
+                'invoice_date' => $request->sale_date,
+                'due_date' => $request->sale_date,
+                'subtotal' => $totalAmount,
+                'tax_amount' => 0,
+                'discount_amount' => 0,
+                'total_amount' => $totalAmount,
+                'paid_amount' => $totalAmount,
+                'status' => 'Paid',
+                'notes' => 'Auto-generated dari penjualan langsung ' . $invNumber,
+                'created_by' => Auth::id(),
+            ]);
+
+            // Buat item invoice dari item penjualan langsung
+            foreach ($request->products as $key => $product_id) {
+                $product = Product::find($product_id);
+                InvoiceItem::create([
+                    'invoice_id' => $invoice->id,
+                    'description' => $product->name,
+                    'product_id' => $product_id,
+                    'quantity' => $request->quantities[$key],
+                    'unit' => 'pcs',
+                    'unit_price' => $request->unit_prices[$key],
+                    'subtotal' => $request->quantities[$key] * $request->unit_prices[$key],
+                ]);
+            }
 
             DB::commit();
 

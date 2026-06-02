@@ -46,21 +46,15 @@
                                 </div>
                             </div>
 
-                            <!-- BAGIAN KANAN: STRUKTUR HARGA -->
+                            <!-- BAGIAN KANAN: HARGA JUAL -->
                             <div class="bg-green-50 p-4 rounded-lg border">
-                                <h3 class="font-bold text-lg mb-4 border-b pb-2 text-green-800">Struktur Harga (Rp)</h3>
+                                <h3 class="font-bold text-lg mb-4 border-b pb-2 text-green-800">Harga Jual (Rp)</h3>
                                 
-                                @foreach($categories as $category)
-                                    @php
-                                        // Cari harga lama berdasarkan kategori di dalam relasi prices
-                                        $oldPrice = $product->prices->where('category', $category)->first();
-                                        $priceValue = $oldPrice ? (int)$oldPrice->price : '';
-                                    @endphp
-                                    <div class="mb-3 flex items-center">
-                                        <label class="w-1/3 text-gray-700 text-sm font-bold">{{ $category }}</label>
-                                        <input type="number" name="prices[{{ $category }}]" value="{{ $priceValue }}" class="w-2/3 border-gray-300 rounded-md shadow-sm" placeholder="Harga untuk {{ $category }}">
-                                    </div>
-                                @endforeach
+                                <div class="mb-3">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Harga Jual Satuan <span class="text-red-500">*</span></label>
+                                    <input type="number" name="price" value="{{ (int)$price }}" class="w-full border-gray-300 rounded-md shadow-sm" required placeholder="Contoh: 15000">
+                                </div>
+                                <p class="text-xs text-gray-500 italic mt-4">*Harga ini akan digunakan sebagai harga default untuk seluruh kategori mitra penjualan.</p>
                             </div>
                         </div>
 

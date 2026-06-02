@@ -18,9 +18,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        // Kita kirimkan daftar kategori ke view agar mudah dibuatkan form input harganya
-        $categories =['Mitra', 'Agen', 'Distributor', 'Reseller', 'End User', 'Maklon'];
-        return view('products.create', compact('categories'));
+        return view('products.create');
     }
 
     public function store(Request $request)
@@ -32,9 +30,7 @@ class ProductController extends Controller
             'weight' => 'nullable|integer',
             'weight_unit' => 'nullable|string|max:50',
             'packaging' => 'nullable|string|max:100',
-            // Validasi untuk array prices
-            'prices' => 'required|array',
-            'prices.*' => 'nullable|numeric|min:0'
+            'price' => 'required|numeric|min:0'
         ]);
 
         // 2. Simpan Data ke tabel products
@@ -47,14 +43,13 @@ class ProductController extends Controller
             'hpp' => 0 // Sementara HPP 0 dulu, nanti kita buat fitur hitung HPP otomatis dari BOM
         ]);
 
-        // 3. Looping dan simpan Data ke tabel product_prices
-        foreach ($request->prices as $category => $price) {
-            if ($price != null) { // Jika harganya diisi
-                $product->prices()->create([
-                    'category' => $category,
-                    'price' => $price
-                ]);
-            }
+        // 3. Simpan satu harga tunggal untuk semua kategori di tabel product_prices guna kompatibilitas
+        $categories = ['Mitra', 'Agen', 'Distributor', 'Reseller', 'End User', 'Maklon'];
+        foreach ($categories as $category) {
+            $product->prices()->create([
+                'category' => $category,
+                'price' => $request->price
+            ]);
         }
 
         return redirect()->route('products.index')->with('success', 'Data Produk & Harga berhasil ditambahkan!');
@@ -62,10 +57,8 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $categories =['Mitra', 'Agen', 'Distributor', 'Reseller', 'End User', 'Maklon'];
-        // Kita tidak perlu memuat relasi prices secara manual di sini karena Laravel 
-        // secara otomatis bisa memanggilnya di View nanti menggunakan $product->prices
-        return view('products.edit', compact('product', 'categories'));
+        $price = $product->prices()->where('category', 'End User')->first()->price ?? 0;
+        return view('products.edit', compact('product', 'price'));
     }
 
     public function update(Request $request, Product $product)
@@ -77,8 +70,7 @@ class ProductController extends Controller
             'weight' => 'nullable|integer',
             'weight_unit' => 'nullable|string|max:50',
             'packaging' => 'nullable|string|max:100',
-            'prices' => 'required|array',
-            'prices.*' => 'nullable|numeric|min:0'
+            'price' => 'required|numeric|min:0'
         ]);
 
         // 2. Update Data Produk Utama
@@ -90,28 +82,61 @@ class ProductController extends Controller
             'packaging' => $request->packaging,
         ]);
 
-        // 3. Update atau Create Harga
-        foreach ($request->prices as $category => $price) {
-            if ($price != null) {
-                // updateOrCreate( [Kondisi Pencarian], [Data yang diupdate/disimpan] )
-                $product->prices()->updateOrCreate(
-                    ['category' => $category],
-                    ['price' => $price]
-                );
-            } else {
-                // Jika user mengosongkan inputan harga saat edit, hapus harga tersebut dari database
-                $product->prices()->where('category', $category)->delete();
-            }
+        // 3. Update semua kategori harga dengan nilai yang sama
+        $categories = ['Mitra', 'Agen', 'Distributor', 'Reseller', 'End User', 'Maklon'];
+        foreach ($categories as $category) {
+            $product->prices()->updateOrCreate(
+                ['category' => $category],
+                ['price' => $request->price]
+            );
         }
 
         return redirect()->route('products.index')->with('success', 'Data Produk & Harga berhasil diperbarui!');
     }
     public function destroy(Product $product)
     {
-        // Karena di migration file product_prices kita menggunakan onDelete('cascade'), 
-        // maka saat produk dihapus, semua harganya akan otomatis terhapus!
-        $product->delete();
-        return redirect()->route('products.index')->with('success', 'Data Produk berhasil dihapus!');
+        try {
+            // Karena di migration file product_prices kita menggunakan onDelete('cascade'), 
+            // maka saat produk dihapus, semua harganya akan otomatis terhapus!
+            $product->delete();
+            return redirect()->route('products.index')->with('success', 'Data Produk berhasil dihapus!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == '23000') {
+                return redirect()->route('products.index')->with('error', 'Data Produk tidak dapat dihapus karena masih digunakan di data transaksi lain!');
+            }
+            return redirect()->route('products.index')->with('error', 'Gagal menghapus data produk: ' . $e->getMessage());
+        }
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $ids = $request->input('ids');
+        if (empty($ids)) {
+            return redirect()->route('products.index')->with('error', 'Tidak ada data produk yang terpilih.');
+        }
+
+        $deletedCount = 0;
+        $failedNames = [];
+
+        foreach ($ids as $id) {
+            $product = Product::find($id);
+            if ($product) {
+                try {
+                    $product->delete();
+                    $deletedCount++;
+                } catch (\Illuminate\Database\QueryException $e) {
+                    $failedNames[] = $product->name;
+                }
+            }
+        }
+
+        if (count($failedNames) > 0) {
+            $msg = "{$deletedCount} produk berhasil dihapus.";
+            $msgError = " Gagal menghapus produk berikut karena masih digunakan di data transaksi lain: " . implode(', ', $failedNames);
+            return redirect()->route('products.index')->with('success', $msg)->with('error', $msgError);
+        }
+
+        return redirect()->route('products.index')->with('success', "{$deletedCount} produk berhasil dihapus.");
     }
     public function show(Product $product)
     {

@@ -7,10 +7,12 @@ use App\Models\PurchaseOrderItem;
 use App\Models\Supplier;
 use App\Models\Material;
 use App\Models\StockItem; 
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; // Untuk database transaction
 use App\Models\StockMovement;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PurchaseOrderController extends Controller
 {
@@ -80,7 +82,8 @@ class PurchaseOrderController extends Controller
 
             DB::commit(); // Simpan permanen ke database
 
-            return redirect()->route('purchase-orders.index')->with('success', 'Purchase Order berhasil dibuat! Status saat ini: Pending.');
+            // Poin 2: Redirect langsung ke halaman detail PO agar pengguna tidak bolak-balik menu
+            return redirect()->route('purchase-orders.show', $po->id)->with('success', 'Purchase Order berhasil dibuat! Silakan lanjutkan ke langkah Penerimaan Barang.');
         } catch (\Exception $e) {
             DB::rollBack(); // Batalkan jika ada error
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
@@ -91,7 +94,11 @@ class PurchaseOrderController extends Controller
     {
         // Muat relasi supplier dan items (beserta materialnya)
         $purchaseOrder->load('supplier', 'items.material');
-        return view('purchase_orders.show', compact('purchaseOrder'));
+
+        // Cari invoice pembelian yang terkait dengan PO ini (jika sudah ada)
+        $invoice = Invoice::with('items')->where('purchase_order_id', $purchaseOrder->id)->first();
+
+        return view('purchase_orders.show', compact('purchaseOrder', 'invoice'));
     }
 
     public function markAsCompleted(PurchaseOrder $purchaseOrder)
@@ -138,6 +145,16 @@ class PurchaseOrderController extends Controller
         }
     }
 
+    public function receipt(PurchaseOrder $purchaseOrder)
+    {
+        if ($purchaseOrder->status !== 'Pending') {
+            return redirect()->route('purchase-orders.show', $purchaseOrder->id)->with('error', 'Penerimaan barang sudah diproses sebelumnya.');
+        }
+        
+        $purchaseOrder->load('supplier', 'items.material');
+        return view('purchase_orders.receipt', compact('purchaseOrder'));
+    }
+
     public function destroy(PurchaseOrder $purchaseOrder)
     {
         // Proteksi Keamanan Ganda (Backend Security)
@@ -152,5 +169,45 @@ class PurchaseOrderController extends Controller
         return redirect()->route('purchase-orders.index')->with('success', 'Purchase Order (Pending) berhasil dihapus!');
     }
     
-    // biarkan edit, update, destroy, show kosong dulu
+    // Cetak Invoice Pembelian PDF
+    public function printInvoice(PurchaseOrder $purchaseOrder)
+    {
+        $purchaseOrder->load('supplier', 'items.material');
+        $invoice = Invoice::with('items')->where('purchase_order_id', $purchaseOrder->id)->firstOrFail();
+
+        $pdf = Pdf::loadView('invoices.print', [
+            'invoice' => $invoice,
+            'title' => 'INVOICE PEMBELIAN',
+            'partyLabel' => 'Supplier',
+            'partyName' => $purchaseOrder->supplier->name ?? '-',
+            'partyAddress' => $purchaseOrder->supplier->address ?? '-',
+            'partyPhone' => $purchaseOrder->supplier->phone_number ?? '-',
+            'reference' => 'PO: ' . $purchaseOrder->po_number,
+        ]);
+
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->stream('Invoice_' . $invoice->invoice_number . '.pdf');
+    }
+
+    // Cetak Nota Konsinyasi Mitra PDF
+    public function printConsignment(PurchaseOrder $purchaseOrder)
+    {
+        $purchaseOrder->load('supplier', 'items.material');
+        $invoice = Invoice::with('items')->where('purchase_order_id', $purchaseOrder->id)->firstOrFail();
+
+        $pdf = Pdf::loadView('invoices.print', [
+            'invoice' => $invoice,
+            'title' => 'NOTA KONSINYASI MITRA',
+            'typeBadge' => 'KONSINYASI MASUK',
+            'typeBadgeClass' => 'badge-consignment',
+            'partyLabel' => 'Mitra / Supplier',
+            'partyName' => $purchaseOrder->supplier->name ?? '-',
+            'partyAddress' => $purchaseOrder->supplier->address ?? '-',
+            'partyPhone' => $purchaseOrder->supplier->phone_number ?? '-',
+            'reference' => 'PO: ' . $purchaseOrder->po_number,
+        ]);
+
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->stream('Consignment_' . $invoice->invoice_number . '.pdf');
+    }
 }

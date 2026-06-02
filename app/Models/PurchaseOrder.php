@@ -18,4 +18,15 @@ class PurchaseOrder extends Model
         return $this->hasMany(PurchaseOrderItem::class);
     }
 
+    // Relasi ke Invoice (tagihan dari supplier)
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    // Relasi ke Goods Receipt (penerimaan barang)
+    public function goodsReceipts()
+    {
+        return $this->hasMany(GoodsReceipt::class);
+    }
 }

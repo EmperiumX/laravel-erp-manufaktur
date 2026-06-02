@@ -60,12 +60,82 @@ class SupplierController extends Controller
     }
     public function destroy(Supplier $supplier)
     {
-        // 1. Hapus data dari database
-        $supplier->delete();
+        try {
+            // 1. Hapus data dari database
+            $supplier->delete();
 
-        // 2. Redirect kembali ke halaman index dengan pesan sukses
-        return redirect()->route('suppliers.index')->with('success', 'Data Supplier berhasil dihapus!');
+            // 2. Redirect kembali ke halaman index dengan pesan sukses
+            return redirect()->route('suppliers.index')->with('success', 'Data Supplier berhasil dihapus!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == '23000') {
+                return redirect()->route('suppliers.index')->with('error', 'Data Supplier tidak dapat dihapus karena masih digunakan di data transaksi lain!');
+            }
+            return redirect()->route('suppliers.index')->with('error', 'Gagal menghapus data supplier: ' . $e->getMessage());
+        }
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $ids = $request->input('ids');
+        if (empty($ids)) {
+            return redirect()->route('suppliers.index')->with('error', 'Tidak ada data supplier yang terpilih.');
+        }
+
+        $deletedCount = 0;
+        $failedNames = [];
+
+        foreach ($ids as $id) {
+            $supplier = Supplier::find($id);
+            if ($supplier) {
+                try {
+                    $supplier->delete();
+                    $deletedCount++;
+                } catch (\Illuminate\Database\QueryException $e) {
+                    $failedNames[] = $supplier->name;
+                }
+            }
+        }
+
+        if (count($failedNames) > 0) {
+            $msg = "{$deletedCount} supplier berhasil dihapus.";
+            $msgError = " Gagal menghapus supplier berikut karena masih digunakan di data transaksi lain: " . implode(', ', $failedNames);
+            return redirect()->route('suppliers.index')->with('success', $msg)->with('error', $msgError);
+        }
+
+        return redirect()->route('suppliers.index')->with('success', "{$deletedCount} supplier berhasil dihapus.");
     }
     
-    // ... biarkan fungsi lainnya kosong untuk saat ini
+    public function export()
+    {
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\SupplierExport, 'suppliers.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048',
+            'start_row' => 'nullable|integer|min:1',
+            'start_column' => 'nullable|integer|min:0',
+        ]);
+        
+        // Ambil konfigurasi fleksibel dari request, default: baris 2, kolom 2 (index 1)
+        $startRow = $request->input('start_row', 2);
+        $startColumn = $request->input('start_column', 1);
+
+        $import = new \App\Imports\SupplierImport($startRow, $startColumn);
+        \Maatwebsite\Excel\Facades\Excel::import($import, $request->file('file'));
+        
+        $imported = $import->getImportedCount();
+        $skipped = $import->getSkippedCount();
+        
+        return redirect()->route('suppliers.index')->with('success', "Import selesai! {$imported} data berhasil diimport, {$skipped} baris dilewati.");
+    }
+
+    /**
+     * Download template Excel untuk import supplier
+     */
+    public function downloadTemplate()
+    {
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\SupplierTemplateExport, 'template_import_supplier.xlsx');
+    }
 }

@@ -12,7 +12,43 @@
 
                 <!-- Navigation Links Container with Scroll -->
                 <div class="hidden sm:flex sm:items-center sm:ms-6 w-full overflow-hidden">
-                    <div class="flex space-x-8 overflow-x-auto whitespace-nowrap w-full no-scrollbar pb-1 pt-1">
+                    <div class="flex space-x-8 overflow-x-auto whitespace-nowrap w-full no-scrollbar pb-1 pt-1"
+                         x-ref="slider"
+                         x-data="{
+                             isDown: false,
+                             startX: 0,
+                             scrollLeft: 0,
+                             start(e) {
+                                 this.isDown = true;
+                                 this.startX = e.pageX - this.$refs.slider.offsetLeft;
+                                 this.scrollLeft = this.$refs.slider.scrollLeft;
+                             },
+                             end() {
+                                 this.isDown = false;
+                             },
+                             move(e) {
+                                 if(!this.isDown) return;
+                                 e.preventDefault();
+                                 const x = e.pageX - this.$refs.slider.offsetLeft;
+                                 const walk = (x - this.startX) * 2;
+                                 this.$refs.slider.scrollLeft = this.scrollLeft - walk;
+                             },
+                             wheelScroll(e) {
+                                 // Jika scroll vertikal (mouse wheel biasa), kita ubah jadi horizontal
+                                 if (e.deltaY !== 0 && Math.abs(e.deltaX) === 0) {
+                                     e.preventDefault();
+                                     this.$refs.slider.scrollLeft += (e.deltaY > 0 ? 50 : -50);
+                                 }
+                             }
+                         }"
+                         @mousedown="start"
+                         @mouseleave="end"
+                         @mouseup="end"
+                         @mousemove="move"
+                         @wheel="wheelScroll"
+                         @dragstart.prevent
+                         :class="{ 'cursor-grabbing select-none': isDown, 'cursor-grab': !isDown }"
+                    >
                         
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}

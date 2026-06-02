@@ -146,5 +146,14 @@ class ProductionOrderController extends Controller
         }
     }
     
-    // ... sisanya biarkan kosong dulu
+    public function destroy(ProductionOrder $production)
+    {
+        if ($production->status !== 'Pending') {
+            return back()->with('error', 'Hanya produksi berstatus Pending yang bisa dihapus.');
+        }
+
+        $production->delete();
+
+        return redirect()->route('productions.index')->with('success', 'Rencana Produksi berhasil dihapus!');
+    }
 }

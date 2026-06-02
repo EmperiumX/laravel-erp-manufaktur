@@ -148,16 +148,8 @@
                 $('#grandTotalDisplay').text(formatRupiah(grandTotal));
             }
 
-            // EVENT 1: Saat dropdown barang dipilih, otomatis tarik harga ke input harga
+            // EVENT 1: Saat dropdown barang dipilih, hitung ulang (tidak otomatis isi harga agar diisi manual sesuai harga supplier saat ini)
             $(document).on('change', '.material-select', function() {
-                let selectedOption = $(this).find('option:selected');
-                let price = selectedOption.data('price'); // Ambil dari attribute data-price
-                
-                // Cari input harga di baris yang sama (closest tr), lalu isi nilainya
-                let tr = $(this).closest('tr');
-                tr.find('.price-input').val(price);
-                
-                // Hitung ulang setelah harga terisi
                 calculateTotal();
             });
 

@@ -38,14 +38,15 @@
 
                 <!-- Struktur Harga -->
                 <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                    <h3 class="font-bold text-lg mb-4 border-b pb-2 text-green-700">Struktur Harga Jual</h3>
-                    <div class="grid grid-cols-2 gap-4 text-sm">
-                        @foreach($product->prices as $price)
-                            <div class="flex justify-between border-b pb-1">
-                                <span class="text-gray-600">{{ $price->category }}</span>
-                                <span class="font-bold text-green-600">Rp {{ number_format($price->price, 0, ',', '.') }}</span>
-                            </div>
-                        @endforeach
+                    <h3 class="font-bold text-lg mb-4 border-b pb-2 text-green-700">Harga Jual</h3>
+                    <div class="text-sm">
+                        @php
+                            $price = $product->prices->first()->price ?? 0;
+                        @endphp
+                        <div class="flex justify-between border-b pb-1">
+                            <span class="text-gray-600">Harga Jual Satuan</span>
+                            <span class="font-bold text-lg text-green-600">Rp {{ number_format($price, 0, ',', '.') }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
