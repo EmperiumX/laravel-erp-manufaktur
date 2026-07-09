@@ -6,7 +6,7 @@
     <style>
         @page {
             size: A4;
-            margin: 12mm 15mm;
+            margin: 0;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -14,6 +14,7 @@
             font-size: 12px;
             color: #333;
             background: #fff;
+            padding: 12mm 15mm;
         }
 
         .header-bar { width: 100%; background-color: #b91c1c; height: 3px; }

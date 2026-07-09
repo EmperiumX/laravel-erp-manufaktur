@@ -6,7 +6,7 @@
     <style>
         @page {
             size: A4;
-            margin: 12mm 15mm;
+            margin: 0;
         }
         * {
             margin: 0;
@@ -18,6 +18,7 @@
             font-size: 12px;
             color: #333;
             background: #fff;
+            padding: 12mm 15mm;
         }
 
         /* ====== HEADER ====== */
