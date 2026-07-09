@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title>{{ $title }} - {{ $invoice->invoice_number }}</title>
     <style>
+        @page {
+            size: A4;
+            margin: 12mm 15mm;
+        }
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-        @page {
-            size: A4;
-            margin: 12mm 15mm;
         }
         body {
             font-family: {!! $settings->invoice_font ?? "'Helvetica Neue', Helvetica, Arial, sans-serif" !!};

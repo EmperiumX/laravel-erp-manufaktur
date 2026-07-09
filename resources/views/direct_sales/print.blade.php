@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>Nota Penjualan - {{ $directSale->invoice_number }}</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         @page {
             size: A4;
             margin: 12mm 15mm;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: {!! $settings->invoice_font ?? "'Helvetica Neue', Helvetica, Arial, sans-serif" !!};
             font-size: 12px;

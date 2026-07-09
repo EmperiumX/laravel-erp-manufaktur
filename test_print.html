@@ -2,15 +2,15 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Surat Jalan - {{ $consignment->shipment_number }}</title>
+    <title>Surat Jalan - DO-20260629-001</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         @page {
             size: A4;
             margin: 12mm 15mm;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: {!! $settings->invoice_font ?? "'Helvetica Neue', Helvetica, Arial, sans-serif" !!};
+            font-family: 'Roboto', 'Inter', 'Segoe UI', Arial, sans-serif;
             font-size: 12px;
             color: #333;
             background: #fff;
@@ -174,13 +174,11 @@
                 </td>
                 <td width="45%" style="text-align: right; vertical-align: top;">
                     <div class="doc-title">Surat Jalan</div>
-                    <div class="doc-number">{{ $consignment->shipment_number }}</div>
-                    @if($consignment->invoice)
-                        <div style="font-size: 12px; font-weight: bold; color: #333; margin-top: 6px;">
-                            No. Invoice: {{ $consignment->invoice->invoice_number }}
+                    <div class="doc-number">DO-20260629-001</div>
+                                            <div style="font-size: 12px; font-weight: bold; color: #333; margin-top: 6px;">
+                            No. Invoice: INV-S-20260629-001
                         </div>
-                    @endif
-                </td>
+                                    </td>
             </tr>
         </table>
     </div>
@@ -192,19 +190,19 @@
                 <table class="info-table">
                     <tr>
                         <td class="label">Tanggal Kirim</td>
-                        <td>: {{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d F Y') }}</td>
+                        <td>: 29 June 2026</td>
                     </tr>
                 </table>
             </td>
             <td width="50%" style="vertical-align: top;">
                 <div class="info-label">Tujuan Pengiriman</div>
                 <div class="dest-box">
-                    <div class="dest-name">{{ $consignment->store?->name ?? 'Toko Dihapus' }}</div>
+                    <div class="dest-name">sadsda</div>
                     <div class="dest-detail">
-                        {{ $consignment->store?->address ?? 'Alamat tidak tersedia' }}<br>
-                        Telp: {{ $consignment->store?->phone_number ?? '-' }}
+                        uiguigui<br>
+                        Telp: 54338980
                     </div>
-                    <span class="dest-badge">{{ $consignment->store?->category ?? 'Mitra' }}</span>
+                    <span class="dest-badge">Maklon</span>
                 </div>
             </td>
         </tr>
@@ -225,26 +223,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($consignment->items as $index => $item)
-            <tr>
-                <td class="text-center">{{ $index + 1 }}</td>
-                <td style="font-weight: 600;">{{ $item->product->name }}</td>
-                <td class="text-center" style="font-size: 13px; font-weight: 600;">{{ $item->quantity }}</td>
-                <td class="text-right">{{ number_format($item->unit_price, 0, ',', '.') }}</td>
-                <td class="text-right" style="font-weight: 600;">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                        <tr>
+                <td class="text-center">1</td>
+                <td style="font-weight: 600;">dsfasf</td>
+                <td class="text-center" style="font-size: 13px; font-weight: 600;">1</td>
+                <td class="text-right">15.000</td>
+                <td class="text-right" style="font-weight: 600;">15.000</td>
             </tr>
-            @endforeach
-            @for($i = count($consignment->items); $i < 3; $i++)
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-            @endfor
-        </tbody>
+                                    <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
+                    </tbody>
     </table>
 
     <div style="overflow: hidden;">
         <table class="totals-table">
             <tr class="grand-total-row">
                 <td style="text-align: right; color: #a81a1a; width: 140px;">TOTAL NILAI</td>
-                <td style="text-align: right; color: #a81a1a; width: 140px;">Rp {{ number_format($consignment->total_amount, 0, ',', '.') }}</td>
+                <td style="text-align: right; color: #a81a1a; width: 140px;">Rp 15.000</td>
             </tr>
         </table>
     </div>
@@ -277,7 +272,7 @@
     <div class="footer-bar">
         <div class="footer-text">
             Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia dan sah tanpa tanda tangan basah.<br>
-            © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
+            © 2026 New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
         </div>
     </div>
 
