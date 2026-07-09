@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'sales_team_id',
     ];
 
     /**
@@ -46,5 +47,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function salesTeam()
+    {
+        return $this->belongsTo(SalesTeam::class, 'sales_team_id');
     }
 }

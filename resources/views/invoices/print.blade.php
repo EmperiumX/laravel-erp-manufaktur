@@ -19,8 +19,8 @@
         /* ====== HEADER ====== */
         .header-bar {
             width: 100%;
-            background-color: #1e3a8a;
-            height: 8px;
+            background-color: #a81a1a;
+            height: 3px;
         }
         .header-content {
             width: 100%;
@@ -29,6 +29,7 @@
         }
         .header-table {
             width: 100%;
+            table-layout: fixed;
         }
         .company-name {
             font-size: 22px;
@@ -49,17 +50,13 @@
         .invoice-title-text {
             font-size: 32px;
             font-weight: bold;
-            color: #1e3a8a;
+            color: #a81a1a;
             letter-spacing: 2px;
         }
         .invoice-number-box {
-            display: inline-block;
-            background-color: #1e3a8a;
-            color: #fff;
-            padding: 5px 14px;
-            border-radius: 4px;
-            font-size: 12px;
+            font-size: 16px;
             font-weight: bold;
+            color: #a81a1a;
             letter-spacing: 0.5px;
             margin-top: 6px;
         }
@@ -126,15 +123,15 @@
             color: #111;
         }
         .party-box {
-            border: 1.5px solid #1e3a8a;
+            border: 1.5px solid #a81a1a;
             border-radius: 6px;
             padding: 12px 14px;
-            background-color: #f0f4ff;
+            background-color: #fefaf0;
         }
         .party-name {
             font-size: 15px;
             font-weight: bold;
-            color: #1e3a8a;
+            color: #a81a1a;
             margin-bottom: 3px;
         }
         .party-detail {
@@ -161,30 +158,23 @@
             margin-top: 10px;
         }
         .items-table thead th {
-            background-color: #1e3a8a;
-            color: #fff;
+            background-color: #fefaf0;
+            color: #a81a1a;
+            border-top: 1.5px solid #a81a1a;
+            border-bottom: 1.5px solid #a81a1a;
             padding: 10px 8px;
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 600;
         }
-        .items-table thead th:first-child {
-            border-radius: 4px 0 0 0;
-        }
-        .items-table thead th:last-child {
-            border-radius: 0 4px 0 0;
-        }
         .items-table tbody td {
             padding: 9px 8px;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid #ccc;
             font-size: 12px;
         }
-        .items-table tbody tr:nth-child(even) {
-            background-color: #f9fafb;
-        }
         .items-table tbody tr:last-child td {
-            border-bottom: 2px solid #1e3a8a;
+            border-bottom: 2px solid #a81a1a;
         }
         .text-right { text-align: right; }
         .text-center { text-align: center; }
@@ -216,14 +206,15 @@
             width: 140px;
         }
         .grand-total-row {
-            background-color: #1e3a8a;
-            color: #fff !important;
+            background-color: #fefaf0;
+            border-top: 2px solid #a81a1a;
+            border-bottom: 2px solid #a81a1a;
         }
         .grand-total-row td {
             padding: 10px 8px;
             font-size: 15px;
             font-weight: bold;
-            border-radius: 4px;
+            color: #a81a1a !important;
         }
         .paid-row td {
             color: #059669;
@@ -242,7 +233,7 @@
             margin-top: 25px;
             padding: 10px 12px;
             background-color: #f9fafb;
-            border-left: 3px solid #1e3a8a;
+            border-left: 3px solid #a81a1a;
             border-radius: 0 4px 4px 0;
         }
         .notes-label {
@@ -263,14 +254,14 @@
             clear: both;
             margin-top: 20px;
             padding: 12px 14px;
-            background-color: #eff6ff;
-            border: 1px solid #bfdbfe;
+            background-color: #fefaf0;
+            border: 1px solid #cca43b;
             border-radius: 6px;
         }
         .payment-info-title {
             font-size: 11px;
             font-weight: bold;
-            color: #1e3a8a;
+            color: #a81a1a;
             margin-bottom: 4px;
         }
         .payment-info-text {
@@ -295,8 +286,8 @@
             height: 90px;
         }
         .sig-title {
-            font-size: 11px;
-            color: #555;
+            font-size: 13px;
+            color: #333;
             font-weight: 600;
         }
         .sig-line {
@@ -305,7 +296,7 @@
             margin: 0 auto 5px auto;
         }
         .sig-name {
-            font-size: 11px;
+            font-size: 12px;
             color: #333;
         }
 
@@ -313,18 +304,20 @@
         .footer-bar {
             width: 100%;
             margin-top: 30px;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid #ccc;
             padding-top: 10px;
         }
         .footer-text {
-            font-size: 9px;
-            color: #9ca3af;
+            font-size: 12px;
+            color: #555;
             text-align: center;
             line-height: 1.5;
         }
     </style>
 </head>
 <body>
+
+
 
     <!-- Top Color Bar -->
     <div class="header-bar"></div>
@@ -333,12 +326,18 @@
     <div class="header-content">
         <table class="header-table">
             <tr>
-                <td width="55%" style="vertical-align: top;">
-                    <div class="company-name">CV. NEW CITRA INDONESIA</div>
+                <td width="55%" style="vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">
+                    <div class="company-name">{{ strtoupper($settings->company_name ?? 'NEW CITRA INDONESIA') }}</div>
                     <div class="company-info">
-                        Jl. Kedungmundu Raya No. 161A Tembalang<br>
-                        Semarang, Jawa Tengah 50273<br>
-                        Telp: 085866228323
+                        {!! nl2br(e($settings->company_address ?? "Jl. Rogojembangan Barat 1 No.31")) !!}<br>
+                        @php
+                            $phoneStr = $settings->company_phone ?? '081225096633, 082133326959, 085866228323';
+                            $phones = array_map('trim', explode(',', $phoneStr));
+                        @endphp
+                        Telp: {{ $phones[0] ?? '' }}
+                        @for($i = 1; $i < count($phones); $i++)
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $phones[$i] }}
+                        @endfor
                     </div>
                 </td>
                 <td width="45%" class="invoice-title">
@@ -418,11 +417,11 @@
             @foreach($invoice->items as $index => $item)
             <tr>
                 <td class="text-center">{{ $index + 1 }}</td>
-                <td class="font-bold">{{ $item->description }}</td>
-                <td class="text-center">{{ rtrim(rtrim(number_format($item->quantity, 4, ',', '.'), '0'), ',') }}</td>
+                <td style="font-weight: 600;">{{ $item->description }}</td>
+                <td class="text-center" style="font-weight: 600;">{{ rtrim(rtrim(number_format($item->quantity, 4, ',', '.'), '0'), ',') }}</td>
                 <td class="text-center">{{ $item->unit }}</td>
                 <td class="text-right">{{ number_format($item->unit_price, 0, ',', '.') }}</td>
-                <td class="text-right font-bold">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                <td class="text-right" style="font-weight: 600;">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
             </tr>
             @endforeach
             {{-- Empty rows to fill space for short invoices --}}
@@ -503,7 +502,7 @@
                     <div class="sig-title">Hormat Kami,</div>
                     <div style="margin-top: 55px;">
                         <div class="sig-line"></div>
-                        <div class="sig-name">CV. New Citra Indonesia</div>
+                        <div class="sig-name">New Citra Indonesia</div>
                     </div>
                 </td>
             </tr>
@@ -513,10 +512,13 @@
     <!-- Footer -->
     <div class="footer-bar">
         <div class="footer-text">
-            Dokumen ini dicetak secara otomatis oleh Sistem ERP CV. New Citra Indonesia dan sah tanpa tanda tangan basah.<br>
-            © {{ date('Y') }} CV. New Citra Indonesia — Jl. Kedungmundu Raya No. 161A Tembalang, Semarang 50273
+            Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia dan sah tanpa tanda tangan basah.<br>
+            © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
         </div>
     </div>
+
+
+
 
 </body>
 </html>

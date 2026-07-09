@@ -30,8 +30,18 @@ class ProductController extends Controller
             'weight' => 'nullable|integer',
             'weight_unit' => 'nullable|string|max:50',
             'packaging' => 'nullable|string|max:100',
-            'price' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0',
+            'hpp_bahan_baku' => 'nullable|numeric|min:0',
+            'labor_cost' => 'nullable|numeric|min:0',
+            'overhead_cost' => 'nullable|numeric|min:0',
+            'other_cost' => 'nullable|numeric|min:0'
         ]);
+
+        $labor = $request->labor_cost ?? 2656.00;
+        $overhead = $request->overhead_cost ?? 576.00;
+        $other = $request->other_cost ?? 0.00;
+        $bahanBaku = $request->hpp_bahan_baku ?? 0.00;
+        $hpp = $bahanBaku + $labor + $overhead + $other;
 
         // 2. Simpan Data ke tabel products
         $product = Product::create([
@@ -40,7 +50,10 @@ class ProductController extends Controller
             'weight' => $request->weight,
             'weight_unit' => $request->weight_unit,
             'packaging' => $request->packaging,
-            'hpp' => 0 // Sementara HPP 0 dulu, nanti kita buat fitur hitung HPP otomatis dari BOM
+            'hpp' => $hpp,
+            'labor_cost' => $labor,
+            'overhead_cost' => $overhead,
+            'other_cost' => $other
         ]);
 
         // 3. Simpan satu harga tunggal untuk semua kategori di tabel product_prices guna kompatibilitas
@@ -57,8 +70,13 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $price = $product->prices()->where('category', 'End User')->first()->price ?? 0;
-        return view('products.edit', compact('product', 'price'));
+        $product->load('boms.material');
+        $bomHpp = $product->boms->sum(fn($bom) => $bom->quantity * ($bom->material?->unit_price ?? 0));
+        
+        $hppBahanBaku = ($product->hpp > 0) ? max(0, $product->hpp - ($product->labor_cost ?? 2656.00) - ($product->overhead_cost ?? 576.00) - ($product->other_cost ?? 0.00)) : 0;
+        
+        $price = $product->prices()->where('category', 'End User')->first()?->price ?? 0;
+        return view('products.edit', compact('product', 'price', 'bomHpp', 'hppBahanBaku'));
     }
 
     public function update(Request $request, Product $product)
@@ -70,8 +88,18 @@ class ProductController extends Controller
             'weight' => 'nullable|integer',
             'weight_unit' => 'nullable|string|max:50',
             'packaging' => 'nullable|string|max:100',
-            'price' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0',
+            'hpp_bahan_baku' => 'nullable|numeric|min:0',
+            'labor_cost' => 'nullable|numeric|min:0',
+            'overhead_cost' => 'nullable|numeric|min:0',
+            'other_cost' => 'nullable|numeric|min:0'
         ]);
+
+        $labor = $request->labor_cost ?? 2656.00;
+        $overhead = $request->overhead_cost ?? 576.00;
+        $other = $request->other_cost ?? 0.00;
+        $bahanBaku = $request->hpp_bahan_baku ?? 0.00;
+        $hpp = $bahanBaku + $labor + $overhead + $other;
 
         // 2. Update Data Produk Utama
         $product->update([
@@ -80,6 +108,10 @@ class ProductController extends Controller
             'weight' => $request->weight,
             'weight_unit' => $request->weight_unit,
             'packaging' => $request->packaging,
+            'hpp' => $hpp,
+            'labor_cost' => $labor,
+            'overhead_cost' => $overhead,
+            'other_cost' => $other
         ]);
 
         // 3. Update semua kategori harga dengan nilai yang sama
@@ -148,6 +180,27 @@ class ProductController extends Controller
 
         return view('products.show', compact('product', 'materials'));
     }
-    
-    // ... biarkan edit, update, destroy kosong dulu
+
+    /**
+     * Hitung HPP otomatis dari BOM dan simpan ke database
+     */
+    public function calculateHpp(Product $product)
+    {
+        $product->load('boms.material');
+        $bomHpp = $product->boms->sum(fn($bom) => $bom->quantity * ($bom->material?->unit_price ?? 0));
+        
+        $laborCost = 2656.00;
+        $overheadCost = 576.00;
+        $otherCost = $product->other_cost ?? 0.00;
+        
+        $totalHpp = $bomHpp + $laborCost + $overheadCost + $otherCost;
+        
+        $product->update([
+            'hpp' => $totalHpp,
+            'labor_cost' => $laborCost,
+            'overhead_cost' => $overheadCost
+        ]);
+
+        return back()->with('success', 'HPP otomatis berhasil dihitung dari BOM + Tenaga Kerja (Rp 2.656) + Overhead (Rp 576) + Lain-lain (Rp ' . number_format($otherCost, 0, ',', '.') . '): Rp ' . number_format($totalHpp, 2, ',', '.'));
+    }
 }

@@ -12,7 +12,7 @@
             background: #fff;
         }
 
-        .header-bar { width: 100%; background-color: #b91c1c; height: 8px; }
+        .header-bar { width: 100%; background-color: #b91c1c; height: 3px; }
 
         .header-content {
             width: 100%;
@@ -39,13 +39,9 @@
             letter-spacing: 1px;
         }
         .doc-number {
-            display: inline-block;
-            background-color: #b91c1c;
-            color: #fff;
-            padding: 5px 14px;
-            border-radius: 4px;
-            font-size: 12px;
+            font-size: 16px;
             font-weight: bold;
+            color: #b91c1c;
             margin-top: 6px;
         }
 
@@ -78,23 +74,24 @@
 
         .items-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .items-table thead th {
-            background-color: #b91c1c;
-            color: #fff;
+            background-color: #fff5f5;
+            color: #b91c1c;
+            border-top: 1.5px solid #b91c1c;
+            border-bottom: 1.5px solid #b91c1c;
             padding: 10px 8px;
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 600;
         }
-        .items-table thead th:first-child { border-radius: 4px 0 0 0; }
-        .items-table thead th:last-child { border-radius: 0 4px 0 0; }
         .items-table tbody td {
             padding: 9px 8px;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid #ccc;
             font-size: 12px;
         }
-        .items-table tbody tr:nth-child(even) { background-color: #f9fafb; }
-        .items-table tbody tr:last-child td { border-bottom: 2px solid #b91c1c; }
+        .items-table tbody tr:last-child td {
+            border-bottom: 2px solid #b91c1c;
+        }
 
         .text-right { text-align: right; }
         .text-center { text-align: center; }
@@ -108,38 +105,49 @@
         .totals-table td { padding: 6px 8px; font-size: 12px; }
         .totals-table .label-col { text-align: right; color: #555; font-weight: 600; width: 120px; }
         .totals-table .value-col { text-align: right; width: 140px; }
-        .grand-total-row { background-color: #b91c1c; color: #fff !important; }
+        .grand-total-row { 
+            background-color: #fff5f5; 
+            border-top: 2px solid #b91c1c;
+            border-bottom: 2px solid #b91c1c;
+        }
         .grand-total-row td {
             padding: 10px 8px;
             font-size: 15px;
             font-weight: bold;
-            border-radius: 4px;
-            color: #fff;
+            color: #b91c1c !important;
         }
 
         .signature-table { width: 100%; margin-top: 50px; text-align: center; }
         .signature-table td { width: 50%; padding: 10px 30px; vertical-align: bottom; height: 90px; }
-        .sig-title { font-size: 11px; color: #555; font-weight: 600; }
+        .sig-title { font-size: 13px; color: #333; font-weight: 600; }
         .sig-line { border-bottom: 1px solid #333; width: 70%; margin: 0 auto 5px auto; }
-        .sig-name { font-size: 11px; color: #333; }
+        .sig-name { font-size: 12px; color: #333; }
 
-        .footer-bar { width: 100%; margin-top: 30px; border-top: 1px solid #e5e7eb; padding-top: 10px; }
-        .footer-text { font-size: 9px; color: #9ca3af; text-align: center; line-height: 1.5; }
+        .footer-bar { width: 100%; margin-top: 30px; border-top: 1px solid #ccc; padding-top: 10px; }
+        .footer-text { font-size: 12px; color: #555; text-align: center; line-height: 1.5; }
     </style>
 </head>
 <body>
 
+
+
     <div class="header-bar"></div>
 
     <div class="header-content">
-        <table style="width:100%;">
+        <table style="width:100%; table-layout: fixed;">
             <tr>
-                <td width="55%" style="vertical-align: top;">
-                    <div class="company-name">CV. NEW CITRA INDONESIA</div>
+                <td width="55%" style="vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">
+                    <div class="company-name">{{ strtoupper($settings->company_name ?? 'NEW CITRA INDONESIA') }}</div>
                     <div class="company-info">
-                        Jl. Kedungmundu Raya No. 161A Tembalang<br>
-                        Semarang, Jawa Tengah 50273<br>
-                        Telp: 085866228323
+                        {!! nl2br(e($settings->company_address ?? "Jl. Rogojembangan Barat 1 No.31")) !!}<br>
+                        @php
+                            $phoneStr = $settings->company_phone ?? '081225096633, 082133326959, 085866228323';
+                            $phones = array_map('trim', explode(',', $phoneStr));
+                        @endphp
+                        Telp: {{ $phones[0] ?? '' }}
+                        @for($i = 1; $i < count($phones); $i++)
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $phones[$i] }}
+                        @endfor
                     </div>
                 </td>
                 <td width="45%" style="text-align: right; vertical-align: top;">
@@ -170,16 +178,16 @@
                 <div class="buyer-box">
                     <div class="buyer-name">
                         @if($directSale->store_id)
-                            {{ $directSale->store->name }}
+                            {{ $directSale->store?->name ?? 'Toko Dihapus' }}
                         @else
                             {{ $directSale->customer_name }}
                         @endif
                     </div>
                     <div class="buyer-detail">
                         @if($directSale->store_id)
-                            Kategori: {{ $directSale->store->category ?? '-' }}<br>
-                            {{ $directSale->store->address ?? '-' }}<br>
-                            Telp: {{ $directSale->store->phone_number ?? '-' }}
+                            Kategori: {{ $directSale->store?->category ?? '-' }}<br>
+                            {{ $directSale->store?->address ?? '-' }}<br>
+                            Telp: {{ $directSale->store?->phone_number ?? '-' }}
                         @else
                             Pembeli Umum / Walk-in
                         @endif
@@ -203,10 +211,10 @@
             @foreach($directSale->items as $index => $item)
             <tr>
                 <td class="text-center">{{ $index + 1 }}</td>
-                <td class="font-bold">{{ $item->product->name }}</td>
-                <td class="text-center">{{ $item->quantity }}</td>
+                <td style="font-weight: 600;">{{ $item->product->name }}</td>
+                <td class="text-center" style="font-weight: 600;">{{ $item->quantity }}</td>
                 <td class="text-right">{{ number_format($item->unit_price, 0, ',', '.') }}</td>
-                <td class="text-right font-bold">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                <td class="text-right" style="font-weight: 600;">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
             </tr>
             @endforeach
             @for($i = count($directSale->items); $i < 3; $i++)
@@ -218,8 +226,8 @@
     <div style="overflow: hidden;">
         <table class="totals-table">
             <tr class="grand-total-row">
-                <td style="text-align: right; color: #fff;">GRAND TOTAL</td>
-                <td style="text-align: right; color: #fff;">Rp {{ number_format($directSale->total_amount, 0, ',', '.') }}</td>
+                <td style="text-align: right; color: #b91c1c;">GRAND TOTAL</td>
+                <td style="text-align: right; color: #b91c1c;">Rp {{ number_format($directSale->total_amount, 0, ',', '.') }}</td>
             </tr>
         </table>
     </div>
@@ -237,7 +245,7 @@
                 <div class="sig-title">Hormat Kami,</div>
                 <div style="margin-top: 55px;">
                     <div class="sig-line"></div>
-                    <div class="sig-name">CV. New Citra Indonesia</div>
+                    <div class="sig-name">New Citra Indonesia</div>
                 </div>
             </td>
         </tr>
@@ -246,9 +254,12 @@
     <div class="footer-bar">
         <div class="footer-text">
             * Nota ini adalah bukti transaksi yang sah. Barang yang sudah dibeli tidak dapat dikembalikan kecuali ada perjanjian sebelumnya.<br>
-            © {{ date('Y') }} CV. New Citra Indonesia — Jl. Kedungmundu Raya No. 161A Tembalang, Semarang 50273
+            © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
         </div>
     </div>
+
+
+
 
 </body>
 </html>

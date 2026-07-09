@@ -19,6 +19,9 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CashBankController;
 use App\Http\Controllers\FinancialReportController;
+use App\Http\Controllers\CashierSessionController;
+use App\Http\Controllers\SalesTeamController;
+use App\Http\Controllers\SettingController;
 
 // Rute Publik (Welcome & Dashboard Bawaan)
 Route::get('/', function () { return view('welcome'); });
@@ -63,6 +66,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/stores/import', [StoreController::class, 'import'])->name('stores.import');
         Route::post('/stores/bulk-delete', [StoreController::class, 'bulkDestroy'])->name('stores.bulk-destroy');
         Route::resource('stores', StoreController::class);
+
+        // Tim Sales CRUD
+        Route::post('/sales-teams/assign-members', [SalesTeamController::class, 'assignMembers'])->name('sales-teams.assign-members');
+        Route::resource('sales-teams', SalesTeamController::class)->except(['create', 'show', 'edit']);
     });
 
     // 3. ZONA PRODUKSI & GUDANG (Superadmin, Admin, Produser)
@@ -73,9 +80,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/materials/bulk-delete', [MaterialController::class, 'bulkDestroy'])->name('materials.bulk-destroy');
         Route::resource('materials', MaterialController::class);
         Route::post('/products/bulk-delete', [ProductController::class, 'bulkDestroy'])->name('products.bulk-destroy');
+        Route::post('/products/{product}/calculate-hpp', [ProductController::class, 'calculateHpp'])->name('products.calculate-hpp');
         Route::resource('products', ProductController::class);
         Route::post('/products/{product}/bom',[BillOfMaterialController::class, 'store'])->name('boms.store');
         Route::delete('/boms/{bom}',[BillOfMaterialController::class, 'destroy'])->name('boms.destroy');
+        Route::put('/boms/{bom}',[BillOfMaterialController::class, 'update'])->name('boms.update');
         
         Route::get('/purchase-orders/{purchase_order}/print-invoice', [PurchaseOrderController::class, 'printInvoice'])->name('purchase-orders.print-invoice');
         Route::get('/purchase-orders/{purchase_order}/print-consignment', [PurchaseOrderController::class, 'printConsignment'])->name('purchase-orders.print-consignment');
@@ -90,6 +99,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
         Route::get('/inventory/history', [InventoryController::class, 'history'])->name('inventory.history');
         Route::get('/inventory/export', [InventoryController::class, 'exportExcel'])->name('inventory.export');
+        Route::get('/inventory/template', [InventoryController::class, 'downloadTemplate'])->name('inventory.template');
+        Route::post('/inventory/import', [InventoryController::class, 'importExcel'])->name('inventory.import');
 
         Route::resource('productions', ProductionOrderController::class);
         Route::get('/productions/{production}/show',[ProductionOrderController::class, 'show'])->name('productions.show');
@@ -107,6 +118,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/direct-sales/export',[DirectSaleController::class, 'exportExcel'])->name('direct-sales.export');
         Route::get('/direct-sales/{direct_sale}/print',[DirectSaleController::class, 'print'])->name('direct-sales.print');
         Route::resource('direct-sales', DirectSaleController::class);
+
+        // Sesi Kasir (POS Sessions)
+        Route::get('/cashier-sessions', [CashierSessionController::class, 'index'])->name('cashier-sessions.index');
+        Route::get('/cashier-sessions/create', [CashierSessionController::class, 'create'])->name('cashier-sessions.create');
+        Route::post('/cashier-sessions', [CashierSessionController::class, 'storeOpen'])->name('cashier-sessions.store-open');
+        Route::get('/cashier-sessions/{cashier_session}', [CashierSessionController::class, 'show'])->name('cashier-sessions.show');
+        Route::post('/cashier-sessions/{cashier_session}/close', [CashierSessionController::class, 'storeClose'])->name('cashier-sessions.close');
     });
 
     // 5. ZONA KEUANGAN (Superadmin, Admin)
@@ -135,6 +153,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/reports/accounts-receivable', [FinancialReportController::class, 'accountsReceivable'])->name('reports.accounts-receivable');
         Route::get('/reports/accounts-payable', [FinancialReportController::class, 'accountsPayable'])->name('reports.accounts-payable');
         Route::get('/reports/cash-flow', [FinancialReportController::class, 'cashFlow'])->name('reports.cash-flow');
+        Route::get('/reports/sales-performance', [FinancialReportController::class, 'salesPerformance'])->name('reports.sales-performance');
+        Route::get('/reports/general-journal', [FinancialReportController::class, 'generalJournal'])->name('reports.general-journal');
+        Route::get('/reports/general-journal/create', [FinancialReportController::class, 'createJournal'])->name('reports.create-journal');
+        Route::post('/reports/general-journal', [FinancialReportController::class, 'storeJournal'])->name('reports.store-journal');
+
+        // Pengaturan Sistem
+        Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+        Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
     });
 
 });

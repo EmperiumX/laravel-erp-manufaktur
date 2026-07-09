@@ -36,4 +36,17 @@ class BillOfMaterialController extends Controller
         $bom->delete();
         return back()->with('success', 'Bahan baku berhasil dihapus dari resep!');
     }
+
+    public function update(Request $request, BillOfMaterial $bom)
+    {
+        $request->validate([
+            'quantity' => 'required|numeric|min:0'
+        ]);
+
+        $bom->update([
+            'quantity' => $request->quantity
+        ]);
+
+        return back()->with('success', 'Kuantitas bahan baku berhasil diubah!');
+    }
 }

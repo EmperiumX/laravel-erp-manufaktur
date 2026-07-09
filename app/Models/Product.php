@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['sku', 'name', 'weight', 'weight_unit', 'packaging', 'hpp'];
+    protected $fillable = ['sku', 'name', 'weight', 'weight_unit', 'packaging', 'hpp', 'labor_cost', 'overhead_cost', 'other_cost'];
 
     // Relasi One-to-Many ke tabel harga
     public function prices()

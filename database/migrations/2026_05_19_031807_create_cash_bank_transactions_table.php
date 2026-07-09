@@ -20,11 +20,7 @@ return new class extends Migration
             $table->date('transaction_date');
             $table->string('reference')->nullable(); // Referensi (No. Payment, No. Invoice, dll)
             $table->string('description'); // Deskripsi transaksi
-            $table->enum('category', [
-                'Penjualan', 'Pembelian', 'Pembayaran Piutang', 'Pembayaran Hutang',
-                'Biaya Operasional', 'Gaji', 'Setoran Modal', 'Penarikan',
-                'Transfer Antar Akun', 'Lainnya'
-            ])->default('Lainnya');
+            $table->string('category', 100)->default('Lainnya');
             $table->boolean('is_reconciled')->default(false); // Status rekonsiliasi
             $table->foreignId('payment_id')->nullable()->constrained('payments');
             $table->foreignId('created_by')->constrained('users');

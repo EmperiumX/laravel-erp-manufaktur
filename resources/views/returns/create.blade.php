@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Form Input Retur Konsinyasi') }}
+            {{ __('Form Input Retur Barang') }}
         </h2>
     </x-slot>
 
@@ -130,11 +130,8 @@
 
                                         <!-- HAPUS -->
                                         <td class="border px-2 py-2 text-center">
-                                            <button type="button"
-                                                class="text-red-500 hover:text-red-700 font-bold remove-row-btn"
-                                                disabled>
-                                                X
-                                            </button>
+                                            <button type="button" class="edit-row text-blue-600 hover:text-blue-800 font-bold mr-2">Edit</button>
+                                            <button type="button" class="text-red-500 hover:text-red-700 font-bold remove-row-btn" disabled>Hapus</button>
                                         </td>
 
                                     </tr>
@@ -232,10 +229,8 @@
                         </td>
 
                         <td class="border px-2 py-2 text-center">
-                            <button type="button"
-                                class="text-red-500 hover:text-red-700 font-bold remove-row-btn">
-                                X
-                            </button>
+                            <button type="button" class="edit-row text-blue-600 hover:text-blue-800 font-bold mr-2">Edit</button>
+                            <button type="button" class="text-red-500 hover:text-red-700 font-bold remove-row-btn">Hapus</button>
                         </td>
 
                     </tr>
@@ -245,6 +240,17 @@
 
                 updateRemoveButtons();
 
+            });
+
+            // EDIT BARIS
+            $(document).on('click', '.edit-row', function() {
+                var select = $(this).closest('tr').find('select')[0];
+                if (select && select.tomselect) {
+                    select.tomselect.focus();
+                    select.tomselect.open();
+                } else if (select) {
+                    select.focus();
+                }
             });
 
             // HAPUS BARIS

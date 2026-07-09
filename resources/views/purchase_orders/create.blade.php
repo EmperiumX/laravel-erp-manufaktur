@@ -53,7 +53,7 @@
                                     <th class="border px-4 py-2 w-1/5">Kuantitas</th>
                                     <th class="border px-4 py-2 w-1/5">Harga Beli Satuan (Rp)</th>
                                     <th class="border px-4 py-2 w-1/5">Subtotal (Rp)</th>
-                                    <th class="border px-4 py-2">Hapus</th>
+                                    <th class="border px-4 py-2 w-24">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="po-items-tbody">
@@ -81,7 +81,8 @@
                                         Rp <span class="subtotal-display">0</span>
                                     </td>
                                     <td class="border px-2 py-2 text-center">
-                                        <button type="button" class="text-red-500 hover:text-red-700 font-bold remove-row-btn" disabled>X</button>
+                                        <button type="button" class="edit-row text-blue-600 hover:text-blue-800 font-bold mr-2">Edit</button>
+                                        <button type="button" class="text-red-500 hover:text-red-700 font-bold remove-row-btn" disabled>Hapus</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -177,7 +178,8 @@
                             Rp <span class="subtotal-display">0</span>
                         </td>
                         <td class="border px-2 py-2 text-center">
-                            <button type="button" class="text-red-500 hover:text-red-700 font-bold remove-row-btn">X</button>
+                            <button type="button" class="edit-row text-blue-600 hover:text-blue-800 font-bold mr-2">Edit</button>
+                            <button type="button" class="text-red-500 hover:text-red-700 font-bold remove-row-btn">Hapus</button>
                         </td>
                     </tr>
                 `;
@@ -188,7 +190,18 @@
                 $('.remove-row-btn').prop('disabled', false);
             });
 
-            // EVENT 4: Hapus Baris
+            // EVENT 4: Edit Baris
+            $(document).on('click', '.edit-row', function() {
+                var select = $(this).closest('tr').find('select')[0];
+                if (select && select.tomselect) {
+                    select.tomselect.focus();
+                    select.tomselect.open();
+                } else if (select) {
+                    select.focus();
+                }
+            });
+
+            // EVENT 5: Hapus Baris
             $(document).on('click', '.remove-row-btn', function() {
                 // Cegah penghapusan jika hanya tersisa 1 baris
                 if($('.item-row').length > 1) {

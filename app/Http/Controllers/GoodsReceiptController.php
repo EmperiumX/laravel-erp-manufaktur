@@ -9,6 +9,7 @@ use App\Models\StockItem;
 use App\Models\StockMovement;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,7 @@ class GoodsReceiptController extends Controller
         $request->validate([
             'purchase_order_id' => 'required|exists:purchase_orders,id',
             'receipt_date' => 'required|date',
+            'backorder_policy' => 'required|in:backorder,no_backorder',
             'items' => 'required|array',
             'items.*.material_id' => 'required|exists:materials,id',
             'items.*.quantity_ordered' => 'required|numeric|min:0',
@@ -91,6 +93,8 @@ class GoodsReceiptController extends Controller
 
             // 3. Simpan detail item & update stok
             $totalReceivedAmount = 0;
+            $hasShortfall = false;
+            $backorderItems = [];
 
             foreach ($request->items as $itemData) {
                 GoodsReceiptItem::create([
@@ -100,6 +104,26 @@ class GoodsReceiptController extends Controller
                     'quantity_received' => $itemData['quantity_received'],
                     'notes' => $itemData['notes'] ?? null,
                 ]);
+
+                // Hitung subtotal berdasarkan quantity_received dan unit_price dari PO Item
+                $poItem = $po->items->where('material_id', $itemData['material_id'])->first();
+                $unitPrice = $poItem ? $poItem->unit_price : 0;
+                $receivedSubtotal = $itemData['quantity_received'] * $unitPrice;
+                $totalReceivedAmount += $receivedSubtotal;
+
+                // Hitung selisih kurang untuk backorder
+                if ($itemData['quantity_received'] < $itemData['quantity_ordered']) {
+                    $hasShortfall = true;
+                    $shortfallQty = $itemData['quantity_ordered'] - $itemData['quantity_received'];
+                    if ($shortfallQty > 0) {
+                        $backorderItems[] = [
+                            'material_id' => $itemData['material_id'],
+                            'quantity' => $shortfallQty,
+                            'unit_price' => $unitPrice,
+                            'subtotal' => $shortfallQty * $unitPrice
+                        ];
+                    }
+                }
 
                 if ($itemData['quantity_received'] > 0) {
                     $stock = StockItem::firstOrCreate(
@@ -120,49 +144,101 @@ class GoodsReceiptController extends Controller
                 }
             }
 
-            // 4. Update status PO menjadi Completed
-            $po->update(['status' => 'Completed']);
+            // Jika ada shortfall dan user memilih 'backorder', buat PO Backorder baru
+            if ($hasShortfall && $request->backorder_policy === 'backorder' && count($backorderItems) > 0) {
+                // Tentukan nomor PO Backorder (flat hierarchy: PO-xxx-BO1, PO-xxx-BO2, etc.)
+                $basePoNumber = preg_replace('/-BO\d+$/', '', $po->po_number);
+                $boCount = PurchaseOrder::where('po_number', 'like', $basePoNumber . '-BO%')->count();
+                $boSuffix = '-BO' . ($boCount + 1);
+                $boNumber = $basePoNumber . $boSuffix;
 
-            // ===== 5. AUTO-GENERATE INVOICE PEMBELIAN (HUTANG) =====
-            $countInvToday = Invoice::where('type', 'purchase')
-                ->whereDate('created_at', date('Y-m-d'))
-                ->count();
-            $invoiceNumber = 'INV-P-' . $today . '-' . str_pad($countInvToday + 1, 3, '0', STR_PAD_LEFT);
+                $backorderPO = PurchaseOrder::create([
+                    'po_number' => $boNumber,
+                    'supplier_id' => $po->supplier_id,
+                    'order_date' => $request->receipt_date,
+                    'status' => 'Pending',
+                    'total_amount' => collect($backorderItems)->sum('subtotal'),
+                    'notes' => 'Backorder dari PO: ' . $po->po_number,
+                ]);
 
-            $invoice = Invoice::create([
-                'invoice_number' => $invoiceNumber,
-                'type' => 'purchase',
-                'supplier_id' => $po->supplier_id,
-                'purchase_order_id' => $po->id,
-                'invoice_date' => $request->receipt_date,
-                'due_date' => date('Y-m-d', strtotime($request->receipt_date . ' +30 days')),
-                'subtotal' => $po->total_amount,
-                'tax_amount' => 0,
-                'discount_amount' => 0,
-                'total_amount' => $po->total_amount,
-                'paid_amount' => 0,
-                'status' => 'Sent',
-                'notes' => 'Auto-generated dari penerimaan barang ' . $grNumber,
-                'created_by' => Auth::id(),
+                foreach ($backorderItems as $boItem) {
+                    \App\Models\PurchaseOrderItem::create([
+                        'purchase_order_id' => $backorderPO->id,
+                        'material_id' => $boItem['material_id'],
+                        'quantity' => $boItem['quantity'],
+                        'unit_price' => $boItem['unit_price'],
+                        'subtotal' => $boItem['subtotal'],
+                    ]);
+                }
+            }
+
+            // 4. Update status PO asal menjadi Completed & update total_amount sesuai penerimaan aktual
+            $po->update([
+                'status' => 'Completed',
+                'total_amount' => $totalReceivedAmount
             ]);
 
-            // Buat detail item invoice dari PO items
-            foreach ($po->items as $poItem) {
-                InvoiceItem::create([
-                    'invoice_id' => $invoice->id,
-                    'description' => $poItem->material->name,
-                    'material_id' => $poItem->material_id,
-                    'quantity' => $poItem->quantity,
-                    'unit' => $poItem->material->unit ?? 'pcs',
-                    'unit_price' => $poItem->unit_price,
-                    'subtotal' => $poItem->subtotal,
+            // ===== 5. AUTO-GENERATE INVOICE PEMBELIAN (HUTANG) - HANYA JIKA ADA BARANG YANG DITERIMA =====
+            $invoiceCreated = false;
+            if ($totalReceivedAmount > 0) {
+                $countInvToday = Invoice::where('type', 'purchase')
+                    ->whereDate('created_at', date('Y-m-d'))
+                    ->count();
+                $invoiceNumber = 'INV-P-' . $today . '-' . str_pad($countInvToday + 1, 3, '0', STR_PAD_LEFT);
+
+                $invoice = Invoice::create([
+                    'invoice_number' => $invoiceNumber,
+                    'type' => 'purchase',
+                    'supplier_id' => $po->supplier_id,
+                    'purchase_order_id' => $po->id,
+                    'invoice_date' => $request->receipt_date,
+                    'due_date' => date('Y-m-d', strtotime($request->receipt_date . ' +30 days')),
+                    'subtotal' => $totalReceivedAmount,
+                    'tax_amount' => 0,
+                    'discount_amount' => 0,
+                    'total_amount' => $totalReceivedAmount,
+                    'paid_amount' => 0,
+                    'status' => 'Sent',
+                    'notes' => 'Auto-generated dari penerimaan barang ' . $grNumber,
+                    'created_by' => Auth::id(),
                 ]);
+
+                // Buat detail item invoice hanya untuk yang kuantitas diterimanya > 0
+                foreach ($request->items as $itemData) {
+                    if ($itemData['quantity_received'] > 0) {
+                        $material = Material::findOrFail($itemData['material_id']);
+                        $poItem = $po->items->where('material_id', $itemData['material_id'])->first();
+                        $unitPrice = $poItem ? $poItem->unit_price : 0;
+                        $subtotal = $itemData['quantity_received'] * $unitPrice;
+
+                        InvoiceItem::create([
+                            'invoice_id' => $invoice->id,
+                            'description' => $material->name,
+                            'material_id' => $itemData['material_id'],
+                            'quantity' => $itemData['quantity_received'],
+                            'unit' => $material->unit ?? 'pcs',
+                            'unit_price' => $unitPrice,
+                            'subtotal' => $subtotal,
+                        ]);
+                    }
+                }
+                $invoiceCreated = true;
             }
 
             DB::commit();
 
+            if ($invoiceCreated) {
+                $msg = 'Penerimaan barang berhasil! Invoice pembelian otomatis dibuat: ' . $invoiceNumber;
+            } else {
+                $msg = 'Penerimaan barang berhasil diproses (tidak ada barang yang diterima).';
+            }
+            
+            if (isset($backorderPO)) {
+                $msg .= '. Sisa barang yang kurang telah dibuatkan PO Backorder baru: ' . $backorderPO->po_number;
+            }
+
             return redirect()->route('goods-receipts.show', $gr->id)
-                ->with('success', 'Penerimaan barang berhasil! Invoice pembelian otomatis dibuat: ' . $invoiceNumber);
+                ->with('success', $msg);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -195,10 +271,10 @@ class GoodsReceiptController extends Controller
             'invoice' => $invoice,
             'title' => 'INVOICE PEMBELIAN',
             'partyLabel' => 'Supplier',
-            'partyName' => $goodsReceipt->purchaseOrder->supplier->name ?? '-',
-            'partyAddress' => $goodsReceipt->purchaseOrder->supplier->address ?? '-',
-            'partyPhone' => $goodsReceipt->purchaseOrder->supplier->phone_number ?? '-',
-            'reference' => 'PO: ' . $goodsReceipt->purchaseOrder->po_number . ' | GR: ' . $goodsReceipt->receipt_number,
+            'partyName' => $goodsReceipt->purchaseOrder?->supplier?->name ?? '-',
+            'partyAddress' => $goodsReceipt->purchaseOrder?->supplier?->address ?? '-',
+            'partyPhone' => $goodsReceipt->purchaseOrder?->supplier?->phone_number ?? '-',
+            'reference' => 'PO: ' . ($goodsReceipt->purchaseOrder?->po_number ?? '-') . ' | GR: ' . $goodsReceipt->receipt_number,
         ]);
 
         $pdf->setPaper('A4', 'portrait');

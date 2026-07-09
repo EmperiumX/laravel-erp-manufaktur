@@ -83,9 +83,20 @@
                             <tr class="bg-yellow-50 mt-4">
                                 <td class="px-4 py-3 font-bold text-yellow-700 text-lg" colspan="2">BIAYA OPERASIONAL</td>
                             </tr>
+                            @forelse($expenseBreakdown as $expense)
                             <tr>
-                                <td class="px-8 py-2">Biaya Operasional & Gaji</td>
-                                <td class="px-4 py-2 text-right text-red-600">Rp {{ number_format($operationalExpenses, 0, ',', '.') }}</td>
+                                <td class="px-8 py-2">{{ $expense->category ?: 'Lain-lain' }}</td>
+                                <td class="px-4 py-2 text-right text-red-600">Rp {{ number_format($expense->total, 0, ',', '.') }}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td class="px-8 py-2 text-gray-500 italic">Tidak ada biaya operasional tercatat</td>
+                                <td class="px-4 py-2 text-right text-red-600">Rp 0</td>
+                            </tr>
+                            @endforelse
+                            <tr class="border-t border-yellow-200">
+                                <td class="px-8 py-3 font-semibold">Total Biaya Operasional</td>
+                                <td class="px-4 py-3 text-right font-semibold text-red-600 text-lg">Rp {{ number_format($operationalExpenses, 0, ',', '.') }}</td>
                             </tr>
 
                             <!-- Laba Bersih -->
@@ -97,6 +108,53 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- Rincian Biaya Terperinci (Collapsible) -->
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-6" x-data="{ open: false }">
+                <div class="p-6 border-b border-gray-100 flex justify-between items-center cursor-pointer select-none" @click="open = !open">
+                    <h3 class="font-bold text-gray-800 text-lg flex items-center gap-2">
+                        <span class="w-1.5 h-6 bg-red-500 rounded-full"></span>
+                        Rincian Transaksi Pengeluaran Biaya
+                    </h3>
+                    <button class="text-gray-500 hover:text-gray-700 transition focus:outline-none">
+                        <i :class="open ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'" class="text-2xl"></i>
+                    </button>
+                </div>
+                <div x-show="open" x-collapse x-cloak class="p-6 text-gray-900 border-t border-gray-50">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead>
+                                <tr class="bg-gray-50 border-b border-gray-200">
+                                    <th class="px-4 py-3 font-semibold text-gray-600">Tanggal</th>
+                                    <th class="px-4 py-3 font-semibold text-gray-600">Kategori</th>
+                                    <th class="px-4 py-3 font-semibold text-gray-600">Akun Kas/Bank</th>
+                                    <th class="px-4 py-3 font-semibold text-gray-600">Referensi</th>
+                                    <th class="px-4 py-3 font-semibold text-gray-600">Deskripsi</th>
+                                    <th class="px-4 py-3 font-semibold text-gray-600 text-right">Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($expenseTransactions as $tx)
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="px-4 py-3 text-gray-800">
+                                        {{ $tx->transaction_date instanceof \Carbon\Carbon ? $tx->transaction_date->format('d M Y') : \Carbon\Carbon::parse($tx->transaction_date)->format('d M Y') }}
+                                    </td>
+                                    <td class="px-4 py-3"><span class="px-2 py-1 text-xs font-semibold rounded bg-red-100 text-red-800">{{ $tx->category }}</span></td>
+                                    <td class="px-4 py-3 text-gray-700 font-medium">{{ $tx->cashBank?->name ?? '-' }}</td>
+                                    <td class="px-4 py-3 text-gray-500 font-mono text-xs">{{ $tx->reference ?: '-' }}</td>
+                                    <td class="px-4 py-3 text-gray-600">{{ $tx->description }}</td>
+                                    <td class="px-4 py-3 text-right text-red-600 font-bold">Rp {{ number_format($tx->amount, 0, ',', '.') }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td class="px-4 py-4 text-center text-gray-500 italic" colspan="6">Tidak ada rincian transaksi pengeluaran dalam periode ini.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@ class DirectSale extends Model
 {
     use HasFactory;
 
-    protected $fillable =['invoice_number', 'store_id', 'customer_name', 'sale_date', 'total_amount', 'notes'];
+    protected $fillable = ['invoice_number', 'store_id', 'customer_name', 'sale_date', 'total_amount', 'notes', 'cashier_session_id', 'cashier_id'];
 
     public function store()
     {

@@ -70,9 +70,25 @@ class ConsignmentController extends Controller
         $request->validate([
             'store_id' => 'required|exists:stores,id',
             'shipment_date' => 'required|date',
-            'products' => 'required|array',
-            'quantities' => 'required|array',
-            'unit_prices' => 'required|array',
+            'products' => 'required|array|min:1',
+            'products.*' => 'required|exists:products,id',
+            'quantities' => 'required|array|min:1',
+            'quantities.*' => 'required|numeric|min:1',
+            'unit_prices' => 'required|array|min:1',
+            'unit_prices.*' => 'required|numeric|min:0',
+        ], [
+            'store_id.required' => 'Pilih Toko wajib diisi.',
+            'shipment_date.required' => 'Tanggal Pengiriman wajib diisi.',
+            'products.required' => 'Produk wajib dipilih.',
+            'products.*.required' => 'Produk wajib dipilih pada setiap baris.',
+            'quantities.required' => 'Kuantitas wajib diisi.',
+            'quantities.*.required' => 'Kuantitas wajib diisi pada setiap baris.',
+            'quantities.*.numeric' => 'Kuantitas harus berupa angka.',
+            'quantities.*.min' => 'Kuantitas minimal adalah 1.',
+            'unit_prices.required' => 'Harga Jual wajib diisi.',
+            'unit_prices.*.required' => 'Harga Jual wajib diisi pada setiap baris.',
+            'unit_prices.*.numeric' => 'Harga Jual harus berupa angka.',
+            'unit_prices.*.min' => 'Harga Jual minimal adalah 0.',
         ]);
 
         DB::beginTransaction();
@@ -183,7 +199,7 @@ class ConsignmentController extends Controller
     // Cetak Surat Jalan PDF
     public function print(ConsignmentShipment $consignment)
     {
-        $consignment->load('items.product', 'store');
+        $consignment->load('items.product', 'store', 'invoice');
         $pdf = Pdf::loadView('consignments.print', compact('consignment'));
         $pdf->setPaper('A4', 'portrait');
         return $pdf->stream('Surat_Jalan_' . $consignment->shipment_number . '.pdf');
@@ -207,5 +223,153 @@ class ConsignmentController extends Controller
 
         $pdf->setPaper('A4', 'portrait');
         return $pdf->stream('Invoice_' . $invoice->invoice_number . '.pdf');
+    }
+
+    // Edit Surat Jalan
+    public function edit(ConsignmentShipment $consignment)
+    {
+        // Edit hanya diperbolehkan jika status invoice belum lunas/berbayar
+        if ($consignment->invoice && !in_array($consignment->invoice->status, ['Sent', 'Draft'])) {
+            return redirect()->route('consignments.index')->with('error', 'Akses Ditolak! Surat jalan ini sudah memiliki pembayaran tagihan sehingga tidak boleh diubah.');
+        }
+        
+        $stores = Store::all();
+        $products = Product::with('prices')->get();
+        $consignment->load('items');
+        
+        return view('consignments.edit', compact('consignment', 'stores', 'products'));
+    }
+
+    // Update Surat Jalan
+    public function update(Request $request, ConsignmentShipment $consignment)
+    {
+        if ($consignment->invoice && !in_array($consignment->invoice->status, ['Sent', 'Draft'])) {
+            return redirect()->route('consignments.index')->with('error', 'Akses Ditolak! Surat jalan ini sudah memiliki pembayaran tagihan sehingga tidak boleh diubah.');
+        }
+
+        $request->validate([
+            'store_id' => 'required|exists:stores,id',
+            'shipment_date' => 'required|date',
+            'products' => 'required|array|min:1',
+            'products.*' => 'required|exists:products,id',
+            'quantities' => 'required|array|min:1',
+            'quantities.*' => 'required|numeric|min:1',
+            'unit_prices' => 'required|array|min:1',
+            'unit_prices.*' => 'required|numeric|min:0',
+        ], [
+            'store_id.required' => 'Pilih Toko wajib diisi.',
+            'shipment_date.required' => 'Tanggal Pengiriman wajib diisi.',
+            'products.required' => 'Produk wajib dipilih.',
+            'products.*.required' => 'Produk wajib dipilih pada setiap baris.',
+            'quantities.required' => 'Kuantitas wajib diisi.',
+            'quantities.*.required' => 'Kuantitas wajib diisi pada setiap baris.',
+            'quantities.*.numeric' => 'Kuantitas harus berupa angka.',
+            'quantities.*.min' => 'Kuantitas minimal adalah 1.',
+            'unit_prices.required' => 'Harga Jual wajib diisi.',
+            'unit_prices.*.required' => 'Harga Jual wajib diisi pada setiap baris.',
+            'unit_prices.*.numeric' => 'Harga Jual harus berupa angka.',
+            'unit_prices.*.min' => 'Harga Jual minimal adalah 0.',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            // 1. Restore/kembalikan stok dari kuantitas lama
+            foreach ($consignment->items as $oldItem) {
+                $stock = StockItem::where('product_id', $oldItem->product_id)->first();
+                if ($stock) {
+                    $stock->quantity += $oldItem->quantity;
+                    $stock->save();
+                }
+            }
+
+            // Hapus stock movements lama yang merujuk pada DO ini
+            StockMovement::where('reference', $consignment->shipment_number)->delete();
+
+            // 2. Update Header Surat Jalan
+            $consignment->update([
+                'store_id' => $request->store_id,
+                'shipment_date' => $request->shipment_date,
+                'notes' => $request->notes,
+            ]);
+
+            // Hapus detail items lama
+            $consignment->items()->delete();
+
+            // 3. Simpan item-item baru dan kurangi stok baru
+            $totalAmount = 0;
+            foreach ($request->products as $key => $product_id) {
+                $qty = $request->quantities[$key];
+                $price = $request->unit_prices[$key];
+                $subtotal = $qty * $price;
+
+                ConsignmentItem::create([
+                    'consignment_shipment_id' => $consignment->id,
+                    'product_id' => $product_id,
+                    'quantity' => $qty,
+                    'unit_price' => $price,
+                    'subtotal' => $subtotal
+                ]);
+
+                $totalAmount += $subtotal;
+
+                // Kurangi stok baru
+                $stock = StockItem::where('product_id', $product_id)->first();
+                if (!$stock || $stock->quantity < $qty) {
+                    $productName = Product::find($product_id)->name;
+                    throw new \Exception("Stok Gudang untuk produk '$productName' tidak mencukupi! (Sisa setelah direstore: " . ($stock ? $stock->quantity : 0) . ")");
+                }
+
+                $stock->quantity -= $qty;
+                $stock->save();
+
+                StockMovement::create([
+                    'stock_item_id' => $stock->id,
+                    'type' => 'OUT',
+                    'quantity' => $qty,
+                    'reference' => $consignment->shipment_number,
+                    'notes' => 'Edit Pengiriman barang ke Toko / Konsinyasi (diupdate)',
+                    'user_id' => Auth::id(),
+                ]);
+            }
+
+            // Update total amount header
+            $consignment->update(['total_amount' => $totalAmount]);
+
+            // 4. Update Invoice yang berkaitan
+            if ($consignment->invoice) {
+                $invoice = $consignment->invoice;
+                $invoice->update([
+                    'store_id' => $request->store_id,
+                    'invoice_date' => $request->shipment_date,
+                    'due_date' => date('Y-m-d', strtotime($request->shipment_date . ' +30 days')),
+                    'subtotal' => $totalAmount,
+                    'total_amount' => $totalAmount,
+                ]);
+
+                // Hapus item invoice lama
+                $invoice->items()->delete();
+
+                // Buat item invoice baru
+                foreach ($request->products as $key => $product_id) {
+                    $product = Product::find($product_id);
+                    InvoiceItem::create([
+                        'invoice_id' => $invoice->id,
+                        'description' => $product->name,
+                        'product_id' => $product_id,
+                        'quantity' => $request->quantities[$key],
+                        'unit' => 'pcs',
+                        'unit_price' => $request->unit_prices[$key],
+                        'subtotal' => $request->quantities[$key] * $request->unit_prices[$key],
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('consignments.index')->with('success', 'Surat Jalan (DO) dan Invoice Tagihannya berhasil diperbarui!');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Gagal memperbarui pengiriman: ' . $e->getMessage());
+        }
     }
 }

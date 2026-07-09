@@ -75,8 +75,8 @@ class ProductionOrderController extends Controller
             }
 
             $materialsNeeded[] =[
-                'name' => $bom->material->name,
-                'unit' => $bom->material->unit,
+                'name' => $bom->material?->name ?? 'Bahan Baku Dihapus',
+                'unit' => $bom->material?->unit ?? 'pcs',
                 'required' => $requiredQty,
                 'available' => $availableQty,
                 'is_enough' => $isEnough
@@ -97,7 +97,15 @@ class ProductionOrderController extends Controller
             // 1. KURANGI STOK BAHAN BAKU (OUT)
             foreach($production->product->boms as $bom) {
                 $requiredQty = $bom->quantity * $production->quantity;
-                $stock = \App\Models\StockItem::where('material_id', $bom->material_id)->first();
+                $stock = \App\Models\StockItem::firstOrCreate(
+                    ['material_id' => $bom->material_id],
+                    ['quantity' => 0]
+                );
+                
+                if ($stock->quantity < $requiredQty) {
+                    $materialName = $bom->material?->name ?? 'Bahan Baku';
+                    throw new \Exception("Stok bahan baku '$materialName' tidak mencukupi untuk memproses rencana produksi ini! (Kebutuhan: $requiredQty, Tersedia: {$stock->quantity})");
+                }
                 
                 // Kurangi stoknya
                 $stock->quantity -= $requiredQty;

@@ -3,7 +3,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Faktur / Invoice: <span class="text-indigo-600 font-bold">{{ $invoice->invoice_number }}</span>
+                    Faktur / Invoice: <span class="text-red-600 font-bold">{{ $invoice->invoice_number }}</span>
                 </h2>
                 <p class="text-xs text-gray-500 mt-1">Dibuat oleh: {{ $invoice->creator->name ?? '-' }}</p>
             </div>
@@ -22,22 +22,22 @@
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                         
                         <!-- Top Accent line -->
-                        <div class="h-2 bg-gradient-to-r {{ $invoice->type === 'sales' ? 'from-blue-500 to-indigo-600' : 'from-rose-500 to-red-600' }}"></div>
+                        <div class="h-2 bg-gradient-to-r {{ $invoice->type === 'sales' ? 'from-red-600 to-amber-500' : 'from-rose-500 to-red-600' }}"></div>
                         
                         <div class="p-6 sm:p-8">
                             <!-- Header / Letterhead -->
                             <div class="flex flex-col sm:flex-row justify-between border-b pb-6 gap-4">
                                 <div>
-                                    <div class="text-red-600 font-extrabold text-2xl tracking-wide">CV. NEW CITRA INDONESIA</div>
+                                    <div class="text-red-600 font-extrabold text-2xl tracking-wide">NEW CITRA INDONESIA</div>
                                     <p class="text-xs text-gray-500 mt-1 leading-relaxed">
-                                        Jl. Kedungmundu Raya No. 161A Tembalang<br>
-                                        Semarang, Jawa Tengah 50273<br>
-                                        Telp: 085866228323
+                                        Jl. Rogojembangan Barat 1 No.31<br>
+                                        Semarang, Jawa Tengah<br>
+                                        Telp: 081225096633, 082133326959, 085866228323
                                     </p>
                                 </div>
                                 <div class="sm:text-right">
                                     <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Jenis Invoice</span>
-                                    <h1 class="text-xl font-black mt-0.5 {{ $invoice->type === 'sales' ? 'text-blue-600' : 'text-rose-600' }}">
+                                    <h1 class="text-xl font-black mt-0.5 {{ $invoice->type === 'sales' ? 'text-red-600' : 'text-rose-600' }}">
                                         {{ $invoice->type === 'sales' ? 'INVOICE PENJUALAN' : 'INVOICE PEMBELIAN' }}
                                     </h1>
                                     <p class="text-xs text-gray-400 mt-1">Tanggal: {{ $invoice->invoice_date->format('d F Y') }}</p>
@@ -49,8 +49,8 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 py-6 border-b text-sm">
                                 <div>
                                     <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Penerbit</p>
-                                    <p class="font-bold text-gray-800">CV. New Citra Indonesia</p>
-                                    <p class="text-xs text-gray-500 mt-1 leading-relaxed">Jl. Kedungmundu Raya No. 161A, Tembalang, Semarang, Jawa Tengah</p>
+                                    <p class="font-bold text-gray-800">New Citra Indonesia</p>
+                                    <p class="text-xs text-gray-500 mt-1 leading-relaxed">Jl. Rogojembangan Barat 1 No.31, Semarang, Jawa Tengah</p>
                                 </div>
                                 <div>
                                     <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
@@ -124,7 +124,7 @@
                                     
                                     <div class="flex justify-between items-center bg-gray-50 rounded-xl px-4 py-3 border border-gray-100">
                                         <span class="font-bold text-sm text-gray-700">Total Tagihan</span>
-                                        <span class="font-black text-lg text-indigo-700">Rp {{ number_format($invoice->total_amount, 0, ',', '.') }}</span>
+                                        <span class="font-black text-lg text-red-700">Rp {{ number_format($invoice->total_amount, 0, ',', '.') }}</span>
                                     </div>
 
                                     @if($invoice->paid_amount > 0)
@@ -168,8 +168,8 @@
                                     </span>
                                     @break
                                 @case('Sent')
-                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-xl text-xs font-bold border border-blue-200">
-                                        <span class="w-2.5 h-2.5 bg-blue-500 rounded-full"></span> Terkirim
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-700 rounded-xl text-xs font-bold border border-red-200">
+                                        <span class="w-2.5 h-2.5 bg-red-500 rounded-full"></span> Terkirim
                                     </span>
                                     @break
                                 @case('Partial')
@@ -198,7 +198,7 @@
 
                         <div class="space-y-3">
                             <!-- Cetak PDF -->
-                            <a href="{{ route('invoices.print', $invoice->id) }}" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow transition">
+                            <a href="{{ route('invoices.print', $invoice->id) }}" target="_blank" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-sm shadow transition">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                                 Cetak Invoice (PDF)
                             </a>
@@ -206,7 +206,7 @@
                             @if($invoice->status === 'Draft')
                                 <form action="{{ route('invoices.send', $invoice->id) }}" method="POST" class="w-full">
                                     @csrf
-                                    <button class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-sm shadow transition">
+                                    <button class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-sm shadow transition">
                                         <i class="ri-send-plane-line"></i> Kirim Invoice
                                     </button>
                                 </form>
@@ -226,6 +226,59 @@
                         </div>
                     </div>
 
+                    <!-- Referensi Dokumen Asal -->
+                    @if($invoice->consignmentShipment || $invoice->purchaseOrder || $invoice->directSale)
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                        <h3 class="font-bold text-gray-800 text-sm uppercase tracking-wider mb-4 border-b pb-2">Dokumen Terkait</h3>
+                        <div class="space-y-4">
+                            @if($invoice->consignmentShipment)
+                            <div>
+                                <span class="text-xs text-gray-400 font-bold block uppercase mb-1">Surat Jalan (DO)</span>
+                                <div class="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-xl p-3">
+                                    <div>
+                                        <p class="font-bold text-red-700 text-sm">{{ $invoice->consignmentShipment->shipment_number }}</p>
+                                        <p class="text-[10px] text-gray-500 mt-0.5">Tgl Kirim: {{ \Carbon\Carbon::parse($invoice->consignmentShipment->shipment_date)->format('d/m/Y') }}</p>
+                                    </div>
+                                    <a href="{{ route('consignments.print', $invoice->consignment_shipment_id) }}" target="_blank" class="inline-flex items-center justify-center p-2 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-lg transition border border-amber-200" title="Cetak Surat Jalan">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            @endif
+
+                            @if($invoice->purchaseOrder)
+                            <div>
+                                <span class="text-xs text-gray-400 font-bold block uppercase mb-1">Purchase Order (PO)</span>
+                                <div class="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-xl p-3">
+                                    <div>
+                                        <p class="font-bold text-rose-700 text-sm">{{ $invoice->purchaseOrder->po_number }}</p>
+                                        <p class="text-[10px] text-gray-500 mt-0.5">Tgl Order: {{ \Carbon\Carbon::parse($invoice->purchaseOrder->order_date)->format('d/m/Y') }}</p>
+                                    </div>
+                                    <a href="{{ route('purchase-orders.show', $invoice->purchase_order_id) }}" class="inline-flex items-center justify-center px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg text-xs font-bold transition">
+                                        Detail
+                                    </a>
+                                </div>
+                            </div>
+                            @endif
+
+                            @if($invoice->directSale)
+                            <div>
+                                <span class="text-xs text-gray-400 font-bold block uppercase mb-1">Penjualan Langsung</span>
+                                <div class="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-xl p-3">
+                                    <div>
+                                        <p class="font-bold text-red-700 text-sm">{{ $invoice->directSale->invoice_number }}</p>
+                                        <p class="text-[10px] text-gray-500 mt-0.5">Tgl Jual: {{ \Carbon\Carbon::parse($invoice->directSale->sale_date)->format('d/m/Y') }}</p>
+                                    </div>
+                                    <a href="{{ route('direct-sales.print', $invoice->direct_sale_id) }}" target="_blank" class="inline-flex items-center justify-center p-2 bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-lg transition border border-amber-200" title="Cetak Nota Penjualan">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    @endif
+
                     <!-- Payment History Card -->
                     @if($invoice->payments->count() > 0)
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
@@ -234,7 +287,7 @@
                             @foreach($invoice->payments as $payment)
                             <div class="bg-gray-50 border border-gray-100 rounded-xl p-3.5 space-y-2 relative hover:bg-gray-100/50 transition">
                                 <div class="flex justify-between items-center">
-                                    <span class="font-bold text-xs text-indigo-600">{{ $payment->payment_number }}</span>
+                                    <span class="font-bold text-xs text-red-600">{{ $payment->payment_number }}</span>
                                     <span class="text-[10px] text-gray-400">{{ $payment->payment_date->format('d/m/Y') }}</span>
                                 </div>
                                 <div class="flex justify-between text-xs text-gray-600">

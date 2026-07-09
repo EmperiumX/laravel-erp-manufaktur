@@ -32,16 +32,26 @@
                                 <div class="mb-3">
                                     <label class="block text-xs font-bold mb-1">Toko Terdaftar</label>
 
-                                    <select name="store_id" class="w-full border-gray-300 rounded-md text-sm">
-                                        <option value="">-- Pilih Toko --</option>
+                                    <select name="store_id" id="storeSelect" class="w-full border-gray-300 rounded-md text-sm">
+                                        <option value="" data-category="End User">-- Pilih Toko --</option>
 
                                         @foreach($stores as $store)
-                                            <option value="{{ $store->id }}">
-                                                {{ $store->name }}
+                                            <option value="{{ $store->id }}" data-category="{{ $store->category }}">
+                                                {{ $store->name }} ({{ $store->category }})
                                             </option>
                                         @endforeach
 
                                     </select>
+                                </div>
+
+                                <div class="mb-3 flex items-center justify-between bg-gray-50 p-2 rounded border border-gray-200">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="autoPriceCheck" checked class="rounded border-gray-300 text-green-600 focus:ring-green-500">
+                                        <label for="autoPriceCheck" class="ml-2 text-xs font-bold text-gray-700 cursor-pointer">Harga Otomatis</label>
+                                    </div>
+                                    <button type="button" id="applyPricelistBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-2.5 py-1 rounded font-bold shadow transition">
+                                        Terapkan Harga Kategori
+                                    </button>
                                 </div>
 
                                 <div>
@@ -104,7 +114,7 @@
                                     <th class="border px-4 py-2 w-1/6">Qty</th>
                                     <th class="border px-4 py-2 w-1/6">Harga (Rp)</th>
                                     <th class="border px-4 py-2 w-1/6 text-right">Subtotal</th>
-                                    <th class="border px-2 py-2 text-center w-12">X</th>
+                                    <th class="border px-2 py-2 text-center w-24">Aksi</th>
                                 </tr>
                                 </thead>
 
@@ -124,13 +134,13 @@
                                             @foreach($products as $product)
 
                                                 @php
-                                                    $defaultPrice = $product->prices->first()
-                                                    ? $product->prices->first()->price
-                                                    : 0;
+                                                    $endUserPrice = $product->prices->where('category', 'End User')->first()->price ?? 0;
+                                                    $pricesMap = $product->prices->pluck('price', 'category')->toArray();
                                                 @endphp
 
                                                 <option value="{{ $product->id }}"
-                                                        data-price="{{ $defaultPrice }}">
+                                                        data-price="{{ $endUserPrice }}"
+                                                        data-prices='@json($pricesMap)'>
 
                                                     {{ $product->name }}
 
@@ -169,18 +179,25 @@
                                         Rp 0
                                     </td>
 
-                                    <!-- HAPUS -->
-                                    <td class="border px-2 py-2 text-center">
-                                        <button type="button"
-                                                class="text-red-500 font-bold remove-row-btn"
-                                                disabled>
-                                            X
-                                        </button>
-                                    </td>
+                                     <!-- AKSI -->
+                                     <td class="border px-2 py-2 text-center">
+                                         <button type="button"
+                                                 class="edit-row text-blue-600 hover:text-blue-800 font-bold mr-2">
+                                             Edit
+                                         </button>
+                                         <button type="button"
+                                                 class="text-red-500 font-bold remove-row-btn"
+                                                 disabled>
+                                             Hapus
+                                         </button>
+                                     </td>
 
                                 </tr>
 
                                 </tbody>
+                                <script>
+                                    const cleanSalesRowTemplate = document.querySelector('.sales-row').outerHTML;
+                                </script>
 
                                 <!-- FOOTER TOTAL -->
                                 <tfoot>
@@ -286,17 +303,55 @@ $(document).ready(function(){
     }
 
 
+    function applyStoreCategoryPrices(force = false) {
+        let isAuto = $('#autoPriceCheck').is(':checked');
+        if (!isAuto && !force) return;
+
+        let category = $('#storeSelect').find(':selected').data('category') || 'End User';
+        $('.sales-row').each(function() {
+            let select = $(this).find('.product-select');
+            let option = select.find(':selected');
+            if (option.val()) {
+                let prices = option.data('prices') || {};
+                let price = prices[category] !== undefined ? prices[category] : (option.data('price') || 0);
+                $(this).find('.price-input').val(price);
+            }
+        });
+        calculateTotal();
+    }
+
+    // KETIKA TOKO BERUBAH
+    $('#storeSelect').on('change', function() {
+        applyStoreCategoryPrices();
+    });
+
+    // KETIKA TOMBOL TERAPKAN DIKLIK
+    $('#applyPricelistBtn').click(function() {
+        applyStoreCategoryPrices(true);
+    });
+
     // AUTO HARGA PRODUK
     $(document).on('change','.product-select',function(){
-
-        let price = $(this).find(':selected').data('price') || 0;
-
         let row = $(this).closest('tr');
+        let option = $(this).find(':selected');
+        if (!option.val()) {
+            row.find('.price-input').val('');
+            calculateTotal();
+            return;
+        }
+
+        let isAuto = $('#autoPriceCheck').is(':checked');
+        let price = 0;
+        if (isAuto) {
+            let category = $('#storeSelect').find(':selected').data('category') || 'End User';
+            let prices = option.data('prices') || {};
+            price = prices[category] !== undefined ? prices[category] : (option.data('price') || 0);
+        } else {
+            price = option.data('price') || 0;
+        }
 
         row.find('.price-input').val(price);
-
         calculateTotal();
-
     });
 
 
@@ -311,12 +366,11 @@ $(document).ready(function(){
     // TAMBAH BARIS
     $('#addRowBtn').click(function(){
 
-        let newRow = $('.sales-row:first').clone();
+        let newRow = $(cleanSalesRowTemplate);
 
-        newRow.find('select').val('');
-
+        // Reset inputs and subtotal
         newRow.find('input').val('');
-
+        newRow.find('.qty-input').val(1);
         newRow.find('.subtotal-cell').text('Rp 0');
 
         newRow.find('.remove-row-btn').prop('disabled',false);
@@ -325,6 +379,16 @@ $(document).ready(function(){
 
     });
 
+    // EDIT BARIS
+    $(document).on('click', '.edit-row', function() {
+        var select = $(this).closest('tr').find('select')[0];
+        if (select && select.tomselect) {
+            select.tomselect.focus();
+            select.tomselect.open();
+        } else if (select) {
+            select.focus();
+        }
+    });
 
     // HAPUS BARIS
     $(document).on('click','.remove-row-btn',function(){

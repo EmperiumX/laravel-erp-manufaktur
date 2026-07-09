@@ -108,8 +108,8 @@
                         {{-- Kanan: Penerimaan Barang (jika masih Pending) --}}
                         <div>
                             @if($purchaseOrder->status == 'Pending')
-                                <a href="{{ route('purchase-orders.receipt', $purchaseOrder->id) }}" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-bold text-md shadow flex items-center gap-2 transition">
-                                    <span>Langkah Selanjutnya: Penerimaan Barang (Good Receipt)</span>
+                                <a href="{{ route('goods-receipts.create', ['po_id' => $purchaseOrder->id]) }}" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-bold text-md shadow flex items-center gap-2 transition">
+                                    <span>Langkah Selanjutnya: Penerimaan Barang (Goods Receipt)</span>
                                     <i class="ri-arrow-right-line"></i>
                                 </a>
                             @endif

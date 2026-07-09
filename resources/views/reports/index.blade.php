@@ -147,7 +147,7 @@
                 <span class="w-1.5 h-6 bg-gray-700 rounded-full"></span>
                 Akses Detail Laporan Keuangan
             </h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
                 <!-- Laba Rugi -->
                 <a href="{{ route('reports.profit-loss') }}" class="group bg-white hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 border border-gray-100 hover:border-indigo-200 shadow-sm hover:shadow-md sm:rounded-2xl p-6 transition-all duration-300 block">
                     <div class="flex items-center gap-4">
@@ -212,6 +212,40 @@
                     </div>
                     <div class="mt-4 flex justify-between items-center text-xs text-purple-600 font-semibold opacity-0 group-hover:opacity-100 transition duration-300">
                         <span>Buka Detail Laporan</span>
+                        <i class="ri-arrow-right-line"></i>
+                    </div>
+                </a>
+
+                <!-- Target Sales & Kinerja -->
+                <a href="{{ route('reports.sales-performance') }}" class="group bg-white hover:bg-gradient-to-br hover:from-amber-50 hover:to-yellow-50 border border-gray-100 hover:border-amber-200 shadow-sm hover:shadow-md sm:rounded-2xl p-6 transition-all duration-300 block">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-amber-100 text-amber-600 p-3 rounded-xl group-hover:bg-amber-600 group-hover:text-white transition duration-300">
+                            <i class="ri-trophy-line text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-md">Kinerja Sales</h3>
+                            <p class="text-xs text-gray-500 mt-1">Kinerja penjualan staf & target tim bulanan</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center text-xs text-amber-600 font-semibold opacity-0 group-hover:opacity-100 transition duration-300">
+                        <span>Buka Detail Laporan</span>
+                        <i class="ri-arrow-right-line"></i>
+                    </div>
+                </a>
+
+                <!-- Jurnal Umum -->
+                <a href="{{ route('reports.general-journal') }}" class="group bg-white hover:bg-gradient-to-br hover:from-cyan-50 hover:to-blue-50 border border-gray-100 hover:border-cyan-200 shadow-sm hover:shadow-md sm:rounded-2xl p-6 transition-all duration-300 block">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-cyan-100 text-cyan-600 p-3 rounded-xl group-hover:bg-cyan-600 group-hover:text-white transition duration-300">
+                            <i class="ri-book-open-line text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-md">Jurnal Umum</h3>
+                            <p class="text-xs text-gray-500 mt-1">Daftar transaksi bulanan & jurnal per mitra/supplier</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center text-xs text-cyan-600 font-semibold opacity-0 group-hover:opacity-100 transition duration-300">
+                        <span>Buka Detail Jurnal</span>
                         <i class="ri-arrow-right-line"></i>
                     </div>
                 </a>

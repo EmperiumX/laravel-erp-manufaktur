@@ -45,7 +45,7 @@ class SalesExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSiz
     {
         // Pengecekan nama pembeli
         $buyerType = $sale->store_id ? 'Mitra Terdaftar' : 'Pembeli Umum';
-        $buyerName = $sale->store_id ? $sale->store->name : $sale->customer_name;
+        $buyerName = $sale->store_id ? ($sale->store?->name ?? 'Toko Dihapus') : $sale->customer_name;
 
         return[
             \Carbon\Carbon::parse($sale->sale_date)->format('d/m/Y'),

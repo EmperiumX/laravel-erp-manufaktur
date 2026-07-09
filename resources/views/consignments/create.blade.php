@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto py-6 px-4">
-        <h2 class="text-2xl font-bold mb-6">Buat Surat Jalan Konsinyasi</h2>
+        <h2 class="text-2xl font-bold mb-6">Buat Surat Jalan</h2>
 
         <form action="{{ route('consignments.store') }}" method="POST">
             @csrf
@@ -10,8 +10,8 @@
 
                 <!-- Pilih Toko -->
                 <div>
-                    <label class="block text-sm font-medium mb-1">Pilih Toko</label>
-                    <select id="store_id" name="store_id"
+                    <label class="block text-sm font-medium mb-1">Pilih Toko <span class="text-red-500">*</span></label>
+                    <select id="store_id" name="store_id" required
                         class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200">
                         <option value="">-- Pilih Toko --</option>
                         @foreach ($stores as $store)
@@ -24,8 +24,8 @@
 
                 <!-- Tanggal -->
                 <div>
-                    <label class="block text-sm font-medium mb-1">Tanggal Pengiriman</label>
-                    <input type="date" name="shipment_date"
+                    <label class="block text-sm font-medium mb-1">Tanggal Pengiriman <span class="text-red-500">*</span></label>
+                    <input type="date" name="shipment_date" required
                         value="{{ date('Y-m-d') }}"
                         class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-200">
                 </div>
@@ -58,7 +58,7 @@
                             <tr class="item-row">
                                 <!-- Produk -->
                                 <td class="border px-4 py-2">
-                                    <select name="products[]"
+                                    <select name="products[]" required
                                         class="product-select w-full border rounded px-2 py-1">
                                         <option value="">-- Pilih Produk --</option>
                                         @foreach ($products as $product)
@@ -72,13 +72,13 @@
 
                                 <!-- Qty -->
                                 <td class="border px-4 py-2">
-                                    <input type="number" name="quantities[]" min="1"
+                                    <input type="number" name="quantities[]" min="1" required
                                         class="qty w-full border rounded px-2 py-1" value="1">
                                 </td>
 
                                 <!-- Harga -->
                                 <td class="border px-4 py-2">
-                                    <input type="number" name="unit_prices[]"
+                                    <input type="number" name="unit_prices[]" min="0" step="any" required
                                         class="price w-full border rounded px-2 py-1">
                                 </td>
 
@@ -87,15 +87,66 @@
                                     Rp 0
                                 </td>
 
-                                <!-- Hapus -->
+                                <!-- Hapus / Edit -->
                                 <td class="border px-4 py-2 text-center">
                                     <button type="button"
-                                        class="remove-row bg-red-500 text-white px-3 py-1 rounded">
+                                        class="edit-row bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded mr-1">
+                                        Edit
+                                    </button>
+                                    <button type="button"
+                                        class="remove-row bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded">
                                         Hapus
                                     </button>
                                 </td>
                             </tr>
                         </tbody>
+
+                        <template id="row-template">
+                            <tr class="item-row">
+                                <!-- Produk -->
+                                <td class="border px-4 py-2">
+                                    <select name="products[]" required
+                                        class="product-select w-full border rounded px-2 py-1">
+                                        <option value="">-- Pilih Produk --</option>
+                                        @foreach ($products as $product)
+                                            <option value="{{ $product->id }}"
+                                                data-prices='@json($product->prices->pluck("price","category"))'>
+                                                {{ $product->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+
+                                <!-- Qty -->
+                                <td class="border px-4 py-2">
+                                    <input type="number" name="quantities[]" min="1" required
+                                        class="qty w-full border rounded px-2 py-1" value="1">
+                                </td>
+
+                                <!-- Harga -->
+                                <td class="border px-4 py-2">
+                                    <input type="number" name="unit_prices[]" min="0" step="any" required
+                                        class="price w-full border rounded px-2 py-1">
+                                </td>
+
+                                <!-- Subtotal -->
+                                <td class="border px-4 py-2 subtotal">
+                                    Rp 0
+                                </td>
+
+                                <!-- Hapus / Edit -->
+                                <td class="border px-4 py-2 text-center">
+                                    <button type="button"
+                                        class="edit-row bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded mr-1">
+                                        Edit
+                                    </button>
+                                    <button type="button"
+                                        class="remove-row bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded">
+                                        Hapus
+                                    </button>
+                                </td>
+                            </tr>
+                        </template>
 
                         <tfoot>
                             <tr class="bg-gray-50">
@@ -208,14 +259,20 @@ $(document).on('input','.qty, .price',function(){
 
 $('#addRow').click(function(){
 
-    let newRow = $('.item-row:first').clone();
-
-    newRow.find('select').val('');
-    newRow.find('input').val('');
-    newRow.find('.subtotal').text('Rp 0');
+    let newRow = $($('#row-template').html());
 
     $('#itemTable').append(newRow);
 
+});
+
+$(document).on('click', '.edit-row', function() {
+    var select = $(this).closest('tr').find('select')[0];
+    if (select && select.tomselect) {
+        select.tomselect.focus();
+        select.tomselect.open();
+    } else if (select) {
+        select.focus();
+    }
 });
 
 $(document).on('click','.remove-row',function(){

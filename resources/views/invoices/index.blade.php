@@ -84,7 +84,16 @@
                             @foreach ($invoices as $inv)
                             <tr class="hover:bg-gray-50/80 transition duration-150">
                                 <td class="px-4 py-3.5 text-center text-gray-500">{{ $inv->invoice_date->format('d/m/Y') }}</td>
-                                <td class="px-4 py-3.5 font-bold text-gray-900">{{ $inv->invoice_number }}</td>
+                                <td class="px-4 py-3.5 font-bold text-gray-900">
+                                    {{ $inv->invoice_number }}
+                                    @if($inv->consignmentShipment)
+                                        <span class="block text-[10px] text-blue-600 font-semibold mt-0.5" title="Nomor Surat Jalan / DO">DO: {{ $inv->consignmentShipment->shipment_number }}</span>
+                                    @elseif($inv->purchaseOrder)
+                                        <span class="block text-[10px] text-rose-600 font-semibold mt-0.5" title="Nomor Purchase Order">PO: {{ $inv->purchaseOrder->po_number }}</span>
+                                    @elseif($inv->directSale)
+                                        <span class="block text-[10px] text-indigo-600 font-semibold mt-0.5" title="Nomor Nota Penjualan">Direct: {{ $inv->directSale->invoice_number }}</span>
+                                    @endif
+                                </td>
                                 <td class="px-4 py-3.5 text-center">
                                     @if($inv->type === 'sales')
                                         <span class="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded-md text-xs font-bold">Piutang</span>

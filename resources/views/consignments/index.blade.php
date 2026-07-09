@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Pengiriman Konsinyasi (Surat Jalan / DO)') }}
+            {{ __('Pengiriman (Surat Jalan / DO)') }}
         </h2>
     </x-slot>
 
@@ -46,7 +46,7 @@
                                     <td class="border px-4 py-2 text-right font-bold">Rp {{ number_format($do->total_amount, 0, ',', '.') }}</td>
                                     <td class="border px-4 py-2 text-center">
                                         @if($do->status == 'Sent')
-                                            <span class="bg-blue-200 text-blue-800 px-2 py-1 rounded text-xs font-bold">Terkirim (Konsinyasi)</span>
+                                            <span class="bg-blue-200 text-blue-800 px-2 py-1 rounded text-xs font-bold">Terkirim</span>
                                         @elseif($do->status == 'Invoiced')
                                             <span class="bg-green-200 text-green-800 px-2 py-1 rounded text-xs font-bold">Sudah Ditagih</span>
                                         @else
@@ -54,6 +54,12 @@
                                         @endif
                                     </td>
                                     <td class="border px-4 py-2 text-center">
+                                         <!-- VERSI EDIT BARU -->
+                                         @if(!$do->invoice || (strtolower($do->invoice->status) !== 'paid' && $do->invoice->paid_amount <= 0))
+                                         <a href="{{ route('consignments.edit', $do->id) }}" class="text-amber-600 hover:text-white hover:bg-amber-600 font-bold border border-amber-600 px-3 py-1 rounded inline-block mb-1 transition-all duration-200">
+                                             ✏️ Edit
+                                         </a>
+                                         @endif
                                         <a href="{{ route('consignments.print', $do->id) }}" target="_blank" class="text-blue-600 hover:underline font-bold border border-blue-600 px-3 py-1 rounded inline-block mb-1">
                                             🖨️ Surat Jalan
                                         </a>
@@ -66,6 +72,14 @@
                                         >
                                             🧾 Invoice
                                         </button>
+                                        @else
+                                        <a
+                                            href="{{ route('invoices.create', ['type' => 'sales', 'source' => 'consignment', 'source_id' => $do->id]) }}"
+                                            class="text-amber-600 hover:text-white hover:bg-amber-600 font-bold border border-amber-600 px-3 py-1 rounded inline-block transition-all duration-200"
+                                            title="Buat invoice tagihan untuk pengiriman ini"
+                                        >
+                                            ➕ Buat Invoice
+                                        </a>
                                         @endif
                                     </td>
                                 </tr>
@@ -91,10 +105,10 @@
             <div id="invoiceModalContent" class="relative bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden transform transition-all duration-300 scale-95 opacity-0 z-10">
 
                 {{-- Modal Header --}}
-                <div class="sticky top-0 bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] px-6 py-4 flex items-center justify-between z-20">
+                <div class="sticky top-0 bg-gradient-to-r from-[#a81a1a] to-[#c22020] px-6 py-4 flex items-center justify-between z-20">
                     <div>
                         <h3 id="modalTitle" class="text-white font-bold text-lg tracking-wide">Preview Invoice</h3>
-                        <p id="modalInvoiceNumber" class="text-blue-200 text-sm font-medium mt-0.5"></p>
+                        <p id="modalInvoiceNumber" class="text-amber-200 text-sm font-medium mt-0.5"></p>
                     </div>
                     <button onclick="closeInvoicePreview()" class="text-white/80 hover:text-white hover:bg-white/20 rounded-lg p-2 transition-all duration-200" aria-label="Tutup modal">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,9 +145,9 @@
                             </div>
                         </div>
                         {{-- Toko Tujuan --}}
-                        <div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
-                            <p class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Kepada</p>
-                            <p id="modalStoreName" class="text-lg font-bold text-[#1e3a8a] mb-1"></p>
+                        <div class="bg-amber-50/50 rounded-xl p-4 border border-amber-200">
+                            <p class="text-xs font-bold text-amber-500 uppercase tracking-widest mb-3">Kepada</p>
+                            <p id="modalStoreName" class="text-lg font-bold text-[#a81a1a] mb-1"></p>
                             <p id="modalStoreAddress" class="text-sm text-gray-600 leading-relaxed"></p>
                             <p id="modalStorePhone" class="text-sm text-gray-600 mt-1"></p>
                         </div>
@@ -143,7 +157,7 @@
                     <div class="rounded-xl overflow-hidden border border-gray-200 mb-5">
                         <table class="w-full text-sm">
                             <thead>
-                                <tr class="bg-[#1e3a8a] text-white">
+                                <tr class="bg-[#a81a1a] text-white">
                                     <th class="px-4 py-3 text-center text-xs uppercase tracking-wider font-semibold w-12">No</th>
                                     <th class="px-4 py-3 text-left text-xs uppercase tracking-wider font-semibold">Deskripsi</th>
                                     <th class="px-4 py-3 text-center text-xs uppercase tracking-wider font-semibold w-16">Qty</th>
@@ -165,7 +179,7 @@
                     </div>
 
                     {{-- Notes --}}
-                    <div id="modalNotesSection" class="hidden bg-gray-50 border-l-4 border-[#1e3a8a] rounded-r-lg p-4 mt-4">
+                    <div id="modalNotesSection" class="hidden bg-gray-50 border-l-4 border-[#a81a1a] rounded-r-lg p-4 mt-4">
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Catatan</p>
                         <p id="modalNotes" class="text-sm text-gray-600"></p>
                     </div>
@@ -177,7 +191,7 @@
                     <button onclick="closeInvoicePreview()" class="px-5 py-2.5 text-gray-600 hover:text-gray-800 hover:bg-gray-200 font-semibold rounded-lg transition-all duration-200 text-sm">
                         Tutup
                     </button>
-                    <a id="modalPrintLink" href="#" target="_blank" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white font-bold rounded-lg hover:from-[#1e3080] hover:to-[#1d4ed8] shadow-lg shadow-blue-500/25 transition-all duration-200 text-sm">
+                    <a id="modalPrintLink" href="#" target="_blank" class="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#a81a1a] to-[#c22020] text-white font-bold rounded-lg hover:from-[#8b1414] hover:to-[#a81a1a] shadow-lg shadow-red-500/25 transition-all duration-200 text-sm">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
                         </svg>
@@ -292,7 +306,7 @@
 
             // Grand total
             const grandDiv = document.createElement('div');
-            grandDiv.classList.add('flex', 'justify-between', 'items-center', 'bg-gradient-to-r', 'from-[#1e3a8a]', 'to-[#2563eb]', 'text-white', 'rounded-lg', 'px-4', 'py-3', 'mt-1');
+            grandDiv.classList.add('flex', 'justify-between', 'items-center', 'bg-gradient-to-r', 'from-[#a81a1a]', 'to-[#c22020]', 'text-white', 'rounded-lg', 'px-4', 'py-3', 'mt-1');
             const grandLabel = document.createElement('span');
             grandLabel.classList.add('font-bold', 'text-sm');
             grandLabel.textContent = 'TOTAL';

@@ -35,4 +35,26 @@ class InventoryController extends Controller
         // Mengunduh file dengan nama Laporan_Stok_Gudang.xlsx
         return Excel::download(new StockExport, 'Laporan_Stok_Gudang_'.date('Ymd').'.xlsx');
     }
+
+    // FUNGSI BARU: Download Template Import Stok Awal
+    public function downloadTemplate()
+    {
+        return Excel::download(new \App\Exports\StockTemplateExport, 'template_import_stok_awal.xlsx');
+    }
+
+    // FUNGSI BARU: Import Stok Awal via Excel
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048',
+        ]);
+
+        $import = new \App\Imports\StockImport(2, 1); // baris 2, kolom B (index 1)
+        Excel::import($import, $request->file('file'));
+
+        $imported = $import->getImportedCount();
+        $skipped = $import->getSkippedCount();
+
+        return redirect()->route('inventory.index')->with('success', "Import selesai! {$imported} data stok berhasil diperbarui, {$skipped} baris dilewati.");
+    }
 }

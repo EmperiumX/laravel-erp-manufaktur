@@ -5,9 +5,9 @@
 <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed inset-y-0 left-0 z-50 w-64 transition-transform duration-300 ease-in-out bg-slate-900 border-r border-slate-800 lg:translate-x-0 lg:static lg:inset-auto flex flex-col text-slate-300">
     <!-- Sidebar Header -->
     <div class="flex items-center justify-between h-16 px-6 border-b border-slate-800/80 bg-slate-950/40">
-        <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 font-extrabold text-xl tracking-wide bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-            <i class="ri-instance-line text-2xl text-blue-400"></i>
-            <span>ERP Citra</span>
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo New Citra" class="h-8 object-contain">
+            <span class="font-extrabold text-lg tracking-wider bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-transparent">ERP New Citra</span>
         </a>
         <button @click="sidebarOpen = false" class="lg:hidden text-slate-400 hover:text-white focus:outline-none transition-colors">
             <i class="ri-close-line text-2xl"></i>
@@ -15,20 +15,25 @@
     </div>
 
     <!-- Sidebar Links -->
-    <div class="flex-1 px-4 py-6 space-y-1 overflow-y-auto no-scrollbar">
+    <div id="sidebarScrollContainer" class="flex-1 px-4 py-6 space-y-1 overflow-y-auto no-scrollbar">
         
         <x-sidebar-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" icon="ri-dashboard-line">
             {{ __('Dashboard') }}
         </x-sidebar-link>
 
-        @role('Superadmin')
+        @hasanyrole('Superadmin|Admin')
         <div class="pt-4 pb-2">
             <p class="px-3 text-xs font-bold text-slate-500 uppercase tracking-wider">Administration</p>
         </div>
+        @role('Superadmin')
         <x-sidebar-link :href="route('users.index')" :active="request()->routeIs('users.*')" icon="ri-group-line">
             {{ __('Users') }}
         </x-sidebar-link>
         @endrole
+        <x-sidebar-link :href="route('settings.index')" :active="request()->routeIs('settings.*')" icon="ri-settings-4-line">
+            {{ __('Pengaturan') }}
+        </x-sidebar-link>
+        @endhasanyrole
 
         @hasanyrole('Superadmin|Admin')
         <div class="pt-4 pb-2">
@@ -39,6 +44,9 @@
         </x-sidebar-link>
         <x-sidebar-link :href="route('stores.index')" :active="request()->routeIs('stores.*')" icon="ri-store-2-line">
             {{ __('Toko/Mitra') }}
+        </x-sidebar-link>
+        <x-sidebar-link :href="route('sales-teams.index')" :active="request()->routeIs('sales-teams.*')" icon="ri-team-line">
+            {{ __('Tim Sales') }}
         </x-sidebar-link>
         @endhasanyrole
 
@@ -71,13 +79,16 @@
             <p class="px-3 text-xs font-bold text-slate-500 uppercase tracking-wider">Sales & Consignment</p>
         </div>
         <x-sidebar-link :href="route('consignments.index')" :active="request()->routeIs('consignments.*')" icon="ri-file-list-3-line">
-            {{ __('Konsinyasi DO') }}
+            {{ __('Surat Jalan/ DO') }}
         </x-sidebar-link>
         <x-sidebar-link :href="route('returns.index')" :active="request()->routeIs('returns.*')" icon="ri-arrow-go-back-line">
             {{ __('Retur') }}
         </x-sidebar-link>
         <x-sidebar-link :href="route('direct-sales.index')" :active="request()->routeIs('direct-sales.*')" icon="ri-money-dollar-circle-line">
             {{ __('Penjualan Langsung') }}
+        </x-sidebar-link>
+        <x-sidebar-link :href="route('cashier-sessions.index')" :active="request()->routeIs('cashier-sessions.*')" icon="ri-cash-line">
+            {{ __('Sesi Kasir') }}
         </x-sidebar-link>
         @endhasanyrole
 
@@ -101,10 +112,31 @@
         <div class="pt-4 pb-2">
             <p class="px-3 text-xs font-bold text-slate-500 uppercase tracking-wider">Laporan</p>
         </div>
-        <x-sidebar-link :href="route('reports.index')" :active="request()->routeIs('reports.*')" icon="ri-line-chart-line">
+        <x-sidebar-link :href="route('reports.index')" :active="request()->routeIs('reports.index')" icon="ri-line-chart-line">
             {{ __('Laporan Keuangan') }}
+        </x-sidebar-link>
+        <x-sidebar-link :href="route('reports.general-journal')" :active="request()->routeIs('reports.general-journal')" icon="ri-book-open-line">
+            {{ __('Jurnal Umum') }}
         </x-sidebar-link>
         @endhasanyrole
 
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var sidebar = document.getElementById("sidebarScrollContainer");
+            if (sidebar) {
+                // Restore scroll position
+                var scrollPosition = localStorage.getItem("sidebar-scroll-position");
+                if (scrollPosition) {
+                    sidebar.scrollTop = parseInt(scrollPosition, 10);
+                }
+                
+                // Save scroll position on scroll
+                sidebar.addEventListener("scroll", function() {
+                    localStorage.setItem("sidebar-scroll-position", sidebar.scrollTop);
+                });
+            }
+        });
+    </script>
 </aside>

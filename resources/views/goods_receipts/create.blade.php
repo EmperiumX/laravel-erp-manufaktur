@@ -11,22 +11,6 @@
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
 
-            @if(session('error'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-                    <span class="block sm:inline">{{ session('error') }}</span>
-                </div>
-            @endif
-
-            @if ($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-                    <strong class="font-bold">Terjadi kesalahan input:</strong>
-                    <ul class="list-disc list-inside text-sm mt-1">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
 
             <!-- Info PO -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
@@ -70,6 +54,20 @@
                                 <label class="block text-gray-700 text-sm font-bold mb-2">Catatan (Opsional)</label>
                                 <input type="text" name="notes" placeholder="Catatan penerimaan barang..." class="w-full border-gray-300 rounded-md shadow-sm">
                             </div>
+                        </div>
+
+                        <!-- Kebijakan Selisih Barang (Backorder) -->
+                        <div class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md shadow-sm">
+                            <label class="block text-yellow-800 text-sm font-bold mb-2">
+                                <i class="ri-git-branch-line mr-1"></i> Kebijakan Selisih Penerimaan (Backorder)
+                            </label>
+                            <select name="backorder_policy" class="w-full border-gray-300 rounded-md text-sm shadow-sm" required>
+                                <option value="backorder">Buat Backorder (Biarkan PO tetap aktif menunggu sisa barang)</option>
+                                <option value="no_backorder">Jangan Buat Backorder (Batalkan sisa barang, selesaikan PO awal)</option>
+                            </select>
+                            <p class="text-xs text-yellow-700 mt-2">
+                                * Pilihan ini hanya berlaku jika jumlah barang yang diterima kurang dari jumlah pesanan PO. Invoice tagihan akan otomatis dibuat hanya untuk barang yang riil diterima.
+                            </p>
                         </div>
 
                         <table class="w-full table-auto border-collapse border border-gray-300 text-sm mb-6">

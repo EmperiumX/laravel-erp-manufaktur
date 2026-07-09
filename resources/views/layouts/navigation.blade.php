@@ -93,7 +93,7 @@
                         <!-- SUPERADMIN, ADMIN, SALES -->
                         @hasanyrole('Superadmin|Admin|Sales')
                             <x-nav-link :href="route('consignments.index')" :active="request()->routeIs('consignments.*')">
-                                {{ __('Konsinyasi DO') }}
+                                {{ __('Surat Jalan/ DO') }}
                             </x-nav-link>
                             <x-nav-link :href="route('returns.index')" :active="request()->routeIs('returns.*')">
                                 {{ __('Retur') }}
@@ -195,7 +195,7 @@
 
             @hasanyrole('Superadmin|Admin|Sales')
                 <x-responsive-nav-link :href="route('consignments.index')" :active="request()->routeIs('consignments.*')">
-                    {{ __('Konsinyasi DO') }}
+                    {{ __('Surat Jalan/ DO') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('returns.index')" :active="request()->routeIs('returns.*')">
                     {{ __('Retur') }}

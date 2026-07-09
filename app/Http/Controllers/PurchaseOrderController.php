@@ -35,9 +35,12 @@ class PurchaseOrderController extends Controller
         $request->validate([
             'supplier_id' => 'required|exists:suppliers,id',
             'order_date' => 'required|date',
-            'materials' => 'required|array', // Array id material
-            'quantities' => 'required|array', // Array jumlah
-            'unit_prices' => 'required|array', // Array harga beli
+            'materials' => 'required|array|min:1',
+            'materials.*' => 'required|exists:materials,id',
+            'quantities' => 'required|array|min:1',
+            'quantities.*' => 'required|numeric|min:0.0001',
+            'unit_prices' => 'required|array|min:1',
+            'unit_prices.*' => 'required|numeric|min:0',
         ]);
 
         // Gunakan DB Transaction agar jika terjadi error di tengah jalan, data di-rollback (dibatalkan) semua
@@ -179,9 +182,9 @@ class PurchaseOrderController extends Controller
             'invoice' => $invoice,
             'title' => 'INVOICE PEMBELIAN',
             'partyLabel' => 'Supplier',
-            'partyName' => $purchaseOrder->supplier->name ?? '-',
-            'partyAddress' => $purchaseOrder->supplier->address ?? '-',
-            'partyPhone' => $purchaseOrder->supplier->phone_number ?? '-',
+            'partyName' => $purchaseOrder->supplier?->name ?? '-',
+            'partyAddress' => $purchaseOrder->supplier?->address ?? '-',
+            'partyPhone' => $purchaseOrder->supplier?->phone_number ?? '-',
             'reference' => 'PO: ' . $purchaseOrder->po_number,
         ]);
 
@@ -201,9 +204,9 @@ class PurchaseOrderController extends Controller
             'typeBadge' => 'KONSINYASI MASUK',
             'typeBadgeClass' => 'badge-consignment',
             'partyLabel' => 'Mitra / Supplier',
-            'partyName' => $purchaseOrder->supplier->name ?? '-',
-            'partyAddress' => $purchaseOrder->supplier->address ?? '-',
-            'partyPhone' => $purchaseOrder->supplier->phone_number ?? '-',
+            'partyName' => $purchaseOrder->supplier?->name ?? '-',
+            'partyAddress' => $purchaseOrder->supplier?->address ?? '-',
+            'partyPhone' => $purchaseOrder->supplier?->phone_number ?? '-',
             'reference' => 'PO: ' . $purchaseOrder->po_number,
         ]);
 

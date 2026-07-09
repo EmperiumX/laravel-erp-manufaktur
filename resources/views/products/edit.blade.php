@@ -44,6 +44,44 @@
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Jenis Kemasan</label>
                                     <input type="text" name="packaging" value="{{ $product->packaging }}" class="w-full border-gray-300 rounded-md shadow-sm">
                                 </div>
+
+                                <!-- Rincian HPP -->
+                                <div class="bg-gray-100/50 p-3.5 rounded-lg border border-gray-200/80 mb-4">
+                                    <h4 class="font-semibold text-sm text-gray-800 mb-3">Rincian HPP (Harga Pokok Produksi)</h4>
+                                    
+                                    <div class="mb-3">
+                                        <label class="block text-gray-700 text-xs font-bold mb-1">HPP Bahan Baku / BOM (Rp)</label>
+                                        <div class="flex gap-2">
+                                            <input type="number" step="0.01" name="hpp_bahan_baku" id="hppBahanBakuInput" value="{{ $hppBahanBaku }}" class="w-full border-gray-300 rounded-md shadow-sm text-sm">
+                                            @if(isset($bomHpp) && $bomHpp > 0)
+                                                <button type="button" id="btnUseBomHpp" data-bom-hpp="{{ $bomHpp }}" class="bg-indigo-600 text-white px-3 py-2 rounded text-xs hover:bg-indigo-700 whitespace-nowrap">
+                                                    Ambil dari BOM (Rp {{ number_format($bomHpp, 0, ',', '.') }})
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-2 gap-3 mb-3">
+                                        <div>
+                                            <label class="block text-gray-700 text-xs font-bold mb-1">Biaya Tenaga Kerja (Rp)</label>
+                                            <input type="number" step="0.01" name="labor_cost" id="laborCostInput" value="{{ $product->labor_cost ?? 2656 }}" class="w-full border-gray-300 rounded-md shadow-sm text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block text-gray-700 text-xs font-bold mb-1">Biaya Overhead (Rp)</label>
+                                            <input type="number" step="0.01" name="overhead_cost" id="overheadCostInput" value="{{ $product->overhead_cost ?? 576 }}" class="w-full border-gray-300 rounded-md shadow-sm text-sm">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="block text-gray-700 text-xs font-bold mb-1">Biaya Lain-lain (Rp)</label>
+                                        <input type="number" step="0.01" name="other_cost" id="otherCostInput" value="{{ $product->other_cost ?? 0 }}" class="w-full border-gray-300 rounded-md shadow-sm text-sm" placeholder="Contoh: 1000">
+                                    </div>
+                                    
+                                    <div class="mt-2 border-t pt-2.5">
+                                        <label class="block text-gray-700 text-xs font-bold mb-1">Total HPP Akhir (Rp)</label>
+                                        <input type="text" id="totalHppInput" class="w-full border-gray-300 rounded-md shadow-sm bg-gray-50 text-gray-800 font-bold text-sm" readonly>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- BAGIAN KANAN: HARGA JUAL -->
@@ -68,4 +106,31 @@
             </div>
         </div>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function calculateTotalHpp() {
+                var bahanBaku = parseFloat($('#hppBahanBakuInput').val()) || 0;
+                var labor = parseFloat($('#laborCostInput').val()) || 0;
+                var overhead = parseFloat($('#overheadCostInput').val()) || 0;
+                var other = parseFloat($('#otherCostInput').val()) || 0;
+                
+                var total = bahanBaku + labor + overhead + other;
+                $('#totalHppInput').val(total.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+            }
+            
+            $('#hppBahanBakuInput, #laborCostInput, #overheadCostInput, #otherCostInput').on('input', function() {
+                calculateTotalHpp();
+            });
+            
+            $('#btnUseBomHpp').click(function() {
+                var bomHpp = $(this).data('bom-hpp');
+                $('#hppBahanBakuInput').val(bomHpp);
+                calculateTotalHpp();
+            });
+            
+            calculateTotalHpp(); // Initial run
+        });
+    </script>
 </x-app-layout>

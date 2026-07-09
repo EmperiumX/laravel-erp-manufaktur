@@ -28,12 +28,17 @@ class DirectSaleController extends Controller
 
     public function create()
     {
-        // Ambil semua produk BESERTA harga 'End User' sebagai harga default
-        // Nanti di JavaScript, kita bisa membebaskan kasir untuk mengubah harga ini
-        $products = Product::with(['prices' => function($query) {
-            $query->where('category', 'End User'); // Kita ambil patokan harga eceran tertinggi dulu
-        }])->get();
-        
+        // Validasi Sesi Kasir Aktif
+        $activeSession = \App\Models\CashierSession::where('user_id', Auth::id())
+            ->where('status', 'Open')
+            ->first();
+
+        if (!$activeSession) {
+            return redirect()->route('cashier-sessions.create')
+                ->with('error', 'Akses Ditolak! Anda harus membuka Sesi Kasir terlebih dahulu sebelum melayani penjualan.');
+        }
+
+        $products = Product::with('prices')->get();
         $stores = Store::all(); // Untuk opsi pembeli terdaftar (Reseller/dll)
 
         return view('direct_sales.create', compact('products', 'stores'));
@@ -41,12 +46,24 @@ class DirectSaleController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi Sesi Kasir Aktif
+        $activeSession = \App\Models\CashierSession::where('user_id', Auth::id())
+            ->where('status', 'Open')
+            ->first();
+
+        if (!$activeSession) {
+            return back()->with('error', 'Transaksi gagal: Sesi kasir aktif tidak ditemukan. Silakan buka sesi terlebih dahulu.');
+        }
+
         // Validasi
         $request->validate([
             'sale_date' => 'required|date',
-            'products' => 'required|array',
-            'quantities' => 'required|array',
-            'unit_prices' => 'required|array',
+            'products' => 'required|array|min:1',
+            'products.*' => 'required|exists:products,id',
+            'quantities' => 'required|array|min:1',
+            'quantities.*' => 'required|numeric|min:1',
+            'unit_prices' => 'required|array|min:1',
+            'unit_prices.*' => 'required|numeric|min:0',
             // Pembeli bisa pilih toko, ATAU ketik nama manual
             'store_id' => 'nullable|exists:stores,id',
             'customer_name' => 'nullable|string|max:255',
@@ -71,7 +88,9 @@ class DirectSaleController extends Controller
                 'customer_name' => $request->customer_name,
                 'sale_date' => $request->sale_date,
                 'total_amount' => 0,
-                'notes' => $request->notes
+                'notes' => $request->notes,
+                'cashier_session_id' => $activeSession->id,
+                'cashier_id' => Auth::id(),
             ]);
 
             $totalAmount = 0;
@@ -156,9 +175,49 @@ class DirectSaleController extends Controller
                 ]);
             }
 
+            // ===== AUTO-GENERATE PAYMENT & MUTASI KAS MASUK =====
+            $countPayToday = \App\Models\Payment::whereDate('created_at', date('Y-m-d'))->count();
+            $paymentNumber = 'PAY-' . $today . '-' . str_pad($countPayToday + 1, 3, '0', STR_PAD_LEFT);
+
+            $payment = \App\Models\Payment::create([
+                'payment_number' => $paymentNumber,
+                'invoice_id' => $invoice->id,
+                'type' => 'inbound',
+                'amount' => $totalAmount,
+                'payment_date' => $request->sale_date,
+                'payment_method' => 'Cash',
+                'cash_bank_id' => $activeSession->cash_bank_id,
+                'notes' => 'Pembayaran otomatis Penjualan Langsung ' . $invNumber,
+                'created_by' => Auth::id(),
+            ]);
+
+            // Update Saldo Kas/Bank
+            $cashBank = \App\Models\CashBank::findOrFail($activeSession->cash_bank_id);
+            $cashBank->balance += $totalAmount;
+            $cashBank->save();
+
+            // Catat Transaksi Kas/Bank
+            \App\Models\CashBankTransaction::create([
+                'cash_bank_id' => $cashBank->id,
+                'type' => 'Debit',
+                'amount' => $totalAmount,
+                'balance_after' => $cashBank->balance,
+                'transaction_date' => $request->sale_date,
+                'reference' => $paymentNumber,
+                'description' => 'Penjualan langsung kasir #' . $sale->invoice_number,
+                'category' => 'Penjualan',
+                'is_reconciled' => false,
+                'payment_id' => $payment->id,
+                'created_by' => Auth::id(),
+            ]);
+
+            // Update Expected Cash Sesi Kasir
+            $activeSession->expected_cash += $totalAmount;
+            $activeSession->save();
+
             DB::commit();
 
-            return redirect()->route('direct-sales.index')->with('success', 'Transaksi Penjualan berhasil disimpan! Stok otomatis terpotong.');
+            return redirect()->route('direct-sales.index')->with('success', 'Transaksi Penjualan berhasil disimpan! Stok otomatis terpotong dan mutasi kas berhasil dicatat.');
 
         } catch (\Exception $e) {
             DB::rollBack();

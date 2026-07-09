@@ -5,7 +5,7 @@
                 <h2 class="font-extrabold text-2xl text-gray-900 leading-tight">
                     {{ __('Dashboard Analitik') }}
                 </h2>
-                <p class="text-sm text-gray-500 mt-1">Selamat datang kembali! Berikut ringkasan operasional CV. New Citra hari ini.</p>
+                <p class="text-sm text-gray-500 mt-1">Selamat datang kembali! Berikut ringkasan operasional New Citra hari ini.</p>
             </div>
         </div>
     </x-slot>
