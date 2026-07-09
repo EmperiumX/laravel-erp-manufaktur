@@ -9,6 +9,10 @@
             padding: 0;
             box-sizing: border-box;
         }
+        @page {
+            size: A4;
+            margin: 12mm 15mm;
+        }
         body {
             font-family: {!! $settings->invoice_font ?? "'Helvetica Neue', Helvetica, Arial, sans-serif" !!};
             font-size: 12px;
