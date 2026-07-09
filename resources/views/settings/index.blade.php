@@ -19,44 +19,11 @@
                     <form action="{{ route('settings.update') }}" method="POST">
                         @csrf
                         
-                        <!-- SECTION 1: INFORMASI PERUSAHAAN -->
-                        <div class="mb-8 pb-6 border-b border-gray-100">
-                            <div class="flex items-center gap-3 mb-6">
-                                <div class="p-2.5 bg-red-50 text-red-600 rounded-xl">
-                                    <i class="ri-building-4-line text-xl"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-gray-900">Informasi Perusahaan</h3>
-                                    <p class="text-xs text-gray-500">Informasi ini akan muncul pada Kop Surat Jalan, Invoice, dan Nota Penjualan.</p>
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Nama Perusahaan <span class="text-red-500">*</span></label>
-                                    <input type="text" name="company_name" value="{{ old('company_name', $settings->company_name) }}" 
-                                           class="w-full border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-xl shadow-sm" required>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Telepon Perusahaan</label>
-                                    <input type="text" name="company_phone" value="{{ old('company_phone', $settings->company_phone) }}" 
-                                           class="w-full border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-xl shadow-sm">
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Email Perusahaan</label>
-                                    <input type="email" name="company_email" value="{{ old('company_email', $settings->company_email) }}" 
-                                           class="w-full border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-xl shadow-sm">
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Alamat Perusahaan</label>
-                                    <textarea name="company_address" rows="3" 
-                                              class="w-full border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-xl shadow-sm">{{ old('company_address', $settings->company_address) }}</textarea>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- HIDDEN COMPANY INFORMATION -->
+                        <input type="hidden" name="company_name" value="{{ $settings->company_name }}">
+                        <input type="hidden" name="company_phone" value="{{ $settings->company_phone }}">
+                        <input type="hidden" name="company_email" value="{{ $settings->company_email }}">
+                        <input type="hidden" name="company_address" value="{{ $settings->company_address }}">
 
                         <!-- SECTION 2: KUSTOMISASI CETAK DOKUMEN -->
                         <div class="mb-8">

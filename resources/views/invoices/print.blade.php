@@ -10,7 +10,7 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: {!! $settings->invoice_font ?? "'Helvetica Neue', Helvetica, Arial, sans-serif" !!};
             font-size: 12px;
             color: #333;
             background: #fff;
@@ -327,17 +327,11 @@
         <table class="header-table">
             <tr>
                 <td width="55%" style="vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">
-                    <div class="company-name">{{ strtoupper($settings->company_name ?? 'NEW CITRA INDONESIA') }}</div>
+                    <div class="company-name">NEW CITRA INDONESIA</div>
                     <div class="company-info">
-                        {!! nl2br(e($settings->company_address ?? "Jl. Rogojembangan Barat 1 No.31")) !!}<br>
-                        @php
-                            $phoneStr = $settings->company_phone ?? '081225096633, 082133326959, 085866228323';
-                            $phones = array_map('trim', explode(',', $phoneStr));
-                        @endphp
-                        Telp: {{ $phones[0] ?? '' }}
-                        @for($i = 1; $i < count($phones); $i++)
-                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $phones[$i] }}
-                        @endfor
+                        Jl. Rogojembangan Barat 1 No.31<br>
+                        Semarang<br>
+                        Telp: 081225096633, 082133326959, 085866228323
                     </div>
                 </td>
                 <td width="45%" class="invoice-title">
