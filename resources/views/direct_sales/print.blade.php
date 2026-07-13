@@ -17,12 +17,9 @@
             padding: 12mm 15mm;
         }
 
-        .header-bar { width: 100%; background-color: #b91c1c; height: 3px; }
-
         .header-content {
             width: 100%;
             padding: 20px 0 15px 0;
-            border-bottom: 2px solid #e5e7eb;
         }
         .company-name {
             font-size: 22px;
@@ -64,7 +61,6 @@
         .info-table .label { width: 100px; color: #555; font-weight: 600; }
 
         .buyer-box {
-            border: 1.5px solid #b91c1c;
             border-radius: 6px;
             padding: 12px 14px;
             background-color: #fff5f5;
@@ -81,8 +77,6 @@
         .items-table thead th {
             background-color: #fff5f5;
             color: #b91c1c;
-            border-top: 1.5px solid #b91c1c;
-            border-bottom: 1.5px solid #b91c1c;
             padding: 10px 8px;
             font-size: 11px;
             text-transform: uppercase;
@@ -91,11 +85,7 @@
         }
         .items-table tbody td {
             padding: 9px 8px;
-            border-bottom: 1px solid #ccc;
             font-size: 12px;
-        }
-        .items-table tbody tr:last-child td {
-            border-bottom: 2px solid #b91c1c;
         }
 
         .text-right { text-align: right; }
@@ -112,8 +102,6 @@
         .totals-table .value-col { text-align: right; width: 140px; }
         .grand-total-row { 
             background-color: #fff5f5; 
-            border-top: 2px solid #b91c1c;
-            border-bottom: 2px solid #b91c1c;
         }
         .grand-total-row td {
             padding: 10px 8px;
@@ -125,10 +113,10 @@
         .signature-table { width: 100%; margin-top: 50px; text-align: center; }
         .signature-table td { width: 50%; padding: 10px 30px; vertical-align: bottom; height: 90px; }
         .sig-title { font-size: 13px; color: #333; font-weight: 600; }
-        .sig-line { border-bottom: 1px solid #333; width: 70%; margin: 0 auto 5px auto; }
+        .sig-line { width: 70%; margin: 0 auto 5px auto; height: 1px; }
         .sig-name { font-size: 12px; color: #333; }
 
-        .footer-bar { width: 100%; margin-top: 30px; border-top: 1px solid #ccc; padding-top: 10px; }
+        .footer-bar { width: 100%; margin-top: 30px; padding-top: 10px; }
         .footer-text { font-size: 12px; color: #555; text-align: center; line-height: 1.5; }
     </style>
 </head>
@@ -136,7 +124,7 @@
 
 
 
-    <div class="header-bar"></div>
+
 
     <div class="header-content">
         <table style="width:100%; table-layout: fixed;">

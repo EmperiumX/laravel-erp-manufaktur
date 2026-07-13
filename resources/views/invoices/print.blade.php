@@ -22,15 +22,9 @@
         }
 
         /* ====== HEADER ====== */
-        .header-bar {
-            width: 100%;
-            background-color: #a81a1a;
-            height: 3px;
-        }
         .header-content {
             width: 100%;
             padding: 20px 0 15px 0;
-            border-bottom: 2px solid #e5e7eb;
         }
         .header-table {
             width: 100%;
@@ -77,17 +71,14 @@
         .badge-purchase {
             background-color: #fef3c7;
             color: #92400e;
-            border: 1px solid #f59e0b;
         }
         .badge-sales {
             background-color: #d1fae5;
             color: #065f46;
-            border: 1px solid #10b981;
         }
         .badge-consignment {
             background-color: #f3e8ff;
             color: #6b21a8;
-            border: 1px solid #a855f7;
         }
 
         /* ====== INFO SECTION ====== */
@@ -128,7 +119,6 @@
             color: #111;
         }
         .party-box {
-            border: 1.5px solid #a81a1a;
             border-radius: 6px;
             padding: 12px 14px;
             background-color: #fefaf0;
@@ -151,9 +141,9 @@
             font-size: 10px;
             font-weight: bold;
         }
-        .status-unpaid { background-color: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
-        .status-partial { background-color: #e0e7ff; color: #3730a3; border: 1px solid #6366f1; }
-        .status-paid { background-color: #d1fae5; color: #065f46; border: 1px solid #10b981; }
+        .status-unpaid { background-color: #fef3c7; color: #92400e; }
+        .status-partial { background-color: #e0e7ff; color: #3730a3; }
+        .status-paid { background-color: #d1fae5; color: #065f46; }
 
         /* ====== TABLE ITEMS ====== */
         .items-table {
@@ -165,8 +155,6 @@
         .items-table thead th {
             background-color: #fefaf0;
             color: #a81a1a;
-            border-top: 1.5px solid #a81a1a;
-            border-bottom: 1.5px solid #a81a1a;
             padding: 10px 8px;
             font-size: 11px;
             text-transform: uppercase;
@@ -175,11 +163,7 @@
         }
         .items-table tbody td {
             padding: 9px 8px;
-            border-bottom: 1px solid #ccc;
             font-size: 12px;
-        }
-        .items-table tbody tr:last-child td {
-            border-bottom: 2px solid #a81a1a;
         }
         .text-right { text-align: right; }
         .text-center { text-align: center; }
@@ -212,8 +196,6 @@
         }
         .grand-total-row {
             background-color: #fefaf0;
-            border-top: 2px solid #a81a1a;
-            border-bottom: 2px solid #a81a1a;
         }
         .grand-total-row td {
             padding: 10px 8px;
@@ -229,7 +211,6 @@
             color: #dc2626;
             font-weight: bold;
             font-size: 13px;
-            border-top: 2px solid #dc2626;
         }
 
         /* ====== NOTES ====== */
@@ -238,8 +219,7 @@
             margin-top: 25px;
             padding: 10px 12px;
             background-color: #f9fafb;
-            border-left: 3px solid #a81a1a;
-            border-radius: 0 4px 4px 0;
+            border-radius: 4px;
         }
         .notes-label {
             font-size: 10px;
@@ -260,7 +240,6 @@
             margin-top: 20px;
             padding: 12px 14px;
             background-color: #fefaf0;
-            border: 1px solid #cca43b;
             border-radius: 6px;
         }
         .payment-info-title {
@@ -296,9 +275,9 @@
             font-weight: 600;
         }
         .sig-line {
-            border-bottom: 1px solid #333;
             width: 70%;
             margin: 0 auto 5px auto;
+            height: 1px;
         }
         .sig-name {
             font-size: 12px;
@@ -309,7 +288,6 @@
         .footer-bar {
             width: 100%;
             margin-top: 30px;
-            border-top: 1px solid #ccc;
             padding-top: 10px;
         }
         .footer-text {
@@ -325,7 +303,7 @@
 
 
     <!-- Top Color Bar -->
-    <div class="header-bar"></div>
+
 
     <!-- Header -->
     <div class="header-content">

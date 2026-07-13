@@ -17,12 +17,9 @@
             padding: 12mm 15mm;
         }
 
-        .header-bar { width: 100%; background-color: #a81a1a; height: 3px; }
-
         .header-content {
             width: 100%;
             padding: 20px 0 15px 0;
-            border-bottom: 2px solid #e5e7eb;
         }
         .company-name {
             font-size: 22px;
@@ -65,7 +62,6 @@
         .info-table .label { width: 110px; color: #555; font-weight: 600; }
 
         .dest-box {
-            border: 1.5px solid #a81a1a;
             border-radius: 6px;
             padding: 12px 14px;
             background-color: #fefaf0;
@@ -92,8 +88,6 @@
         .items-table thead th {
             background-color: #fefaf0;
             color: #a81a1a;
-            border-top: 1.5px solid #a81a1a;
-            border-bottom: 1.5px solid #a81a1a;
             padding: 10px 8px;
             font-size: 11px;
             text-transform: uppercase;
@@ -102,11 +96,7 @@
         }
         .items-table tbody td {
             padding: 9px 8px;
-            border-bottom: 1px solid #ccc;
             font-size: 12px;
-        }
-        .items-table tbody tr:last-child td {
-            border-bottom: 2px solid #a81a1a;
         }
 
         .text-right { text-align: right; }
@@ -118,8 +108,6 @@
         .totals-table td { padding: 6px 8px; font-size: 12px; }
         .grand-total-row { 
             background-color: #fefaf0; 
-            border-top: 2px solid #a81a1a;
-            border-bottom: 2px solid #a81a1a;
         }
         .grand-total-row td {
             padding: 10px 8px;
@@ -133,8 +121,7 @@
             margin-top: 20px;
             padding: 10px 12px;
             background-color: #f9fafb;
-            border-left: 3px solid #a81a1a;
-            border-radius: 0 4px 4px 0;
+            border-radius: 4px;
             font-size: 13px;
             color: #333;
             font-style: italic;
@@ -149,10 +136,10 @@
             height: 100px;
         }
         .sig-title { font-size: 13px; color: #333; font-weight: 600; }
-        .sig-line { border-bottom: 1px solid #333; width: 80%; margin: 0 auto 5px auto; }
+        .sig-line { width: 80%; margin: 0 auto 5px auto; height: 1px; }
         .sig-name { font-size: 12px; color: #333; }
 
-        .footer-bar { width: 100%; margin-top: 25px; border-top: 1px solid #ccc; padding-top: 10px; }
+        .footer-bar { width: 100%; margin-top: 25px; padding-top: 10px; }
         .footer-text { font-size: 12px; color: #555; text-align: center; line-height: 1.5; }
     </style>
 </head>
@@ -160,7 +147,7 @@
 
 
 
-    <div class="header-bar"></div>
+
 
     <div class="header-content">
         <table style="width:100%; table-layout: fixed;">
