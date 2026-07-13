@@ -120,7 +120,6 @@
             clear: both;
             margin-top: 20px;
             padding: 10px 12px;
-            background-color: #f9fafb;
             border-radius: 4px;
             font-size: 13px;
             color: #333;

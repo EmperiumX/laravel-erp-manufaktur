@@ -218,7 +218,6 @@
             clear: both;
             margin-top: 25px;
             padding: 10px 12px;
-            background-color: #f9fafb;
             border-radius: 4px;
         }
         .notes-label {
