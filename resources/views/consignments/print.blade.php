@@ -142,7 +142,6 @@
             margin: 20px auto;
             width: 80%;
             padding: 10px 12px;
-            background-color: #f9fafb;
             border-left: 3px solid #a81a1a;
             border-radius: 0 4px 4px 0;
             font-size: 11px;
