@@ -226,7 +226,7 @@
                 @foreach($consignment->items as $index => $item)
                 <tr>
                     <td class="text-center">{{ $index + 1 }}</td>
-                    <td>{{ $item->product->name }}</td>
+                    <td>{{ strtoupper($item->product->name) }}</td>
                     <td class="text-center font-bold">{{ $item->quantity }}</td>
                 </tr>
                 @endforeach

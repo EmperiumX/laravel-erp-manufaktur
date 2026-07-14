@@ -295,6 +295,23 @@
             text-align: center;
             line-height: 1.5;
         }
+
+        /* ====== CENTERING A4 TO 80% WIDTH ====== */
+        .header-content,
+        .info-section,
+        .items-table,
+        .totals-section,
+        .notes-section,
+        .payment-info,
+        .signature-section,
+        .footer-bar {
+            width: 80% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        .totals-section {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -393,7 +410,7 @@
             @foreach($invoice->items as $index => $item)
             <tr>
                 <td class="text-center">{{ $index + 1 }}</td>
-                <td style="font-weight: 600;">{{ $item->description }}</td>
+                <td style="font-weight: 600;">{{ strtoupper($item->description) }}</td>
                 <td class="text-center" style="font-weight: 600;">{{ rtrim(rtrim(number_format($item->quantity, 4, ',', '.'), '0'), ',') }}</td>
                 <td class="text-center">{{ $item->unit }}</td>
                 <td class="text-right">{{ number_format($item->unit_price, 0, ',', '.') }}</td>

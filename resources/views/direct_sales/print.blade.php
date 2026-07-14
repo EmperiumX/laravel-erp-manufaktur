@@ -116,8 +116,23 @@
         .sig-line { width: 70%; margin: 0 auto 5px auto; height: 1px; }
         .sig-name { font-size: 12px; color: #333; }
 
-        .footer-bar { width: 100%; margin-top: 30px; padding-top: 10px; }
         .footer-text { font-size: 12px; color: #555; text-align: center; line-height: 1.5; }
+
+        /* ====== CENTERING A4 TO 80% WIDTH ====== */
+        .header-content,
+        .info-section,
+        .items-table,
+        .signature-table,
+        .footer-bar {
+            width: 80% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        /* Wrap the totals container div so its floated table centers nicely */
+        div[style*="overflow: hidden"] {
+            width: 80% !important;
+            margin: 0 auto !important;
+        }
     </style>
 </head>
 <body>
@@ -198,7 +213,7 @@
             @foreach($directSale->items as $index => $item)
             <tr>
                 <td class="text-center">{{ $index + 1 }}</td>
-                <td style="font-weight: 600;">{{ $item->product->name }}</td>
+                <td style="font-weight: 600;">{{ strtoupper($item->product->name) }}</td>
                 <td class="text-center" style="font-weight: 600;">{{ $item->quantity }}</td>
                 <td class="text-right">{{ number_format($item->unit_price, 0, ',', '.') }}</td>
                 <td class="text-right" style="font-weight: 600;">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
