@@ -19,7 +19,8 @@
 
         /* NARROW TABLES FOR STEP 1 */
         .narrow-table {
-            width: 75%;
+            width: 80%;
+            margin: 0 auto;
             table-layout: fixed;
             border-collapse: collapse;
         }
@@ -51,10 +52,9 @@
         }
 
         .info-section-table {
-            width: 75%;
+            width: 80%;
+            margin: 20px auto 25px auto;
             table-layout: fixed;
-            margin-top: 20px;
-            margin-bottom: 25px;
             border-collapse: collapse;
         }
         .info-label {
@@ -121,8 +121,8 @@
 
         /* SIGNATURE TABLE FOR STEP 2 (LEBAR 75%) */
         .signature-table {
-            width: 75%;
-            margin-top: 30px;
+            width: 80%;
+            margin: 30px auto 0 auto;
             text-align: center;
             border-collapse: collapse;
         }
@@ -152,11 +152,6 @@
             <td width="45%" style="text-align: right; vertical-align: top;">
                 <div class="doc-title">Surat Jalan</div>
                 <div class="doc-number">{{ $consignment->shipment_number }}</div>
-                @if($consignment->invoice)
-                    <div style="font-size: 11px; font-weight: bold; color: #333; margin-top: 4px; text-align: right;">
-                        No. Invoice: {{ $consignment->invoice->invoice_number }}
-                    </div>
-                @endif
             </td>
         </tr>
     </table>
@@ -186,8 +181,8 @@
         </tr>
     </table>
 
-    <!-- DAFTAR BARANG (TABEL LEBAR 75%) -->
-    <div style="width: 75%; margin-top: 10px; margin-bottom: 25px;">
+    <!-- DAFTAR BARANG (TABEL LEBAR 80%) -->
+    <div style="width: 80%; margin: 10px auto 25px auto;">
         <div class="info-label">Daftar Barang</div>
         <table class="items-table">
             <thead>
