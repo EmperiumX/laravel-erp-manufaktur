@@ -168,13 +168,9 @@
         <h2>Daftar Barang</h2>
         @foreach($consignment->items as $index => $item)
             <p style="margin-bottom: 4px; font-size: 11px;">
-                {{ $index + 1 }}. {{ $item->product->name }} |
-                Qty: {{ $item->quantity }} |
-                Harga: Rp {{ number_format($item->unit_price, 0, ',', '.') }} |
-                Subtotal: Rp {{ number_format($item->subtotal, 0, ',', '.') }}
+                {{ $index + 1 }}. {{ $item->product->name }} | Qty: {{ $item->quantity }}
             </p>
         @endforeach
-        <p style="margin-top: 10px; font-size: 12px;"><span class="label">TOTAL NILAI BARANG:</span> Rp {{ number_format($consignment->total_amount, 0, ',', '.') }}</p>
     </div>
 
     <!-- TANDA TANGAN (FLOW VERTIKAL - LEBAR 75%) -->
