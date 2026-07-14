@@ -134,12 +134,17 @@
         }
         .sig-title { font-size: 12px; color: #333; font-weight: bold; }
         .sig-name { font-size: 11px; color: #333; }
+        .sig-line { border-bottom: 1px solid #333; width: 80%; margin: 0 auto 5px auto; }
 
         /* NOTICE BOX & FOOTER */
         .notice-box {
             clear: both;
             margin: 20px auto;
             width: 80%;
+            padding: 10px 12px;
+            background-color: #f9fafb;
+            border-left: 3px solid #a81a1a;
+            border-radius: 0 4px 4px 0;
             font-size: 11px;
             color: #555;
             font-style: italic;
@@ -207,6 +212,9 @@
     <!-- DAFTAR BARANG (TABEL LEBAR 80%) -->
     <div style="width: 80%; margin: 10px auto 25px auto;">
         <div class="info-label">Daftar Barang</div>
+        <div style="font-size: 11px; color: #333; margin-bottom: 8px;">
+            Bersama dengan ini kami kirimkan sejumlah produk dengan rincian sebagai berikut:
+        </div>
         <table class="items-table">
             <thead>
                 <tr>
@@ -240,12 +248,14 @@
             <td>
                 <div class="sig-title">Penerima / Toko</div>
                 <div style="margin-top: 55px;">
+                    <div class="sig-line"></div>
                     <div class="sig-name">( Nama Terang & Cap Toko )</div>
                 </div>
             </td>
             <td>
                 <div class="sig-title">Pengirim / Gudang</div>
                 <div style="margin-top: 55px;">
+                    <div class="sig-line"></div>
                     <div class="sig-name">( Nama Terang )</div>
                 </div>
             </td>
@@ -255,7 +265,7 @@
     <!-- FOOTER (TABEL LEBAR 80%) -->
     <div class="footer-bar">
         <div class="footer-text">
-            Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia.<br>
+            Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia dan sah tanpa tanda tangan basah.<br>
             © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
         </div>
     </div>
