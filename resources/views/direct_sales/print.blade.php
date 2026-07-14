@@ -34,7 +34,7 @@
             margin-top: 4px;
         }
         .doc-title {
-            font-size: 28px;
+            font-size: 20px;
             font-weight: bold;
             color: #b91c1c;
             text-align: right;

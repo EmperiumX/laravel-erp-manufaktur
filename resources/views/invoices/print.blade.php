@@ -47,7 +47,7 @@
             vertical-align: top;
         }
         .invoice-title-text {
-            font-size: 32px;
+            font-size: 20px;
             font-weight: bold;
             color: #a81a1a;
             letter-spacing: 2px;
