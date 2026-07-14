@@ -134,6 +134,29 @@
         }
         .sig-title { font-size: 12px; color: #333; font-weight: bold; }
         .sig-name { font-size: 11px; color: #333; }
+
+        /* NOTICE BOX & FOOTER */
+        .notice-box {
+            clear: both;
+            margin: 20px auto;
+            width: 80%;
+            font-size: 11px;
+            color: #555;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        .footer-bar {
+            width: 80%;
+            margin: 25px auto 0 auto;
+            padding-top: 10px;
+            clear: both;
+        }
+        .footer-text {
+            font-size: 11px;
+            color: #777;
+            text-align: center;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -204,6 +227,13 @@
         </table>
     </div>
 
+    <!-- KETERANGAN / PENJELASAN (TABEL LEBAR 80%) -->
+    <div class="notice-box">
+        * Barang-barang di atas telah diterima dalam kondisi baik dan cukup.<br>
+        * Surat jalan ini sah sebagai dokumen penagihan sesuai dengan nilai barang yang terjual.<br>
+        * Barang yang tidak terjual dapat dikembalikan sesuai perjanjian yang berlaku.
+    </div>
+
     <!-- TANDA TANGAN (TABEL LEBAR 75%) -->
     <table class="signature-table">
         <tr>
@@ -221,6 +251,13 @@
             </td>
         </tr>
     </table>
+
+    <!-- FOOTER (TABEL LEBAR 80%) -->
+    <div class="footer-bar">
+        <div class="footer-text">
+            © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
+        </div>
+    </div>
 
 </body>
 </html>
