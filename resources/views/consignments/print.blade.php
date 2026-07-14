@@ -148,18 +148,6 @@
                         <td width="35%" class="label">Tanggal Kirim</td>
                         <td>: {{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d F Y') }}</td>
                     </tr>
-                    <tr>
-                        <td class="label">Supir / Kurir</td>
-                        <td>: _________________</td>
-                    </tr>
-                    <tr>
-                        <td class="label">No. Kendaraan</td>
-                        <td>: _________________</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Catatan</td>
-                        <td>: {{ $consignment->notes ?? '-' }}</td>
-                    </tr>
                 </table>
             </td>
             <td width="50%" style="vertical-align: top;">
