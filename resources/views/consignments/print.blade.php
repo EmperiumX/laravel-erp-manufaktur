@@ -255,6 +255,7 @@
     <!-- FOOTER (TABEL LEBAR 80%) -->
     <div class="footer-bar">
         <div class="footer-text">
+            Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia.<br>
             © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
         </div>
     </div>
