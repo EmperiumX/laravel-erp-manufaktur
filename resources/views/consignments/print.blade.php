@@ -94,23 +94,46 @@
             line-height: 1.4;
         }
 
-        /* VERTICAL SECTIONS */
-        .section {
-            width: 75%;
-            margin-bottom: 20px;
-            border-bottom: 1px dashed #ccc;
-            padding-bottom: 15px;
+        /* TABLE ITEMS FOR STEP 2 (LEBAR 75%) */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
         }
-        .section h2 {
-            font-size: 12px;
-            color: #6b7280;
+        .items-table thead th {
+            background-color: #fefaf0;
+            color: #a81a1a;
+            padding: 8px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-        .label {
+            letter-spacing: 0.5px;
             font-weight: bold;
+            text-align: left;
         }
+        .items-table tbody td {
+            padding: 8px;
+            font-size: 12px;
+            vertical-align: top;
+        }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .font-bold { font-weight: bold; }
+
+        /* SIGNATURE TABLE FOR STEP 2 (LEBAR 75%) */
+        .signature-table {
+            width: 75%;
+            margin-top: 30px;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        .signature-table td {
+            width: 50%;
+            padding: 10px 15px;
+            vertical-align: bottom;
+            height: 90px;
+        }
+        .sig-title { font-size: 12px; color: #333; font-weight: bold; }
+        .sig-name { font-size: 11px; color: #333; }
     </style>
 </head>
 <body>
@@ -163,22 +186,46 @@
         </tr>
     </table>
 
-    <!-- DAFTAR BARANG (FLOW VERTIKAL - LEBAR 75%) -->
-    <div class="section">
-        <h2>Daftar Barang</h2>
-        @foreach($consignment->items as $index => $item)
-            <p style="margin-bottom: 4px; font-size: 11px;">
-                {{ $index + 1 }}. {{ $item->product->name }} | Qty: {{ $item->quantity }}
-            </p>
-        @endforeach
+    <!-- DAFTAR BARANG (TABEL LEBAR 75%) -->
+    <div style="width: 75%; margin-top: 10px; margin-bottom: 25px;">
+        <div class="info-label">Daftar Barang</div>
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th width="10%" class="text-center">No</th>
+                    <th width="70%">Nama Barang / Produk</th>
+                    <th width="20%" class="text-center">Qty</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($consignment->items as $index => $item)
+                <tr>
+                    <td class="text-center">{{ $index + 1 }}</td>
+                    <td>{{ $item->product->name }}</td>
+                    <td class="text-center font-bold">{{ $item->quantity }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 
-    <!-- TANDA TANGAN (FLOW VERTIKAL - LEBAR 75%) -->
-    <div class="section" style="border-bottom: none;">
-        <h2>Tanda Tangan</h2>
-        <p style="margin-bottom: 15px; font-size: 11px;">Penerima / Toko: _________________________ ( Nama Terang & Cap Toko )</p>
-        <p style="font-size: 11px;">Pengirim / Gudang: _________________________ ( Nama Terang )</p>
-    </div>
+    <!-- TANDA TANGAN (TABEL LEBAR 75%) -->
+    <table class="signature-table">
+        <tr>
+            <td>
+                <div class="sig-title">Penerima / Toko</div>
+                <div style="margin-top: 55px;">
+                    <div class="sig-name">( Nama Terang & Cap Toko )</div>
+                </div>
+            </td>
+            <td>
+                <div class="sig-title">Pengirim / Gudang</div>
+                <div style="margin-top: 55px;">
+                    <div class="sig-name">( Nama Terang )</div>
+                </div>
+            </td>
+        </tr>
+    </table>
 
 </body>
 </html>
