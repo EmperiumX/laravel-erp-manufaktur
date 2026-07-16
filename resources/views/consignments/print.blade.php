@@ -52,8 +52,8 @@
         }
 
         .info-section-table {
-            width: 80%;
-            margin: 20px auto 25px auto;
+            width: 70%;
+            margin: 20px 0 25px 0;
             table-layout: fixed;
             border-collapse: collapse;
         }
