@@ -61,9 +61,9 @@
         .info-table .label { width: 100px; color: #555; font-weight: 600; }
 
         .buyer-box {
+            border: 1px solid #b91c1c;
             border-radius: 6px;
             padding: 12px 14px;
-            background-color: #fff5f5;
         }
         .buyer-name {
             font-size: 15px;
@@ -118,19 +118,19 @@
 
         .footer-text { font-size: 12px; color: #555; text-align: center; line-height: 1.5; }
 
-        /* ====== CENTERING A4 TO 80% WIDTH ====== */
+        /* ====== CENTERING A4 TO 75% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
         .signature-table,
         .footer-bar {
-            width: 80% !important;
+            width: 75% !important;
             margin-left: auto !important;
             margin-right: auto !important;
         }
         /* Wrap the totals container div so its floated table centers nicely */
         div[style*="overflow: hidden"] {
-            width: 80% !important;
+            width: 75% !important;
             margin: 0 auto !important;
         }
     </style>

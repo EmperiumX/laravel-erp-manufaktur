@@ -119,9 +119,9 @@
             color: #111;
         }
         .party-box {
+            border: 1px solid #a81a1a;
             border-radius: 6px;
             padding: 12px 14px;
-            background-color: #fefaf0;
         }
         .party-name {
             font-size: 15px;
@@ -230,7 +230,8 @@
         }
         .notes-text {
             font-size: 11px;
-            color: #555;
+            color: #000;
+            font-weight: bold;
         }
 
         /* ====== PAYMENT INFO ====== */
@@ -296,7 +297,7 @@
             line-height: 1.5;
         }
 
-        /* ====== CENTERING A4 TO 80% WIDTH ====== */
+        /* ====== CENTERING A4 TO 75% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
@@ -305,7 +306,7 @@
         .payment-info,
         .signature-section,
         .footer-bar {
-            width: 80% !important;
+            width: 75% !important;
             margin-left: auto !important;
             margin-right: auto !important;
         }

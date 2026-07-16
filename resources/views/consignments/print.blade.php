@@ -19,7 +19,7 @@
 
         /* NARROW TABLES FOR STEP 1 */
         .narrow-table {
-            width: 80%;
+            width: 75%;
             margin: 0 auto;
             table-layout: fixed;
             border-collapse: collapse;
@@ -78,9 +78,9 @@
             color: #555;
         }
         .dest-box {
+            border: 1px solid #a81a1a;
             border-radius: 6px;
             padding: 10px 12px;
-            background-color: #fefaf0;
         }
         .dest-name {
             font-size: 13px;
@@ -121,7 +121,7 @@
 
         /* SIGNATURE TABLE FOR STEP 2 (LEBAR 75%) */
         .signature-table {
-            width: 80%;
+            width: 75%;
             margin: 30px auto 0 auto;
             text-align: center;
             border-collapse: collapse;
@@ -140,17 +140,18 @@
         .notice-box {
             clear: both;
             margin: 20px auto;
-            width: 80%;
+            width: 75%;
             padding: 10px 12px;
             border-left: 3px solid #a81a1a;
             border-radius: 0 4px 4px 0;
             font-size: 11px;
-            color: #555;
+            color: #000;
+            font-weight: bold;
             font-style: italic;
             line-height: 1.6;
         }
         .footer-bar {
-            width: 80%;
+            width: 75%;
             margin: 25px auto 0 auto;
             padding-top: 10px;
             clear: both;
@@ -208,8 +209,8 @@
         </tr>
     </table>
 
-    <!-- DAFTAR BARANG (TABEL LEBAR 80%) -->
-    <div style="width: 80%; margin: 10px auto 25px auto;">
+    <!-- DAFTAR BARANG (TABEL LEBAR 75%) -->
+    <div style="width: 75%; margin: 10px auto 25px auto;">
         <div class="info-label">Daftar Barang</div>
         <div style="font-size: 11px; color: #333; margin-bottom: 8px;">
             Bersama dengan ini kami kirimkan sejumlah produk dengan rincian sebagai berikut:
