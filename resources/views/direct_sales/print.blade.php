@@ -118,19 +118,19 @@
 
         .footer-text { font-size: 12px; color: #555; text-align: center; line-height: 1.5; }
 
-        /* ====== CENTERING A4 TO 75% WIDTH ====== */
+        /* ====== CENTERING A4 TO 65% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
         .signature-table,
         .footer-bar {
-            width: 75% !important;
+            width: 65% !important;
             margin-left: auto !important;
             margin-right: auto !important;
         }
         /* Wrap the totals container div so its floated table centers nicely */
         div[style*="overflow: hidden"] {
-            width: 75% !important;
+            width: 65% !important;
             margin: 0 auto !important;
         }
     </style>
