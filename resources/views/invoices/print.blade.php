@@ -297,7 +297,7 @@
             line-height: 1.5;
         }
 
-        /* ====== ALIGN LEFT TO 85% WIDTH ====== */
+        /* ====== ALIGN LEFT TO 70% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
@@ -306,7 +306,7 @@
         .payment-info,
         .signature-section,
         .footer-bar {
-            width: 85% !important;
+            width: 70% !important;
             margin-left: 0 !important;
             margin-right: auto !important;
         }

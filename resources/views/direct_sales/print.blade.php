@@ -118,19 +118,19 @@
 
         .footer-text { font-size: 12px; color: #555; text-align: center; line-height: 1.5; }
 
-        /* ====== ALIGN LEFT TO 85% WIDTH ====== */
+        /* ====== ALIGN LEFT TO 70% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
         .signature-table,
         .footer-bar {
-            width: 85% !important;
+            width: 70% !important;
             margin-left: 0 !important;
             margin-right: auto !important;
         }
         /* Wrap the totals container div so its floated table aligns nicely */
         div[style*="overflow: hidden"] {
-            width: 85% !important;
+            width: 70% !important;
             margin: 0 !important;
         }
     </style>
