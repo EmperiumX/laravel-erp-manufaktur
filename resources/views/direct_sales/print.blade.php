@@ -118,20 +118,20 @@
 
         .footer-text { font-size: 12px; color: #555; text-align: center; line-height: 1.5; }
 
-        /* ====== CENTERING A4 TO 65% WIDTH ====== */
+        /* ====== ALIGN LEFT TO 85% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
         .signature-table,
         .footer-bar {
-            width: 65% !important;
-            margin-left: auto !important;
+            width: 85% !important;
+            margin-left: 0 !important;
             margin-right: auto !important;
         }
-        /* Wrap the totals container div so its floated table centers nicely */
+        /* Wrap the totals container div so its floated table aligns nicely */
         div[style*="overflow: hidden"] {
-            width: 65% !important;
-            margin: 0 auto !important;
+            width: 85% !important;
+            margin: 0 !important;
         }
     </style>
 </head>

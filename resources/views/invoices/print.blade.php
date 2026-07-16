@@ -297,7 +297,7 @@
             line-height: 1.5;
         }
 
-        /* ====== CENTERING A4 TO 65% WIDTH ====== */
+        /* ====== ALIGN LEFT TO 85% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
@@ -306,8 +306,8 @@
         .payment-info,
         .signature-section,
         .footer-bar {
-            width: 65% !important;
-            margin-left: auto !important;
+            width: 85% !important;
+            margin-left: 0 !important;
             margin-right: auto !important;
         }
         .totals-section {
