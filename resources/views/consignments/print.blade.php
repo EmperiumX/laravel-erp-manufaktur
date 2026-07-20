@@ -84,20 +84,21 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin: 14px 0 18px 0;
+            margin: 6px 0 12px 0; /* RAISED UPWARDS SLIGHTLY */
         }
         .info-label {
             color: #000;
             font-size: 12px;
             text-transform: uppercase;
             font-weight: bold;
-            margin-bottom: 6px;
-            line-height: 1.2;
+            margin-bottom: 5px;
+            line-height: 1.3;
         }
         .info-row {
             display: flex;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             font-size: 13px;
+            line-height: 1.5;
         }
         .info-row-label {
             width: 110px;
@@ -112,21 +113,21 @@
         .dest-box {
             border: 1.5px solid #000;
             border-radius: 4px;
-            padding: 10px 14px;
+            padding: 8px 12px;
             background: transparent;
         }
         .dest-name {
             font-size: 13px;
             font-weight: bold;
             color: #000;
-            line-height: 1.3;
-            margin-bottom: 4px;
+            line-height: 1.4;
+            margin-bottom: 6px;
             text-transform: uppercase;
         }
         .dest-detail {
-            font-size: 11px;
+            font-size: 12px;
             color: #000;
-            font-weight: normal; /* SINGLE STRIKE CRISP */
+            font-weight: normal;
             line-height: 1.5;
         }
         .mitra-badge {
