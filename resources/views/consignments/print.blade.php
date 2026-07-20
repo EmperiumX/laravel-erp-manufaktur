@@ -11,14 +11,14 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 12px;
+            font-size: 13px;
             color: #000;
             background: #fff;
-            padding: 8mm 10mm;
+            padding: 6mm 5mm;
         }
         .main-container {
             width: 100%;
-            max-width: 580px;
+            max-width: 650px;
             margin: 0 auto;
         }
         table {
@@ -30,43 +30,48 @@
             padding-bottom: 6px;
         }
         .label-title {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
         }
         .val-text {
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: bold;
             margin-top: 2px;
         }
         .divider {
             border-top: 1px solid #000;
-            margin: 6px 0;
+            margin: 8px 0;
         }
         .info-table td {
             vertical-align: top;
             padding: 4px 0;
+            font-size: 13px;
         }
         .items-table th {
             text-align: left;
-            padding: 6px 4px;
+            padding: 7px 4px;
             border-top: 1px solid #000;
             border-bottom: 1px solid #000;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
         }
         .items-table td {
-            padding: 5px 4px;
-            font-size: 12px;
+            padding: 6px 4px;
+            font-size: 13px;
+            font-weight: bold;
         }
         .sig-table {
-            margin-top: 25px;
+            margin-top: 30px;
             width: 100%;
             text-align: center;
         }
         .sig-table td {
             width: 50%;
             vertical-align: bottom;
-            height: 60px;
+            height: 65px;
+            font-size: 13px;
+            font-weight: bold;
         }
         .sig-line {
             border-bottom: 1px solid #000;
@@ -93,7 +98,7 @@
                     <div class="val-text">{{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d M Y') }}</div>
                 </td>
                 <td width="18%" style="text-align: right;">
-                    <div style="font-size: 15px; font-weight: bold;">Surat Jalan</div>
+                    <div style="font-size: 17px; font-weight: bold;">Surat Jalan</div>
                 </td>
             </tr>
         </table>
@@ -148,7 +153,7 @@
 
         <div class="divider"></div>
 
-        <div style="text-align: right; font-weight: bold; margin-top: 6px; padding-right: 14%;">
+        <div style="text-align: right; font-weight: bold; font-size: 13px; margin-top: 6px; padding-right: 14%;">
             Total Jumlah: {{ $totalQty }}
         </div>
 
@@ -157,14 +162,14 @@
             <tr>
                 <td>
                     <div>Penerima / Toko</div>
-                    <div style="margin-top: 40px;">
+                    <div style="margin-top: 45px;">
                         <div class="sig-line"></div>
                         <div>( Nama Terang & Cap )</div>
                     </div>
                 </td>
                 <td>
                     <div>Pengirim / Gudang</div>
-                    <div style="margin-top: 40px;">
+                    <div style="margin-top: 45px;">
                         <div class="sig-line"></div>
                         <div>( Nama Terang )</div>
                     </div>
