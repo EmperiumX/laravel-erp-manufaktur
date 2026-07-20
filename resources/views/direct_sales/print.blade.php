@@ -124,19 +124,19 @@
         .footer-bar { width: 100%; margin-top: 30px; padding-top: 10px; border-top: 1px solid #000; }
         .footer-text { font-size: 12px; color: #000; font-weight: bold; text-align: center; line-height: 1.5; }
 
-        /* ====== ALIGN LEFT TO 100% WIDTH ====== */
+        /* ====== ALIGN LEFT TO 70% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
         .signature-table,
         .footer-bar {
-            width: 100% !important;
+            width: 70% !important;
             margin-left: 0 !important;
-            margin-right: 0 !important;
+            margin-right: auto !important;
         }
         /* Wrap the totals container div so its floated table aligns nicely */
         div[style*="overflow: hidden"] {
-            width: 100% !important;
+            width: 70% !important;
             margin: 0 !important;
         }
     </style>
