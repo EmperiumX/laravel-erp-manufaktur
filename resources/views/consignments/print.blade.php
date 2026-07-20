@@ -12,21 +12,21 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 13px;
+            font-weight: normal;
             color: #000;
             background: #fff;
             padding: 8mm 14mm;
             box-sizing: border-box;
-            line-height: 1.5;
+            line-height: 1.4;
         }
         .main-container {
             width: 100%;
             margin: 0 auto;
         }
         .top-red-bar {
-            border-top: 4px solid #000;
-            margin-bottom: 16px;
+            border-top: 3px solid #000;
+            margin-bottom: 14px;
         }
 
         /* PURE DIV + CSS GRID KOP SURAT */
@@ -34,49 +34,49 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
         .company-name {
-            font-size: 24px;
-            font-weight: 900;
+            font-size: 22px;
+            font-weight: bold;
             color: #000;
             line-height: 1.2;
         }
         .company-info {
-            font-size: 14px;
+            font-size: 13px;
             color: #000;
-            font-weight: bold;
-            margin-top: 6px;
-            line-height: 1.6;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
+            margin-top: 4px;
+            line-height: 1.5;
         }
         .doc-title {
-            font-size: 26px;
-            font-weight: 900;
+            font-size: 22px;
+            font-weight: bold;
             color: #000;
             text-transform: uppercase;
             text-align: right;
             line-height: 1.2;
         }
         .doc-number {
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
             color: #000;
-            margin-top: 6px;
+            margin-top: 4px;
             text-align: right;
             line-height: 1.3;
         }
         .doc-subnumber {
-            font-size: 14px;
+            font-size: 13px;
             color: #000;
-            font-weight: bold;
-            margin-top: 5px;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
+            margin-top: 4px;
             text-align: right;
             line-height: 1.3;
         }
 
         .divider {
-            border-top: 2px solid #000;
-            margin: 16px 0;
+            border-top: 1.5px solid #000;
+            margin: 14px 0;
         }
 
         /* PURE DIV + CSS GRID INFO SECTION */
@@ -84,80 +84,80 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin: 16px 0 20px 0;
+            margin: 14px 0 18px 0;
         }
         .info-label {
             color: #000;
-            font-size: 14px;
+            font-size: 12px;
             text-transform: uppercase;
-            font-weight: 900;
-            margin-bottom: 8px;
-            line-height: 1.3;
+            font-weight: bold;
+            margin-bottom: 6px;
+            line-height: 1.2;
         }
         .info-row {
             display: flex;
-            margin-bottom: 6px;
-            font-size: 14px;
+            margin-bottom: 4px;
+            font-size: 13px;
         }
         .info-row-label {
-            width: 120px;
+            width: 110px;
             color: #000;
-            font-weight: bold;
+            font-weight: normal;
         }
         .info-row-val {
             color: #000;
-            font-weight: bold;
+            font-weight: normal;
         }
 
         .dest-box {
-            border: 2px solid #000;
+            border: 1.5px solid #000;
             border-radius: 4px;
-            padding: 12px 16px;
+            padding: 10px 14px;
             background: transparent;
         }
         .dest-name {
-            font-size: 15px;
-            font-weight: 900;
+            font-size: 13px;
+            font-weight: bold;
             color: #000;
-            line-height: 1.4;
-            margin-bottom: 8px;
+            line-height: 1.3;
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
         .dest-detail {
-            font-size: 14px;
+            font-size: 13px;
             color: #000;
-            font-weight: bold;
-            line-height: 1.6;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
+            line-height: 1.5;
         }
         .mitra-badge {
             display: inline-block;
-            border: 1.5px solid #000;
+            border: 1px solid #000;
             color: #000;
             font-size: 11px;
-            font-weight: 900;
-            padding: 2px 8px;
+            font-weight: bold;
+            padding: 1px 6px;
             border-radius: 3px;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         .items-intro {
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 13px;
+            font-weight: normal;
             color: #000;
-            margin: 20px 0 12px 0;
-            line-height: 1.5;
+            margin: 16px 0 10px 0;
+            line-height: 1.4;
         }
 
         /* PURE DIV + CSS GRID DAFTAR BARANG (GARIS HANYA PADA HEADER) */
         .items-header {
             display: grid;
             grid-template-columns: 10% 70% 20%;
-            border-top: 2.5px solid #000;
-            border-bottom: 2.5px solid #000;
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
             padding: 8px 0;
             color: #000;
-            font-size: 14px;
-            font-weight: 900;
+            font-size: 12px;
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -165,9 +165,9 @@
             display: grid;
             grid-template-columns: 10% 70% 20%;
             border-bottom: none !important; /* TIDAK ADA GARIS PADA BARIS PRODUK */
-            padding: 10px 0;
-            font-size: 14px;
-            font-weight: bold;
+            padding: 8px 0;
+            font-size: 13px;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
             color: #000;
             align-items: center;
         }
@@ -177,15 +177,15 @@
 
         .notice-box {
             clear: both;
-            margin: 30px 0;
+            margin: 24px 0;
             width: 100%;
-            padding: 12px 16px;
-            border-left: 4px solid #000;
+            padding: 10px 14px;
+            border-left: 3px solid #000;
             background: transparent;
-            font-size: 13px;
+            font-size: 12px;
             color: #000;
-            font-weight: bold;
-            line-height: 1.8;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
+            line-height: 1.6;
         }
 
         /* PURE DIV + CSS GRID SIGNATURES */
@@ -193,29 +193,29 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
-            margin-top: 35px;
+            margin-top: 30px;
             text-align: center;
         }
         .sig-col {
             width: 100%;
         }
-        .sig-title { font-size: 14px; color: #000; font-weight: 900; line-height: 1.3; }
-        .sig-space { height: 60px; }
-        .sig-line { border-bottom: 2px solid #000; width: 75%; margin: 0 auto 6px auto; }
-        .sig-name { font-size: 13px; color: #000; font-weight: bold; line-height: 1.3; }
+        .sig-title { font-size: 13px; color: #000; font-weight: bold; line-height: 1.2; }
+        .sig-space { height: 55px; }
+        .sig-line { border-bottom: 1.5px solid #000; width: 75%; margin: 0 auto 6px auto; }
+        .sig-name { font-size: 12px; color: #000; font-weight: normal; line-height: 1.2; }
 
         .footer-bar {
             width: 100%;
-            margin: 35px 0 0 0;
-            padding-top: 12px;
+            margin: 30px 0 0 0;
+            padding-top: 10px;
             border-top: 1.5px solid #000;
         }
         .footer-text {
-            font-size: 12px;
+            font-size: 11px;
             color: #000;
-            font-weight: bold;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
             text-align: center;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         /* NO PRINT ACTION BAR */
@@ -276,7 +276,7 @@
     <!-- NO PRINT ACTION BAR -->
     <div class="no-print-bar no-print">
         <div>
-            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Surat Jalan (Bolder Font & Spaced Layout)</span>
+            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Surat Jalan (Single-Strike Crisp Dot-Matrix)</span>
             <span style="font-size: 13px; color: #cbd5e1; margin-left: 10px;">{{ $consignment->shipment_number }}</span>
         </div>
         <div>
