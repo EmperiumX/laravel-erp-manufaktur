@@ -29,7 +29,7 @@
             margin-bottom: 15px;
         }
 
-        /* FLEX / GRID KOP SURAT (TANPA TABEL) */
+        /* PURE DIV + CSS GRID / FLEX KOP SURAT (ZERO TABLE TAGS) */
         .kop-container {
             display: flex;
             justify-content: space-between;
@@ -79,15 +79,12 @@
             margin: 15px 0;
         }
 
-        /* FLEX / GRID INFO SECTION (TANPA TABEL) */
+        /* PURE DIV + CSS GRID INFO SECTION */
         .info-grid {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
             margin: 15px 0 20px 0;
-        }
-        .info-column {
-            flex: 1;
         }
         .info-label {
             color: #b91c1c;
@@ -151,9 +148,10 @@
             line-height: 1.4;
         }
 
-        /* FLEX ITEMS LIST (TANPA TABEL) */
+        /* PURE DIV + CSS GRID DAFTAR BARANG */
         .items-header {
-            display: flex;
+            display: grid;
+            grid-template-columns: 10% 70% 20%;
             border-top: 2px solid #b91c1c;
             border-bottom: 2px solid #b91c1c;
             padding: 8px 0;
@@ -164,7 +162,8 @@
             letter-spacing: 0.5px;
         }
         .item-row {
-            display: flex;
+            display: grid;
+            grid-template-columns: 10% 70% 20%;
             border-bottom: 1px solid #cbd5e1;
             padding: 10px 0;
             font-size: 13px;
@@ -172,9 +171,9 @@
             color: #000;
             align-items: center;
         }
-        .col-no { width: 10%; text-align: center; }
-        .col-name { width: 70%; text-transform: uppercase; }
-        .col-qty { width: 20%; text-align: center; }
+        .col-no { text-align: center; }
+        .col-name { text-transform: uppercase; }
+        .col-qty { text-align: center; }
 
         .notice-box {
             clear: both;
@@ -189,19 +188,20 @@
             line-height: 1.6;
         }
 
-        /* FLEX SIGNATURES (TANPA TABEL) */
+        /* PURE DIV + CSS GRID SIGNATURES */
         .sig-container {
-            display: flex;
-            justify-content: space-around;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
             margin-top: 35px;
             text-align: center;
         }
         .sig-col {
-            width: 42%;
+            width: 100%;
         }
         .sig-title { font-size: 13px; color: #000; font-weight: bold; line-height: 1.2; }
         .sig-space { height: 60px; }
-        .sig-line { border-bottom: 2px solid #000; width: 80%; margin: 0 auto 6px auto; }
+        .sig-line { border-bottom: 2px solid #000; width: 75%; margin: 0 auto 6px auto; }
         .sig-name { font-size: 12px; color: #000; font-weight: bold; line-height: 1.2; }
 
         .footer-bar {
@@ -269,7 +269,7 @@
     <!-- NO PRINT ACTION BAR -->
     <div class="no-print-bar no-print">
         <div>
-            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Surat Jalan (Pure DIV + Flex Layout)</span>
+            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Surat Jalan (Pure DIV + CSS Grid Layout)</span>
             <span style="font-size: 13px; color: #cbd5e1; margin-left: 10px;">{{ $consignment->shipment_number }}</span>
         </div>
         <div>
@@ -282,7 +282,7 @@
         <!-- TOP RED BAR -->
         <div class="top-red-bar"></div>
 
-        <!-- KOP SURAT (DIV + FLEX) -->
+        <!-- KOP SURAT (PURE DIV + FLEX) -->
         <div class="kop-container">
             <div>
                 <div class="company-name">NEW CITRA INDONESIA</div>
@@ -302,16 +302,16 @@
 
         <div class="divider"></div>
 
-        <!-- DETAIL & TUJUAN PENGIRIMAN (DIV + FLEX) -->
+        <!-- DETAIL & TUJUAN PENGIRIMAN (PURE DIV + CSS GRID) -->
         <div class="info-grid">
-            <div class="info-column">
+            <div>
                 <div class="info-label">Detail Pengiriman</div>
                 <div class="info-row">
                     <div class="info-row-label">Tanggal Kirim</div>
                     <div class="info-row-val">: {{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d F Y') }}</div>
                 </div>
             </div>
-            <div class="info-column">
+            <div>
                 <div class="info-label">Tujuan Pengiriman</div>
                 <div class="dest-box">
                     <div class="dest-name">
@@ -332,10 +332,10 @@
 
         <!-- INTRO BARANG -->
         <div class="items-intro">
-            Bersama dengan ini kami kirimkan sejumlah produk dengan rincian sebagai meberikut:
+            Bersama dengan ini kami kirimkan sejumlah produk dengan rincian sebagai berikut:
         </div>
 
-        <!-- DAFTAR BARANG (DIV + FLEX) -->
+        <!-- DAFTAR BARANG (PURE DIV + CSS GRID) -->
         <div class="items-header">
             <div class="col-no">NO</div>
             <div class="col-name">NAMA BARANG / PRODUK</div>
@@ -356,7 +356,7 @@
             * Barang yang tidak terjual dapat dikembalikan sesuai perjanjian yang berlaku.
         </div>
 
-        <!-- TANDA TANGAN (DIV + FLEX) -->
+        <!-- TANDA TANGAN (PURE DIV + CSS GRID) -->
         <div class="sig-container">
             <div class="sig-col">
                 <div class="sig-title">Penerima / Toko</div>
