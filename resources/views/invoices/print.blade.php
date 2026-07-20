@@ -6,7 +6,7 @@
     <style>
         @page {
             size: Letter;
-            margin: 5mm 13mm;
+            margin: 0;
         }
         * {
             margin: 0;
@@ -18,7 +18,7 @@
             font-size: 13px;
             color: #000;
             background: #fff;
-            padding: 0;
+            padding: 5mm 13mm;
         }
 
         /* ====== HEADER ====== */

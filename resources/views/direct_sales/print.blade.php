@@ -6,7 +6,7 @@
     <style>
         @page {
             size: Letter;
-            margin: 5mm 13mm;
+            margin: 0;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -14,7 +14,7 @@
             font-size: 13px;
             color: #000;
             background: #fff;
-            padding: 0;
+            padding: 5mm 13mm;
         }
 
         .header-content {
