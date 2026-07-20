@@ -182,7 +182,7 @@
             padding: 10px 14px;
             border-left: 3px solid #000;
             background: transparent;
-            font-size: 12px;
+            font-size: 13px;
             color: #000;
             font-weight: normal; /* SINGLE STRIKE CRISP */
             line-height: 1.6;
@@ -211,7 +211,7 @@
             border-top: 1.5px solid #000;
         }
         .footer-text {
-            font-size: 11px;
+            font-size: 13px;
             color: #000;
             font-weight: normal; /* SINGLE STRIKE CRISP */
             text-align: center;
