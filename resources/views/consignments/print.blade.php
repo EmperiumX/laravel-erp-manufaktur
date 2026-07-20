@@ -6,7 +6,7 @@
     <style>
         @page {
             size: Letter;
-            margin: 0;
+            margin: 5mm 13mm;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
