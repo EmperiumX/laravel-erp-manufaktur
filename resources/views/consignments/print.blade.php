@@ -6,27 +6,27 @@
     <title>Surat Jalan - {{ $consignment->shipment_number }}</title>
     <style>
         @page {
-            size: A4;
-            margin: 6mm 15mm;
+            size: Letter;
+            margin: 6mm 12mm;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 14px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
             font-weight: bold;
             color: #000;
             background: #fff;
-            padding: 8mm 15mm;
+            padding: 4mm 10mm;
             box-sizing: border-box;
-            line-height: 1.5;
+            line-height: 1.3;
         }
         .main-container {
             width: 100%;
             margin: 0 auto;
         }
         .top-red-bar {
-            border-top: 4px solid #b91c1c;
-            margin-bottom: 15px;
+            border-top: 3px solid #b91c1c;
+            margin-bottom: 12px;
         }
         table {
             width: 100%;
@@ -34,103 +34,88 @@
             table-layout: fixed;
         }
         .company-name {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             color: #b91c1c;
-            letter-spacing: 0.5px;
+            line-height: 1.2;
         }
         .company-info {
-            font-size: 14px;
+            font-size: 13px;
             color: #000;
             font-weight: bold;
             margin-top: 4px;
-            line-height: 1.5;
+            line-height: 1.3;
         }
         .doc-title {
-            font-size: 26px;
+            font-size: 22px;
             font-weight: bold;
             color: #b91c1c;
-            letter-spacing: 1px;
             text-transform: uppercase;
+            line-height: 1.2;
         }
         .doc-number {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: bold;
             color: #000;
             margin-top: 4px;
-            text-align: right;
+            line-height: 1.2;
         }
         .doc-subnumber {
-            font-size: 13px;
+            font-size: 12px;
             color: #000;
             font-weight: bold;
             margin-top: 3px;
-            text-align: right;
+            line-height: 1.2;
         }
         .divider {
-            border-top: 2px solid #cbd5e1;
-            margin: 15px 0;
+            border-top: 1.5px solid #000;
+            margin: 12px 0;
         }
 
-        .info-section-table {
-            width: 100%;
-            margin: 15px 0 20px 0;
-            table-layout: fixed;
-            border-collapse: collapse;
-        }
         .info-label {
             color: #b91c1c;
-            font-size: 13px;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             font-weight: bold;
-            margin-bottom: 8px;
-        }
-        .info-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .info-table td {
-            padding: 5px 0;
-            vertical-align: top;
-            font-size: 14px;
-            color: #000;
-            font-weight: bold;
+            margin-bottom: 6px;
+            line-height: 1.2;
         }
         .dest-box {
-            border: 2px solid #b91c1c;
+            border: 1.5px solid #b91c1c;
             border-radius: 6px;
-            padding: 12px 16px;
+            padding: 8px 12px;
             background: transparent;
         }
         .dest-name {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             color: #b91c1c;
+            line-height: 1.2;
             margin-bottom: 4px;
         }
         .dest-detail {
-            font-size: 14px;
+            font-size: 13px;
             color: #000;
             font-weight: bold;
-            line-height: 1.5;
+            line-height: 1.3;
         }
         .mitra-badge {
             display: inline-block;
             background-color: #fef08a;
             color: #854d0e;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
-            padding: 3px 10px;
+            padding: 2px 8px;
             border-radius: 4px;
-            margin-top: 8px;
+            margin-top: 4px;
         }
 
         .items-intro {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             color: #000;
-            margin: 18px 0 12px 0;
+            margin: 14px 0 10px 0;
+            line-height: 1.3;
         }
         .items-table {
             width: 100%;
@@ -141,22 +126,23 @@
         .items-table thead th {
             background: transparent;
             color: #b91c1c;
-            padding: 10px 8px;
-            font-size: 13px;
+            padding: 8px 6px;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             font-weight: bold;
             text-align: left;
             border-top: 2px solid #b91c1c;
             border-bottom: 2px solid #b91c1c;
+            line-height: 1.2;
         }
         .items-table tbody td {
-            padding: 10px 8px;
-            font-size: 14px;
+            padding: 8px 6px;
+            font-size: 13px;
             font-weight: bold;
             color: #000;
             vertical-align: middle;
-            border-bottom: 1px solid #cbd5e1;
+            border-bottom: 1px solid #000;
+            line-height: 1.3;
         }
         .text-center { text-align: center; }
         .text-right { text-align: right; }
@@ -164,46 +150,46 @@
 
         .notice-box {
             clear: both;
-            margin: 25px 0;
+            margin: 20px 0;
             width: 100%;
-            padding: 10px 14px;
-            border-left: 4px solid #b91c1c;
+            padding: 8px 12px;
+            border-left: 3px solid #b91c1c;
             background: transparent;
-            font-size: 13px;
+            font-size: 12px;
             color: #000;
             font-weight: bold;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         .signature-table {
             width: 100%;
-            margin: 35px 0 0 0;
+            margin: 25px 0 0 0;
             text-align: center;
             border-collapse: collapse;
         }
         .signature-table td {
             width: 50%;
-            padding: 10px 15px;
+            padding: 5px 10px;
             vertical-align: bottom;
-            height: 90px;
+            height: 75px;
         }
-        .sig-title { font-size: 14px; color: #000; font-weight: bold; }
-        .sig-name { font-size: 13px; color: #000; font-weight: bold; }
-        .sig-line { border-bottom: 2px solid #000; width: 70%; margin: 0 auto 6px auto; }
+        .sig-title { font-size: 13px; color: #000; font-weight: bold; line-height: 1.2; }
+        .sig-name { font-size: 12px; color: #000; font-weight: bold; line-height: 1.2; }
+        .sig-line { border-bottom: 1.5px solid #000; width: 70%; margin: 0 auto 4px auto; }
 
         .footer-bar {
             width: 100%;
-            margin: 30px 0 0 0;
-            padding-top: 12px;
+            margin: 20px 0 0 0;
+            padding-top: 8px;
             clear: both;
-            border-top: 1px solid #cbd5e1;
+            border-top: 1px solid #000;
         }
         .footer-text {
-            font-size: 12px;
+            font-size: 11px;
             color: #000;
             font-weight: bold;
             text-align: center;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         /* NO PRINT ACTION BAR */
@@ -211,7 +197,7 @@
             background: #1e293b;
             color: #fff;
             padding: 12px 20px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
@@ -227,10 +213,6 @@
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-print:hover {
-            background: #991b1b;
         }
         .btn-close {
             background: #475569;
@@ -261,8 +243,8 @@
     <!-- NO PRINT ACTION BAR -->
     <div class="no-print-bar no-print">
         <div>
-            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Langsung HTML (Alternatif 3B)</span>
-            <span style="font-size: 13px; color: #cbd5e1; margin-left: 10px;">Surat Jalan: {{ $consignment->shipment_number }}</span>
+            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Surat Jalan (Langsung HTML)</span>
+            <span style="font-size: 13px; color: #cbd5e1; margin-left: 10px;">{{ $consignment->shipment_number }}</span>
         </div>
         <div>
             <button onclick="window.print()" class="btn-print">🖨️ Cetak Dokumen</button>
@@ -299,11 +281,11 @@
         <!-- DETAIL & TUJUAN PENGIRIMAN -->
         <table class="info-section-table">
             <tr>
-                <td width="50%" style="vertical-align: top; padding-right: 20px;">
+                <td width="50%" style="vertical-align: top; padding-right: 15px;">
                     <div class="info-label">Detail Pengiriman</div>
                     <table class="info-table">
                         <tr>
-                            <td width="35%" class="label">Tanggal Kirim</td>
+                            <td width="35%">Tanggal Kirim</td>
                             <td>: {{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d F Y') }}</td>
                         </tr>
                     </table>
@@ -365,14 +347,14 @@
             <tr>
                 <td>
                     <div class="sig-title">Penerima / Toko</div>
-                    <div style="margin-top: 50px;">
+                    <div style="margin-top: 45px;">
                         <div class="sig-line"></div>
                         <div class="sig-name">( Nama Terang & Cap Toko )</div>
                     </div>
                 </td>
                 <td>
                     <div class="sig-title">Pengirim / Gudang</div>
-                    <div style="margin-top: 50px;">
+                    <div style="margin-top: 45px;">
                         <div class="sig-line"></div>
                         <div class="sig-name">( Nama Terang )</div>
                     </div>
