@@ -11,8 +11,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: {!! $settings->invoice_font ?? "'Helvetica Neue', Helvetica, Arial, sans-serif" !!};
-            font-size: 12px;
-            color: #333;
+            font-size: 13px;
+            color: #000;
             background: #fff;
             padding: 12mm 15mm;
         }
@@ -28,8 +28,9 @@
             letter-spacing: 0.5px;
         }
         .company-info {
-            font-size: 11px;
-            color: #555;
+            font-size: 13px;
+            color: #000;
+            font-weight: bold;
             line-height: 1.6;
             margin-top: 4px;
         }
@@ -43,49 +44,53 @@
         .doc-number {
             font-size: 16px;
             font-weight: bold;
-            color: #b91c1c;
+            color: #000;
             margin-top: 6px;
         }
 
         .info-section { width: 100%; margin: 20px 0; }
         .info-label {
-            color: #6b7280;
-            font-size: 10px;
+            color: #000;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: bold;
             margin-bottom: 6px;
         }
         .info-table { width: 100%; }
-        .info-table td { padding: 3px 0; vertical-align: top; }
-        .info-table .label { width: 100px; color: #555; font-weight: 600; }
+        .info-table td { padding: 3px 0; vertical-align: top; font-size: 13px; color: #000; font-weight: bold; }
+        .info-table .label { width: 100px; color: #000; font-weight: bold; }
 
         .buyer-box {
-            border: 1px solid #b91c1c;
+            border: 2px solid #000;
             border-radius: 6px;
             padding: 12px 14px;
         }
         .buyer-name {
             font-size: 15px;
             font-weight: bold;
-            color: #b91c1c;
+            color: #000;
             margin-bottom: 2px;
         }
-        .buyer-detail { font-size: 11px; color: #444; line-height: 1.5; }
+        .buyer-detail { font-size: 13px; color: #000; font-weight: bold; line-height: 1.5; }
 
         .items-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .items-table thead th {
             background-color: #fff5f5;
-            color: #b91c1c;
+            color: #000;
             padding: 10px 8px;
-            font-size: 11px;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            font-weight: 600;
+            font-weight: bold;
+            border-bottom: 2px solid #000;
         }
         .items-table tbody td {
             padding: 9px 8px;
-            font-size: 12px;
+            font-size: 13px;
+            color: #000;
+            font-weight: bold;
+            border-bottom: 1px solid #ddd;
         }
 
         .text-right { text-align: right; }
@@ -97,9 +102,9 @@
             float: right;
             border-collapse: collapse;
         }
-        .totals-table td { padding: 6px 8px; font-size: 12px; }
-        .totals-table .label-col { text-align: right; color: #555; font-weight: 600; width: 120px; }
-        .totals-table .value-col { text-align: right; width: 140px; }
+        .totals-table td { padding: 6px 8px; font-size: 13px; }
+        .totals-table .label-col { text-align: right; color: #000; font-weight: bold; width: 120px; }
+        .totals-table .value-col { text-align: right; color: #000; font-weight: bold; width: 140px; }
         .grand-total-row { 
             background-color: #fff5f5; 
         }
@@ -112,25 +117,26 @@
 
         .signature-table { width: 100%; margin-top: 50px; text-align: center; }
         .signature-table td { width: 50%; padding: 10px 30px; vertical-align: bottom; height: 90px; }
-        .sig-title { font-size: 13px; color: #333; font-weight: 600; }
-        .sig-line { width: 70%; margin: 0 auto 5px auto; height: 1px; }
-        .sig-name { font-size: 12px; color: #333; }
+        .sig-title { font-size: 13px; color: #000; font-weight: bold; }
+        .sig-line { width: 70%; margin: 0 auto 5px auto; border-bottom: 2px solid #000; }
+        .sig-name { font-size: 12px; color: #000; font-weight: bold; }
 
-        .footer-text { font-size: 12px; color: #555; text-align: center; line-height: 1.5; }
+        .footer-bar { width: 100%; margin-top: 30px; padding-top: 10px; border-top: 1px solid #000; }
+        .footer-text { font-size: 12px; color: #000; font-weight: bold; text-align: center; line-height: 1.5; }
 
-        /* ====== ALIGN LEFT TO 70% WIDTH ====== */
+        /* ====== ALIGN LEFT TO 100% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
         .signature-table,
         .footer-bar {
-            width: 70% !important;
+            width: 100% !important;
             margin-left: 0 !important;
-            margin-right: auto !important;
+            margin-right: 0 !important;
         }
         /* Wrap the totals container div so its floated table aligns nicely */
         div[style*="overflow: hidden"] {
-            width: 70% !important;
+            width: 100% !important;
             margin: 0 !important;
         }
     </style>

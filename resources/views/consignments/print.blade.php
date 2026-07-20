@@ -11,55 +11,55 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: {!! $settings->invoice_font ?? "'Helvetica Neue', Helvetica, Arial, sans-serif" !!};
-            font-size: 12px;
-            color: #333;
+            font-size: 13px;
+            color: #000;
             background: #fff;
             padding: 12mm 15mm;
         }
 
         /* NARROW TABLES FOR STEP 1 */
         .narrow-table {
-            width: 70%;
+            width: 100%;
             margin: 0;
             table-layout: fixed;
             border-collapse: collapse;
         }
         .company-name {
-            font-size: 18px;
+            font-size: 22px;
             font-weight: bold;
             color: #b91c1c;
             letter-spacing: 0.5px;
         }
         .company-info {
-            font-size: 11px;
-            color: #555;
+            font-size: 14px;
+            color: #000;
+            font-weight: bold;
             line-height: 1.5;
             margin-top: 4px;
         }
         .doc-title {
-            font-size: 20px;
+            font-size: 26px;
             font-weight: bold;
             color: #a81a1a;
-            text-align: right;
-            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .doc-number {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
-            color: #a81a1a;
+            color: #000;
             margin-top: 4px;
             text-align: right;
         }
 
         .info-section-table {
-            width: 70%;
+            width: 100%;
             margin: 20px 0 25px 0;
             table-layout: fixed;
             border-collapse: collapse;
         }
         .info-label {
-            color: #6b7280;
-            font-size: 10px;
+            color: #000;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: bold;
@@ -69,28 +69,31 @@
             width: 100%;
         }
         .info-table td {
-            padding: 2px 0;
+            padding: 3px 0;
             vertical-align: top;
-            font-size: 11px;
+            font-size: 13px;
+            color: #000;
+            font-weight: bold;
         }
         .info-table .label {
             font-weight: bold;
-            color: #555;
+            color: #000;
         }
         .dest-box {
-            border: 1px solid #a81a1a;
+            border: 2px solid #000;
             border-radius: 6px;
             padding: 10px 12px;
         }
         .dest-name {
-            font-size: 13px;
+            font-size: 15px;
             font-weight: bold;
-            color: #a81a1a;
+            color: #000;
             margin-bottom: 2px;
         }
         .dest-detail {
-            font-size: 11px;
-            color: #444;
+            font-size: 13px;
+            color: #000;
+            font-weight: bold;
             line-height: 1.4;
         }
 
@@ -102,18 +105,22 @@
         }
         .items-table thead th {
             background-color: #fefaf0;
-            color: #a81a1a;
+            color: #000;
             padding: 8px;
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: bold;
             text-align: left;
+            border-bottom: 2px solid #000;
         }
         .items-table tbody td {
             padding: 8px;
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #000;
             vertical-align: top;
+            border-bottom: 1px solid #ddd;
         }
         .text-center { text-align: center; }
         .text-right { text-align: right; }
@@ -121,7 +128,7 @@
 
         /* SIGNATURE TABLE FOR STEP 2 (LEBAR 75%) */
         .signature-table {
-            width: 70%;
+            width: 100%;
             margin: 30px 0 0 0;
             text-align: center;
             border-collapse: collapse;
@@ -132,33 +139,35 @@
             vertical-align: bottom;
             height: 90px;
         }
-        .sig-title { font-size: 12px; color: #333; font-weight: bold; }
-        .sig-name { font-size: 11px; color: #333; }
-        .sig-line { border-bottom: 1px solid #333; width: 80%; margin: 0 auto 5px auto; }
+        .sig-title { font-size: 13px; color: #000; font-weight: bold; }
+        .sig-name { font-size: 12px; color: #000; font-weight: bold; }
+        .sig-line { border-bottom: 2px solid #000; width: 80%; margin: 0 auto 5px auto; }
 
         /* NOTICE BOX & FOOTER */
         .notice-box {
             clear: both;
             margin: 20px 0;
-            width: 70%;
+            width: 100%;
             padding: 10px 12px;
-            border-left: 3px solid #a81a1a;
+            border-left: 4px solid #b91c1c;
             border-radius: 0 4px 4px 0;
-            font-size: 11px;
+            font-size: 12px;
             color: #000;
             font-weight: bold;
             font-style: italic;
             line-height: 1.6;
         }
         .footer-bar {
-            width: 70%;
+            width: 100%;
             margin: 25px 0 0 0;
             padding-top: 10px;
             clear: both;
+            border-top: 1px solid #000;
         }
         .footer-text {
-            font-size: 11px;
-            color: #777;
+            font-size: 12px;
+            color: #000;
+            font-weight: bold;
             text-align: center;
             line-height: 1.5;
         }
@@ -209,10 +218,10 @@
         </tr>
     </table>
 
-    <!-- DAFTAR BARANG (TABEL LEBAR 70%) -->
-    <div style="width: 70%; margin: 10px 0 25px 0;">
+    <!-- DAFTAR BARANG (TABEL LEBAR 100%) -->
+    <div style="width: 100%; margin: 10px 0 25px 0;">
         <div class="info-label">Daftar Barang</div>
-        <div style="font-size: 11px; color: #333; margin-bottom: 8px;">
+        <div style="font-size: 13px; color: #000; font-weight: bold; margin-bottom: 8px;">
             Bersama dengan ini kami kirimkan sejumlah produk dengan rincian sebagai berikut:
         </div>
         <table class="items-table">

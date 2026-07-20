@@ -15,8 +15,8 @@
         }
         body {
             font-family: {!! $settings->invoice_font ?? "'Helvetica Neue', Helvetica, Arial, sans-serif" !!};
-            font-size: 12px;
-            color: #333;
+            font-size: 13px;
+            color: #000;
             background: #fff;
             padding: 12mm 15mm;
         }
@@ -37,8 +37,9 @@
             letter-spacing: 0.5px;
         }
         .company-info {
-            font-size: 11px;
-            color: #555;
+            font-size: 13px;
+            color: #000;
+            font-weight: bold;
             line-height: 1.6;
             margin-top: 4px;
         }
@@ -96,8 +97,8 @@
             width: 50%;
         }
         .info-label {
-            color: #6b7280;
-            font-size: 10px;
+            color: #000;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: bold;
@@ -109,29 +110,33 @@
         .info-detail-table td {
             padding: 3px 0;
             vertical-align: top;
+            font-size: 13px;
+            color: #000;
+            font-weight: bold;
         }
         .info-detail-table .label {
             width: 100px;
-            color: #555;
-            font-weight: 600;
+            color: #000;
+            font-weight: bold;
         }
         .info-detail-table .value {
-            color: #111;
+            color: #000;
         }
         .party-box {
-            border: 1px solid #a81a1a;
+            border: 2px solid #000;
             border-radius: 6px;
             padding: 12px 14px;
         }
         .party-name {
             font-size: 15px;
             font-weight: bold;
-            color: #a81a1a;
+            color: #000;
             margin-bottom: 3px;
         }
         .party-detail {
-            font-size: 11px;
-            color: #444;
+            font-size: 13px;
+            color: #000;
+            font-weight: bold;
             line-height: 1.5;
         }
         .status-badge {
@@ -154,16 +159,20 @@
         }
         .items-table thead th {
             background-color: #fefaf0;
-            color: #a81a1a;
+            color: #000;
             padding: 10px 8px;
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            font-weight: 600;
+            font-weight: bold;
+            border-bottom: 2px solid #000;
         }
         .items-table tbody td {
             padding: 9px 8px;
-            font-size: 12px;
+            font-size: 13px;
+            color: #000;
+            font-weight: bold;
+            border-bottom: 1px solid #ddd;
         }
         .text-right { text-align: right; }
         .text-center { text-align: center; }
@@ -186,12 +195,14 @@
         }
         .totals-table .label-col {
             text-align: right;
-            color: #555;
-            font-weight: 600;
+            color: #000;
+            font-weight: bold;
             width: 140px;
         }
         .totals-table .value-col {
             text-align: right;
+            color: #000;
+            font-weight: bold;
             width: 140px;
         }
         .grand-total-row {
@@ -221,15 +232,15 @@
             border-radius: 4px;
         }
         .notes-label {
-            font-size: 10px;
-            color: #6b7280;
+            font-size: 12px;
+            color: #000;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: bold;
             margin-bottom: 3px;
         }
         .notes-text {
-            font-size: 11px;
+            font-size: 13px;
             color: #000;
             font-weight: bold;
         }
@@ -239,18 +250,19 @@
             clear: both;
             margin-top: 20px;
             padding: 12px 14px;
-            background-color: #fefaf0;
+            border: 2px solid #000;
             border-radius: 6px;
         }
         .payment-info-title {
-            font-size: 11px;
+            font-size: 13px;
             font-weight: bold;
-            color: #a81a1a;
+            color: #000;
             margin-bottom: 4px;
         }
         .payment-info-text {
-            font-size: 11px;
-            color: #444;
+            font-size: 13px;
+            color: #000;
+            font-weight: bold;
             line-height: 1.5;
         }
 
@@ -271,17 +283,18 @@
         }
         .sig-title {
             font-size: 13px;
-            color: #333;
-            font-weight: 600;
+            color: #000;
+            font-weight: bold;
         }
         .sig-line {
             width: 70%;
             margin: 0 auto 5px auto;
-            height: 1px;
+            border-bottom: 2px solid #000;
         }
         .sig-name {
             font-size: 12px;
-            color: #333;
+            color: #000;
+            font-weight: bold;
         }
 
         /* ====== FOOTER ====== */
@@ -289,15 +302,17 @@
             width: 100%;
             margin-top: 30px;
             padding-top: 10px;
+            border-top: 1px solid #000;
         }
         .footer-text {
             font-size: 12px;
-            color: #555;
+            color: #000;
+            font-weight: bold;
             text-align: center;
             line-height: 1.5;
         }
 
-        /* ====== ALIGN LEFT TO 70% WIDTH ====== */
+        /* ====== ALIGN LEFT TO 100% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
@@ -306,9 +321,9 @@
         .payment-info,
         .signature-section,
         .footer-bar {
-            width: 70% !important;
+            width: 100% !important;
             margin-left: 0 !important;
-            margin-right: auto !important;
+            margin-right: 0 !important;
         }
         .totals-section {
             overflow: hidden;
