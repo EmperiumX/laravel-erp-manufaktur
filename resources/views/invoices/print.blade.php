@@ -135,7 +135,7 @@
         <table class="items-table">
             <thead>
                 <tr>
-                    <th width="8%">No.</th>
+                    <th width="6%">No.</th>
                     <th width="42%">Deskripsi Barang</th>
                     <th width="12%" class="text-center">QTY</th>
                     <th width="18%" class="text-right">Harga</th>

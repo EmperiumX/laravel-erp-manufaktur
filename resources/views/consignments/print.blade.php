@@ -133,11 +133,11 @@
         <table class="items-table">
             <thead>
                 <tr>
-                    <th width="8%">No.</th>
-                    <th width="18%">SKU</th>
-                    <th width="48%">Deskripsi</th>
-                    <th width="14%" style="text-align: center;">QTY</th>
-                    <th width="12%" style="text-align: center;">Unit</th>
+                    <th width="6%">No.</th>
+                    <th width="16%">SKU</th>
+                    <th width="46%">Deskripsi</th>
+                    <th width="16%" style="text-align: center;">QTY</th>
+                    <th width="16%" style="text-align: center;">Unit</th>
                 </tr>
             </thead>
             <tbody>
@@ -157,7 +157,7 @@
 
         <div class="divider"></div>
 
-        <div style="text-align: right; font-weight: bold; font-size: 14px; margin-top: 6px; padding-right: 14%;">
+        <div style="text-align: right; font-weight: bold; font-size: 14px; margin-top: 6px;">
             Total Jumlah: {{ $totalQty }}
         </div>
 
