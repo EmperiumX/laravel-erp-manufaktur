@@ -5,7 +5,7 @@
     <title>{{ $title }} - {{ $invoice->invoice_number }}</title>
     <style>
         @page {
-            size: 9.5in 11in;
+            size: Letter;
             margin: 0;
         }
         * {
@@ -18,7 +18,7 @@
             font-size: 13px;
             color: #000;
             background: #fff;
-            padding: 5mm 20mm;
+            padding: 5mm 18mm;
         }
 
         /* ====== HEADER ====== */

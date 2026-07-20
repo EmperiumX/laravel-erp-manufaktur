@@ -250,7 +250,7 @@ class DirectSaleController extends Controller
         $pdf = Pdf::loadView('direct_sales.print', compact('directSale'));
         
         // Atur ukuran kertas (misal A4 atau setruk kasir), di sini kita pakai A4 portrait
-        $pdf->setPaper([0, 0, 684, 792], 'portrait');
+        $pdf->setPaper('letter', 'portrait');
 
         // Gunakan stream() agar PDF terbuka di tab baru browser (bisa diprint/didownload manual)
         // Gunakan download() jika ingin langsung terunduh ke komputer
