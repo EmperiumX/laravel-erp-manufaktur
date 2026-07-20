@@ -201,7 +201,7 @@ class ConsignmentController extends Controller
     {
         $consignment->load('items.product', 'store', 'invoice');
         $pdf = Pdf::loadView('consignments.print', compact('consignment'));
-        $pdf->setPaper('letter', 'portrait');
+        $pdf->setPaper([0, 0, 684, 792], 'portrait');
         return $pdf->stream('Surat_Jalan_' . $consignment->shipment_number . '.pdf');
     }
 
@@ -221,7 +221,7 @@ class ConsignmentController extends Controller
             'reference' => 'DO: ' . $consignment->shipment_number,
         ]);
 
-        $pdf->setPaper('letter', 'portrait');
+        $pdf->setPaper([0, 0, 684, 792], 'portrait');
         return $pdf->stream('Invoice_' . $invoice->invoice_number . '.pdf');
     }
 

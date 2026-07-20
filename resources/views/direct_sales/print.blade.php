@@ -5,7 +5,7 @@
     <title>Nota Penjualan - {{ $directSale->invoice_number }}</title>
     <style>
         @page {
-            size: Letter;
+            size: 9.5in 11in;
             margin: 0;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,7 +14,7 @@
             font-size: 13px;
             color: #000;
             background: #fff;
-            padding: 5mm 12mm;
+            padding: 5mm 20mm;
         }
 
         .header-content {
