@@ -18,7 +18,11 @@
             box-sizing: border-box;
         }
 
-        /* NARROW TABLES FOR STEP 1 */
+        .print-container {
+            width: 100%;
+            margin: 0;
+        }
+
         .narrow-table {
             width: 100%;
             margin: 0;
@@ -117,7 +121,6 @@
         .text-right { text-align: right; }
         .font-bold { font-weight: bold; }
 
-        /* SIGNATURE TABLE FOR STEP 2 (LEBAR 75%) */
         .signature-table {
             width: 100%;
             margin: 30px 0 0 0;
@@ -134,7 +137,6 @@
         .sig-name { font-size: 12px; color: #000; font-weight: bold; }
         .sig-line { border-bottom: 2px solid #000; width: 80%; margin: 0 auto 5px auto; }
 
-        /* NOTICE BOX & FOOTER */
         .notice-box {
             clear: both;
             margin: 20px 0;
@@ -162,118 +164,112 @@
             text-align: center;
             line-height: 1.5;
         }
-    
-        .print-container {
-            width: 75%;
-            margin: 0 auto;
-        }
     </style>
 </head>
 <body>
-    <div class=print-container>
-    <div style="width: 75%; margin: 0 auto;">
-
-    <!-- KOP SURAT (TABEL LEBAR 75%) -->
-    <table class="narrow-table" style="margin-bottom: 20px;">
-        <tr>
-            <td width="55%" style="vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">
-                <div class="company-name">NEW CITRA INDONESIA</div>
-                <div class="company-info">
-                    Jl. Rogojembangan Barat 1 No.31<br>
-                    Semarang<br>
-                    Telp: 081225096633, 082133326959, 085866228323
-                </div>
-            </td>
-            <td width="45%" style="text-align: right; vertical-align: top;">
-                <div class="doc-title">Surat Jalan</div>
-                <div class="doc-number">{{ $consignment->shipment_number }}</div>
-            </td>
-        </tr>
-    </table>
-
-    <!-- DETAIL & TUJUAN PENGIRIMAN (TABEL LEBAR 75%) -->
-    <table class="info-section-table">
-        <tr>
-            <td width="50%" style="vertical-align: top; padding-right: 15px;">
-                <div class="info-label">Detail Pengiriman</div>
-                <table class="info-table">
-                    <tr>
-                        <td width="35%" class="label">Tanggal Kirim</td>
-                        <td>: {{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d F Y') }}</td>
-                    </tr>
-                </table>
-            </td>
-            <td width="50%" style="vertical-align: top;">
-                <div class="info-label">Tujuan Pengiriman</div>
-                <div class="dest-box">
-                    <div class="dest-name">{{ $consignment->store?->name ?? 'Toko Dihapus' }}</div>
-                    <div class="dest-detail">
-                        {{ $consignment->store?->address ?? 'Alamat tidak tersedia' }}<br>
-                        Telp: {{ $consignment->store?->phone_number ?? '-' }}
+    <div class="print-container">
+        <!-- KOP SURAT (TABEL LEBAR 100%) -->
+        <table class="narrow-table" style="margin-bottom: 20px;">
+            <tr>
+                <td width="55%" style="vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">
+                    <div class="company-name">NEW CITRA INDONESIA</div>
+                    <div class="company-info">
+                        Jl. Rogojembangan Barat 1 No.31<br>
+                        Semarang<br>
+                        Telp: 081225096633, 082133326959, 085866228323
                     </div>
-                </div>
-            </td>
-        </tr>
-    </table>
-
-    <!-- DAFTAR BARANG (TABEL LEBAR 100%) -->
-    <div style="width: 100%; margin: 10px 0 25px 0;">
-        <div class="info-label">Daftar Barang</div>
-        <div style="font-size: 13px; color: #000; font-weight: bold; margin-bottom: 8px;">
-            Bersama dengan ini kami kirimkan sejumlah produk dengan rincian sebagai berikut:
-        </div>
-        <table class="items-table">
-            <thead>
-                <tr>
-                    <th width="10%" class="text-center">No</th>
-                    <th width="70%">Nama Barang / Produk</th>
-                    <th width="20%" class="text-center">Qty</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($consignment->items as $index => $item)
-                <tr>
-                    <td class="text-center">{{ $index + 1 }}</td>
-                    <td>{{ strtoupper($item->product->name) }}</td>
-                    <td class="text-center font-bold">{{ $item->quantity }}</td>
-                </tr>
-                @endforeach
-            </tbody>
+                </td>
+                <td width="45%" style="text-align: right; vertical-align: top;">
+                    <div class="doc-title">Surat Jalan</div>
+                    <div class="doc-number">{{ $consignment->shipment_number }}</div>
+                </td>
+            </tr>
         </table>
-    </div>
 
-    <!-- KETERANGAN / PENJELASAN (TABEL LEBAR 80%) -->
-    <div class="notice-box">
-        * Barang-barang di atas telah diterima dalam kondisi baik dan cukup.<br>
-        * Surat jalan ini sah sebagai dokumen penagihan sesuai dengan nilai barang yang terjual.<br>
-        * Barang yang tidak terjual dapat dikembalikan sesuai perjanjian yang berlaku.
-    </div>
+        <!-- DETAIL & TUJUAN PENGIRIMAN (TABEL LEBAR 100%) -->
+        <table class="info-section-table">
+            <tr>
+                <td width="50%" style="vertical-align: top; padding-right: 15px;">
+                    <div class="info-label">Detail Pengiriman</div>
+                    <table class="info-table">
+                        <tr>
+                            <td width="35%" class="label">Tanggal Kirim</td>
+                            <td>: {{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d F Y') }}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="50%" style="vertical-align: top;">
+                    <div class="info-label">Tujuan Pengiriman</div>
+                    <div class="dest-box">
+                        <div class="dest-name">{{ $consignment->store?->name ?? 'Toko Dihapus' }}</div>
+                        <div class="dest-detail">
+                            {{ $consignment->store?->address ?? 'Alamat tidak tersedia' }}<br>
+                            Telp: {{ $consignment->store?->phone_number ?? '-' }}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
 
-    <!-- TANDA TANGAN (TABEL LEBAR 75%) -->
-    <table class="signature-table">
-        <tr>
-            <td>
-                <div class="sig-title">Penerima / Toko</div>
-                <div style="margin-top: 55px;">
-                    <div class="sig-line"></div>
-                    <div class="sig-name">( Nama Terang & Cap Toko )</div>
-                </div>
-            </td>
-            <td>
-                <div class="sig-title">Pengirim / Gudang</div>
-                <div style="margin-top: 55px;">
-                    <div class="sig-line"></div>
-                    <div class="sig-name">( Nama Terang )</div>
-                </div>
-            </td>
-        </tr>
-    </table>
+        <!-- DAFTAR BARANG (TABEL LEBAR 100%) -->
+        <div style="width: 100%; margin: 10px 0 25px 0;">
+            <div class="info-label">Daftar Barang</div>
+            <div style="font-size: 13px; color: #000; font-weight: bold; margin-bottom: 8px;">
+                Bersama dengan ini kami kirimkan sejumlah produk dengan rincian sebagai berikut:
+            </div>
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th width="10%" class="text-center">No</th>
+                        <th width="70%">Nama Barang / Produk</th>
+                        <th width="20%" class="text-center">Qty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($consignment->items as $index => $item)
+                    <tr>
+                        <td class="text-center">{{ $index + 1 }}</td>
+                        <td>{{ strtoupper($item->product->name) }}</td>
+                        <td class="text-center font-bold">{{ $item->quantity }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
-    <!-- FOOTER (TABEL LEBAR 80%) -->
-    <div class="footer-bar">
-        <div class="footer-text">
-            Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia dan sah tanpa tanda tangan basah.<br>
-            © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
+        <!-- KETERANGAN / PENJELASAN -->
+        <div class="notice-box">
+            * Barang-barang di atas telah diterima dalam kondisi baik dan cukup.<br>
+            * Surat jalan ini sah sebagai dokumen penagihan sesuai dengan nilai barang yang terjual.<br>
+            * Barang yang tidak terjual dapat dikembalikan sesuai perjanjian yang berlaku.
+        </div>
+
+        <!-- TANDA TANGAN -->
+        <table class="signature-table">
+            <tr>
+                <td>
+                    <div class="sig-title">Penerima / Toko</div>
+                    <div style="margin-top: 55px;">
+                        <div class="sig-line"></div>
+                        <div class="sig-name">( Nama Terang & Cap Toko )</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="sig-title">Pengirim / Gudang</div>
+                    <div style="margin-top: 55px;">
+                        <div class="sig-line"></div>
+                        <div class="sig-name">( Nama Terang )</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- FOOTER -->
+        <div class="footer-bar">
+            <div class="footer-text">
+                Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia dan sah tanpa tanda tangan basah.<br>
+                © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
+            </div>
         </div>
     </div>
 </body>
