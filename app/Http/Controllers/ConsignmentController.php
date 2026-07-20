@@ -201,7 +201,7 @@ class ConsignmentController extends Controller
     {
         $consignment->load('items.product', 'store', 'invoice');
         $pdf = Pdf::loadView('consignments.print', compact('consignment'));
-        $pdf->setPaper('letter', 'portrait');
+        $pdf->setPaper('A4', 'portrait');
         return $pdf->stream('Surat_Jalan_' . $consignment->shipment_number . '.pdf');
     }
 

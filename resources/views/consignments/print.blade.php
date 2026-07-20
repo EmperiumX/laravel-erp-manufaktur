@@ -5,7 +5,7 @@
     <title>Surat Jalan - {{ $consignment->shipment_number }}</title>
     <style>
         @page {
-            size: Letter;
+            size: A4;
             margin: 0;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,7 +14,8 @@
             font-size: 13px;
             color: #000;
             background: #fff;
-            padding: 5mm 0;
+            padding: 6mm 15mm;
+            box-sizing: border-box;
         }
 
         /* NARROW TABLES FOR STEP 1 */
@@ -58,58 +59,48 @@
             border-collapse: collapse;
         }
         .info-label {
-            color: #000;
             font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             font-weight: bold;
-            margin-bottom: 6px;
+            color: #b91c1c;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
         .info-table {
             width: 100%;
+            border-collapse: collapse;
         }
         .info-table td {
             padding: 3px 0;
             vertical-align: top;
-            font-size: 13px;
-            color: #000;
+        }
+        .info-table td.label {
+            color: #555;
             font-weight: bold;
         }
-        .info-table .label {
-            font-weight: bold;
-            color: #000;
-        }
+
         .dest-box {
-            border: 2px solid #000;
-            border-radius: 6px;
+            background-color: #fcfcfc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
             padding: 10px 12px;
         }
         .dest-name {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: bold;
             color: #000;
-            margin-bottom: 2px;
         }
         .dest-detail {
             font-size: 13px;
-            color: #000;
-            font-weight: bold;
+            color: #334155;
+            margin-top: 4px;
             line-height: 1.4;
         }
 
-        /* TABLE ITEMS FOR STEP 2 (LEBAR 75%) */
         .items-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 5px;
-        }
-        .items-table thead th {
-            background-color: #fefaf0;
-            color: #000;
-            padding: 8px;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
             font-weight: bold;
             text-align: left;
             border-bottom: 2px solid #000;
@@ -284,9 +275,6 @@
             Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia dan sah tanpa tanda tangan basah.<br>
             © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
         </div>
-    </div>
-
-    </div>
     </div>
 </body>
 </html>
