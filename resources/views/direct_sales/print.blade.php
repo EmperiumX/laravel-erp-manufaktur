@@ -134,14 +134,15 @@
             margin-left: 0 !important;
             margin-right: 0 !important;
         }
-        /* Wrap the totals container div so its floated table aligns nicely */
-        div[style*="overflow: hidden"] {
-            width: 100% !important;
-            margin: 0 !important;
+        .print-container {
+            width: 100%;
+            max-width: 630px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
+    <div class="print-container">
 
 
 
@@ -269,5 +270,6 @@
 
 
 
+    </div>
 </body>
 </html>

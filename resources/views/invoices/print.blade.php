@@ -325,12 +325,15 @@
             margin-left: 0 !important;
             margin-right: 0 !important;
         }
-        .totals-section {
-            overflow: hidden;
+        .print-container {
+            width: 100%;
+            max-width: 630px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
+    <div class="print-container">
 
 
 
@@ -529,5 +532,6 @@
 
 
 
+    </div>
 </body>
 </html>

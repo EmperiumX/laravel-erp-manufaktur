@@ -170,10 +170,15 @@
             font-weight: bold;
             text-align: center;
             line-height: 1.5;
+        .print-container {
+            width: 100%;
+            max-width: 630px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
+    <div class="print-container">
 
     <!-- KOP SURAT (TABEL LEBAR 75%) -->
     <table class="narrow-table" style="margin-bottom: 20px;">
@@ -279,5 +284,6 @@
         </div>
     </div>
 
+    </div>
 </body>
 </html>
