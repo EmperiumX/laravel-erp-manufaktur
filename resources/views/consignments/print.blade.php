@@ -16,22 +16,25 @@
             font-weight: bold;
             color: #000;
             background: #fff;
-            padding: 4mm 10mm;
+            padding: 8mm 15mm;
             box-sizing: border-box;
-            line-height: 1.3;
+            line-height: 1.4;
         }
         .main-container {
             width: 100%;
             margin: 0 auto;
         }
         .top-red-bar {
-            border-top: 3px solid #b91c1c;
-            margin-bottom: 12px;
+            border-top: 4px solid #b91c1c;
+            margin-bottom: 15px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
+
+        /* FLEX / GRID KOP SURAT (TANPA TABEL) */
+        .kop-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
         }
         .company-name {
             font-size: 22px;
@@ -44,20 +47,22 @@
             color: #000;
             font-weight: bold;
             margin-top: 4px;
-            line-height: 1.3;
+            line-height: 1.4;
         }
         .doc-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             color: #b91c1c;
             text-transform: uppercase;
+            text-align: right;
             line-height: 1.2;
         }
         .doc-number {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             color: #000;
             margin-top: 4px;
+            text-align: right;
             line-height: 1.2;
         }
         .doc-subnumber {
@@ -65,32 +70,59 @@
             color: #000;
             font-weight: bold;
             margin-top: 3px;
+            text-align: right;
             line-height: 1.2;
         }
+
         .divider {
-            border-top: 1.5px solid #000;
-            margin: 12px 0;
+            border-top: 2px solid #cbd5e1;
+            margin: 15px 0;
         }
 
+        /* FLEX / GRID INFO SECTION (TANPA TABEL) */
+        .info-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 15px 0 20px 0;
+        }
+        .info-column {
+            flex: 1;
+        }
         .info-label {
             color: #b91c1c;
             font-size: 12px;
             text-transform: uppercase;
             font-weight: bold;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             line-height: 1.2;
         }
+        .info-row {
+            display: flex;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+        .info-row-label {
+            width: 110px;
+            color: #000;
+            font-weight: bold;
+        }
+        .info-row-val {
+            color: #000;
+            font-weight: bold;
+        }
+
         .dest-box {
-            border: 1.5px solid #b91c1c;
+            border: 2px solid #b91c1c;
             border-radius: 6px;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: transparent;
         }
         .dest-name {
             font-size: 15px;
             font-weight: bold;
             color: #b91c1c;
-            line-height: 1.2;
+            line-height: 1.3;
             margin-bottom: 4px;
             text-transform: uppercase;
         }
@@ -98,7 +130,7 @@
             font-size: 13px;
             color: #000;
             font-weight: bold;
-            line-height: 1.3;
+            line-height: 1.4;
         }
         .mitra-badge {
             display: inline-block;
@@ -108,89 +140,82 @@
             font-weight: bold;
             padding: 2px 8px;
             border-radius: 4px;
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         .items-intro {
             font-size: 13px;
             font-weight: bold;
             color: #000;
-            margin: 14px 0 10px 0;
-            line-height: 1.3;
+            margin: 18px 0 10px 0;
+            line-height: 1.4;
         }
-        .items-table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-            margin-top: 5px;
-        }
-        .items-table thead th {
-            background: transparent;
-            color: #b91c1c;
-            padding: 8px 6px;
-            font-size: 12px;
-            text-transform: uppercase;
-            font-weight: bold;
-            text-align: left;
+
+        /* FLEX ITEMS LIST (TANPA TABEL) */
+        .items-header {
+            display: flex;
             border-top: 2px solid #b91c1c;
             border-bottom: 2px solid #b91c1c;
-            line-height: 1.2;
+            padding: 8px 0;
+            color: #b91c1c;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .items-table tbody td {
-            padding: 8px 6px;
+        .item-row {
+            display: flex;
+            border-bottom: 1px solid #cbd5e1;
+            padding: 10px 0;
             font-size: 13px;
             font-weight: bold;
             color: #000;
-            vertical-align: middle;
-            border-bottom: 1px solid #000;
-            line-height: 1.3;
+            align-items: center;
         }
-        .text-center { text-align: center; }
-        .text-right { text-align: right; }
-        .font-bold { font-weight: bold; }
+        .col-no { width: 10%; text-align: center; }
+        .col-name { width: 70%; text-transform: uppercase; }
+        .col-qty { width: 20%; text-align: center; }
 
         .notice-box {
             clear: both;
-            margin: 20px 0;
+            margin: 25px 0;
             width: 100%;
-            padding: 8px 12px;
-            border-left: 3px solid #b91c1c;
+            padding: 10px 14px;
+            border-left: 4px solid #b91c1c;
             background: transparent;
             font-size: 12px;
             color: #000;
             font-weight: bold;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
-        .signature-table {
-            width: 100%;
-            margin: 25px 0 0 0;
+        /* FLEX SIGNATURES (TANPA TABEL) */
+        .sig-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 35px;
             text-align: center;
-            border-collapse: collapse;
         }
-        .signature-table td {
-            width: 50%;
-            padding: 5px 10px;
-            vertical-align: bottom;
-            height: 75px;
+        .sig-col {
+            width: 42%;
         }
         .sig-title { font-size: 13px; color: #000; font-weight: bold; line-height: 1.2; }
+        .sig-space { height: 60px; }
+        .sig-line { border-bottom: 2px solid #000; width: 80%; margin: 0 auto 6px auto; }
         .sig-name { font-size: 12px; color: #000; font-weight: bold; line-height: 1.2; }
-        .sig-line { border-bottom: 1.5px solid #000; width: 70%; margin: 0 auto 4px auto; }
 
         .footer-bar {
             width: 100%;
-            margin: 20px 0 0 0;
-            padding-top: 8px;
-            clear: both;
-            border-top: 1px solid #000;
+            margin: 30px 0 0 0;
+            padding-top: 10px;
+            border-top: 1px solid #cbd5e1;
         }
         .footer-text {
             font-size: 11px;
             color: #000;
             font-weight: bold;
             text-align: center;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         /* NO PRINT ACTION BAR */
@@ -244,7 +269,7 @@
     <!-- NO PRINT ACTION BAR -->
     <div class="no-print-bar no-print">
         <div>
-            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Surat Jalan (Langsung HTML)</span>
+            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Surat Jalan (Pure DIV + Flex Layout)</span>
             <span style="font-size: 13px; color: #cbd5e1; margin-left: 10px;">{{ $consignment->shipment_number }}</span>
         </div>
         <div>
@@ -257,84 +282,72 @@
         <!-- TOP RED BAR -->
         <div class="top-red-bar"></div>
 
-        <!-- KOP SURAT -->
-        <table>
-            <tr>
-                <td width="55%" style="vertical-align: top;">
-                    <div class="company-name">NEW CITRA INDONESIA</div>
-                    <div class="company-info">
-                        Jl. Rogojembangan Barat 1 No.31<br>
-                        Telp: 081225096633, 082133326959, 085866228323
-                    </div>
-                </td>
-                <td width="45%" style="text-align: right; vertical-align: top;">
-                    <div class="doc-title">SURAT JALAN</div>
-                    <div class="doc-number">{{ $consignment->shipment_number }}</div>
-                    @if($consignment->invoice)
-                    <div class="doc-subnumber">No. Invoice: {{ $consignment->invoice->invoice_number }}</div>
-                    @endif
-                </td>
-            </tr>
-        </table>
+        <!-- KOP SURAT (DIV + FLEX) -->
+        <div class="kop-container">
+            <div>
+                <div class="company-name">NEW CITRA INDONESIA</div>
+                <div class="company-info">
+                    Jl. Rogojembangan Barat 1 No.31<br>
+                    Telp: 081225096633, 082133326959, 085866228323
+                </div>
+            </div>
+            <div>
+                <div class="doc-title">SURAT JALAN</div>
+                <div class="doc-number">{{ $consignment->shipment_number }}</div>
+                @if($consignment->invoice)
+                <div class="doc-subnumber">No. Invoice: {{ $consignment->invoice->invoice_number }}</div>
+                @endif
+            </div>
+        </div>
 
         <div class="divider"></div>
 
-        <!-- DETAIL & TUJUAN PENGIRIMAN -->
-        <table class="info-section-table">
-            <tr>
-                <td width="50%" style="vertical-align: top; padding-right: 15px;">
-                    <div class="info-label">Detail Pengiriman</div>
-                    <table class="info-table">
-                        <tr>
-                            <td width="35%">Tanggal Kirim</td>
-                            <td>: {{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d F Y') }}</td>
-                        </tr>
-                    </table>
-                </td>
-                <td width="50%" style="vertical-align: top;">
-                    <div class="info-label">Tujuan Pengiriman</div>
-                    <div class="dest-box">
-                        <div class="dest-name">
-                            {{ strtoupper($consignment->store?->name ?? 'Toko Dihapus') }}
-                            @if($consignment->store?->address)
-                             - {{ strtoupper($consignment->store->address) }}
-                            @endif
-                        </div>
-                        <div class="dest-detail">
-                            Telp: {{ $consignment->store?->phone_number ?? '-' }}
-                        </div>
-                        @if($consignment->store?->type)
-                        <div><span class="mitra-badge">{{ strtoupper($consignment->store->type) }}</span></div>
+        <!-- DETAIL & TUJUAN PENGIRIMAN (DIV + FLEX) -->
+        <div class="info-grid">
+            <div class="info-column">
+                <div class="info-label">Detail Pengiriman</div>
+                <div class="info-row">
+                    <div class="info-row-label">Tanggal Kirim</div>
+                    <div class="info-row-val">: {{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d F Y') }}</div>
+                </div>
+            </div>
+            <div class="info-column">
+                <div class="info-label">Tujuan Pengiriman</div>
+                <div class="dest-box">
+                    <div class="dest-name">
+                        {{ strtoupper($consignment->store?->name ?? 'Toko Dihapus') }}
+                        @if($consignment->store?->address)
+                         - {{ strtoupper($consignment->store->address) }}
                         @endif
                     </div>
-                </td>
-            </tr>
-        </table>
+                    <div class="dest-detail">
+                        Telp: {{ $consignment->store?->phone_number ?? '-' }}
+                    </div>
+                    @if($consignment->store?->type)
+                    <div><span class="mitra-badge">{{ strtoupper($consignment->store->type) }}</span></div>
+                    @endif
+                </div>
+            </div>
+        </div>
 
         <!-- INTRO BARANG -->
         <div class="items-intro">
-            Bersama dengan ini kami kirimkan sejumlah produk dengan rincian sebagai berikut:
+            Bersama dengan ini kami kirimkan sejumlah produk dengan rincian sebagai meberikut:
         </div>
 
-        <!-- DAFTAR BARANG (TANPA HARGA & SUBTOTAL KHUSUS SURAT JALAN) -->
-        <table class="items-table">
-            <thead>
-                <tr>
-                    <th width="10%" class="text-center">NO</th>
-                    <th width="70%">NAMA BARANG / PRODUK</th>
-                    <th width="20%" class="text-center">QTY</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($consignment->items as $index => $item)
-                <tr>
-                    <td class="text-center">{{ $index + 1 }}</td>
-                    <td>{{ strtoupper($item->product->name) }}</td>
-                    <td class="text-center font-bold">{{ $item->quantity }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <!-- DAFTAR BARANG (DIV + FLEX) -->
+        <div class="items-header">
+            <div class="col-no">NO</div>
+            <div class="col-name">NAMA BARANG / PRODUK</div>
+            <div class="col-qty">QTY</div>
+        </div>
+        @foreach($consignment->items as $index => $item)
+        <div class="item-row">
+            <div class="col-no">{{ $index + 1 }}</div>
+            <div class="col-name">{{ strtoupper($item->product->name) }}</div>
+            <div class="col-qty">{{ $item->quantity }}</div>
+        </div>
+        @endforeach
 
         <!-- KETERANGAN -->
         <div class="notice-box">
@@ -343,25 +356,21 @@
             * Barang yang tidak terjual dapat dikembalikan sesuai perjanjian yang berlaku.
         </div>
 
-        <!-- TANDA TANGAN -->
-        <table class="signature-table">
-            <tr>
-                <td>
-                    <div class="sig-title">Penerima / Toko</div>
-                    <div style="margin-top: 45px;">
-                        <div class="sig-line"></div>
-                        <div class="sig-name">( Nama Terang & Cap Toko )</div>
-                    </div>
-                </td>
-                <td>
-                    <div class="sig-title">Pengirim / Gudang</div>
-                    <div style="margin-top: 45px;">
-                        <div class="sig-line"></div>
-                        <div class="sig-name">( Nama Terang )</div>
-                    </div>
-                </td>
-            </tr>
-        </table>
+        <!-- TANDA TANGAN (DIV + FLEX) -->
+        <div class="sig-container">
+            <div class="sig-col">
+                <div class="sig-title">Penerima / Toko</div>
+                <div class="sig-space"></div>
+                <div class="sig-line"></div>
+                <div class="sig-name">( Nama Terang & Cap Toko )</div>
+            </div>
+            <div class="sig-col">
+                <div class="sig-title">Pengirim / Gudang</div>
+                <div class="sig-space"></div>
+                <div class="sig-line"></div>
+                <div class="sig-name">( Nama Terang )</div>
+            </div>
+        </div>
 
         <!-- FOOTER -->
         <div class="footer-bar">
