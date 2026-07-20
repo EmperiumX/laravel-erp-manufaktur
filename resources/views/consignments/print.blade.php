@@ -5,21 +5,20 @@
     <title>Surat Jalan - {{ $consignment->shipment_number }}</title>
     <style>
         @page {
-            size: A4;
+            size: Letter;
             margin: 0;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
+            font-size: 12px;
             color: #000;
             background: #fff;
-            padding: 8mm 12mm;
+            padding: 8mm 0 8mm 15mm;
         }
         .main-container {
-            width: 100%;
-            max-width: 100%;
-            margin: 0 auto;
+            width: 170mm;
+            margin: 0;
         }
         table {
             width: 100%;
@@ -30,52 +29,50 @@
             padding-bottom: 6px;
         }
         .label-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             text-transform: uppercase;
         }
         .val-text {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             margin-top: 2px;
         }
         .divider {
             border-top: 1px solid #000;
-            margin: 8px 0;
+            margin: 6px 0;
         }
         .info-table td {
             vertical-align: top;
             padding: 4px 0;
-            font-size: 14px;
+            font-size: 12px;
         }
         .items-table th {
             text-align: left;
-            padding: 8px 4px;
+            padding: 6px 3px;
             border-top: 1px solid #000;
             border-bottom: 1px solid #000;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: bold;
         }
         .items-table td {
-            padding: 7px 4px;
-            font-size: 14px;
-            font-weight: bold;
+            padding: 5px 3px;
+            font-size: 12px;
         }
         .sig-table {
-            margin-top: 35px;
+            margin-top: 25px;
             width: 100%;
             text-align: center;
         }
         .sig-table td {
             width: 50%;
             vertical-align: bottom;
-            height: 70px;
-            font-size: 14px;
-            font-weight: bold;
+            height: 60px;
+            font-size: 12px;
         }
         .sig-line {
             border-bottom: 1px solid #000;
-            width: 70%;
+            width: 75%;
             margin: 0 auto 4px auto;
         }
     </style>
@@ -85,20 +82,20 @@
         <!-- HEADER GRID (4 COLUMNS) -->
         <table class="header-table">
             <tr>
-                <td width="26%">
+                <td width="27%">
                     <div class="label-title">NO PESANAN</div>
                     <div class="val-text">{{ $consignment->invoice?->invoice_number ?? '-' }}</div>
                 </td>
-                <td width="26%">
+                <td width="27%">
                     <div class="label-title">NO PENGIRIMAN</div>
                     <div class="val-text">{{ $consignment->shipment_number }}</div>
                 </td>
-                <td width="22%">
+                <td width="23%">
                     <div class="label-title">TANGGAL DIBUAT</div>
                     <div class="val-text">{{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d M Y') }}</div>
                 </td>
-                <td width="26%" style="text-align: right;">
-                    <div style="font-size: 18px; font-weight: bold; white-space: nowrap;">Surat Jalan</div>
+                <td width="23%" style="text-align: right;">
+                    <div style="font-size: 15px; font-weight: bold; white-space: nowrap;">Surat Jalan</div>
                 </td>
             </tr>
         </table>
@@ -108,17 +105,18 @@
         <!-- ADDRESS & OUTLET (2 COLUMNS) -->
         <table class="info-table">
             <tr>
-                <td width="48%" style="vertical-align: top; padding-right: 25px;">
-                    <div class="label-title" style="margin-bottom: 8px;">Outlet</div>
-                    <div style="line-height: 1.4;">
+                <td width="50%" style="vertical-align: top; padding-right: 15px;">
+                    <div class="label-title" style="margin-bottom: 4px;">Outlet</div>
+                    <div style="line-height: 1.3;">
                         <div><strong>NEW CITRA INDONESIA</strong></div>
-                        <div>Jl. Rogojembangan Barat 1 No.31, Semarang</div>
+                        <div>Jl. Rogojembangan Barat 1 No.31</div>
+                        <div>Semarang</div>
                         <div>Telp: 081225096633</div>
                     </div>
                 </td>
-                <td width="52%" style="vertical-align: top; padding-left: 15px;">
-                    <div class="label-title" style="margin-bottom: 8px;">Dikirimkan ke Alamat</div>
-                    <div style="line-height: 1.4;">
+                <td width="50%" style="vertical-align: top; padding-left: 10px;">
+                    <div class="label-title" style="margin-bottom: 4px;">Dikirimkan ke Alamat</div>
+                    <div style="line-height: 1.3;">
                         <div><strong>{{ $consignment->store?->name ?? 'Toko Dihapus' }}</strong></div>
                         <div>{{ $consignment->store?->address ?? '-' }}</div>
                         <div>Telp: {{ $consignment->store?->phone_number ?? '-' }}</div>
@@ -133,11 +131,11 @@
         <table class="items-table">
             <thead>
                 <tr>
-                    <th width="6%">No.</th>
-                    <th width="16%">SKU</th>
+                    <th width="7%">No.</th>
+                    <th width="17%">SKU</th>
                     <th width="46%">Deskripsi</th>
-                    <th width="16%" style="text-align: center;">QTY</th>
-                    <th width="16%" style="text-align: center;">Unit</th>
+                    <th width="15%" style="text-align: center;">QTY</th>
+                    <th width="15%" style="text-align: center;">Unit</th>
                 </tr>
             </thead>
             <tbody>
@@ -157,7 +155,7 @@
 
         <div class="divider"></div>
 
-        <div style="text-align: right; font-weight: bold; font-size: 14px; margin-top: 6px;">
+        <div style="text-align: right; font-weight: bold; font-size: 12px; margin-top: 4px; padding-right: 15%;">
             Total Jumlah: {{ $totalQty }}
         </div>
 
@@ -166,14 +164,14 @@
             <tr>
                 <td>
                     <div>Penerima / Toko</div>
-                    <div style="margin-top: 45px;">
+                    <div style="margin-top: 40px;">
                         <div class="sig-line"></div>
                         <div>( Nama Terang & Cap )</div>
                     </div>
                 </td>
                 <td>
                     <div>Pengirim / Gudang</div>
-                    <div style="margin-top: 45px;">
+                    <div style="margin-top: 40px;">
                         <div class="sig-line"></div>
                         <div>( Nama Terang )</div>
                     </div>

@@ -5,21 +5,20 @@
     <title>Invoice - {{ $invoice->invoice_number }}</title>
     <style>
         @page {
-            size: A4;
+            size: Letter;
             margin: 0;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
+            font-size: 12px;
             color: #000;
             background: #fff;
-            padding: 8mm 12mm;
+            padding: 8mm 0 8mm 15mm;
         }
         .main-container {
-            width: 100%;
-            max-width: 100%;
-            margin: 0 auto;
+            width: 170mm;
+            margin: 0;
         }
         table {
             width: 100%;
@@ -30,54 +29,52 @@
             padding-bottom: 6px;
         }
         .label-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             text-transform: uppercase;
         }
         .val-text {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             margin-top: 2px;
         }
         .divider {
             border-top: 1px solid #000;
-            margin: 8px 0;
+            margin: 6px 0;
         }
         .info-table td {
             vertical-align: top;
             padding: 4px 0;
-            font-size: 14px;
+            font-size: 12px;
         }
         .items-table th {
             text-align: left;
-            padding: 8px 4px;
+            padding: 6px 3px;
             border-top: 1px solid #000;
             border-bottom: 1px solid #000;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: bold;
         }
         .items-table td {
-            padding: 7px 4px;
-            font-size: 14px;
-            font-weight: bold;
+            padding: 5px 3px;
+            font-size: 12px;
         }
         .text-right { text-align: right; }
         .text-center { text-align: center; }
         .sig-table {
-            margin-top: 35px;
+            margin-top: 25px;
             width: 100%;
             text-align: center;
         }
         .sig-table td {
             width: 50%;
             vertical-align: bottom;
-            height: 70px;
-            font-size: 14px;
-            font-weight: bold;
+            height: 60px;
+            font-size: 12px;
         }
         .sig-line {
             border-bottom: 1px solid #000;
-            width: 70%;
+            width: 75%;
             margin: 0 auto 4px auto;
         }
     </style>
@@ -87,20 +84,20 @@
         <!-- HEADER GRID (4 COLUMNS) -->
         <table class="header-table">
             <tr>
-                <td width="26%">
+                <td width="27%">
                     <div class="label-title">NO FAKTUR</div>
                     <div class="val-text">{{ $invoice->invoice_number }}</div>
                 </td>
-                <td width="26%">
+                <td width="27%">
                     <div class="label-title">REFERENSI</div>
                     <div class="val-text">{{ $invoice->reference ?? '-' }}</div>
                 </td>
-                <td width="22%">
+                <td width="23%">
                     <div class="label-title">TANGGAL TEMPO</div>
                     <div class="val-text">{{ \Carbon\Carbon::parse($invoice->due_date)->format('d M Y') }}</div>
                 </td>
-                <td width="26%" style="text-align: right;">
-                    <div style="font-size: 18px; font-weight: bold; white-space: nowrap;">INVOICE</div>
+                <td width="23%" style="text-align: right;">
+                    <div style="font-size: 15px; font-weight: bold; white-space: nowrap;">INVOICE</div>
                 </td>
             </tr>
         </table>
@@ -110,17 +107,18 @@
         <!-- ADDRESS & OUTLET (2 COLUMNS) -->
         <table class="info-table">
             <tr>
-                <td width="48%" style="vertical-align: top; padding-right: 25px;">
-                    <div class="label-title" style="margin-bottom: 8px;">Penjual / Outlet</div>
-                    <div style="line-height: 1.4;">
+                <td width="50%" style="vertical-align: top; padding-right: 15px;">
+                    <div class="label-title" style="margin-bottom: 4px;">Penjual / Outlet</div>
+                    <div style="line-height: 1.3;">
                         <div><strong>NEW CITRA INDONESIA</strong></div>
-                        <div>Jl. Rogojembangan Barat 1 No.31, Semarang</div>
+                        <div>Jl. Rogojembangan Barat 1 No.31</div>
+                        <div>Semarang</div>
                         <div>Telp: 081225096633</div>
                     </div>
                 </td>
-                <td width="52%" style="vertical-align: top; padding-left: 15px;">
-                    <div class="label-title" style="margin-bottom: 8px;">Pembeli / Customer</div>
-                    <div style="line-height: 1.4;">
+                <td width="50%" style="vertical-align: top; padding-left: 10px;">
+                    <div class="label-title" style="margin-bottom: 4px;">Pembeli / Customer</div>
+                    <div style="line-height: 1.3;">
                         <div><strong>{{ $invoice->store?->name ?? 'Pelanggan Umum' }}</strong></div>
                         <div>{{ $invoice->store?->address ?? '-' }}</div>
                         <div>Telp: {{ $invoice->store?->phone_number ?? '-' }}</div>
@@ -135,11 +133,11 @@
         <table class="items-table">
             <thead>
                 <tr>
-                    <th width="6%">No.</th>
-                    <th width="42%">Deskripsi Barang</th>
+                    <th width="7%">No.</th>
+                    <th width="41%">Deskripsi Barang</th>
                     <th width="12%" class="text-center">QTY</th>
                     <th width="18%" class="text-right">Harga</th>
-                    <th width="20%" class="text-right">Subtotal</th>
+                    <th width="22%" class="text-right">Subtotal</th>
                 </tr>
             </thead>
             <tbody>
@@ -160,12 +158,12 @@
         <!-- TOTALS SUMMARY -->
         <table style="width: 100%; margin-top: 4px;">
             <tr>
-                <td width="60%"></td>
-                <td width="40%">
+                <td width="50%"></td>
+                <td width="50%">
                     <table style="width: 100%;">
                         <tr>
-                            <td><strong style="font-size: 14px;">Total Tagihan:</strong></td>
-                            <td class="text-right"><strong style="font-size: 14px;">Rp {{ number_format($invoice->total_amount, 0, ',', '.') }}</strong></td>
+                            <td><strong style="font-size: 12px;">Total Tagihan:</strong></td>
+                            <td class="text-right"><strong style="font-size: 12px;">Rp {{ number_format($invoice->total_amount, 0, ',', '.') }}</strong></td>
                         </tr>
                     </table>
                 </td>
@@ -177,14 +175,14 @@
             <tr>
                 <td>
                     <div>Pembeli</div>
-                    <div style="margin-top: 45px;">
+                    <div style="margin-top: 40px;">
                         <div class="sig-line"></div>
                         <div>( Nama Terang & Cap )</div>
                     </div>
                 </td>
                 <td>
                     <div>Hormat Kami</div>
-                    <div style="margin-top: 45px;">
+                    <div style="margin-top: 40px;">
                         <div class="sig-line"></div>
                         <div>( New Citra Indonesia )</div>
                     </div>
