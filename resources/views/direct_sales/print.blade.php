@@ -2,281 +2,411 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nota Penjualan - {{ $directSale->invoice_number }}</title>
     <style>
         @page {
-            size: Letter;
-            margin: 0;
+            size: A4;
+            margin: 6mm 12mm;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: {!! $settings->invoice_font ?? "'Helvetica Neue', Helvetica, Arial, sans-serif" !!};
+            font-family: Arial, Helvetica, sans-serif;
             font-size: 13px;
+            font-weight: normal;
             color: #000;
             background: #fff;
-            padding: 5mm 0;
+            padding: 8mm 14mm;
+            box-sizing: border-box;
+            line-height: 1.4;
+        }
+        .main-container {
+            width: 100%;
+            margin: 0 auto;
+        }
+        .top-black-bar {
+            border-top: 3px solid #000;
+            margin-bottom: 14px;
         }
 
-        .header-content {
-            width: 100%;
-            padding: 20px 0 15px 0;
+        /* PURE DIV + CSS GRID KOP SURAT */
+        .kop-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
         }
         .company-name {
             font-size: 22px;
             font-weight: bold;
-            color: #b91c1c;
-            letter-spacing: 0.5px;
+            color: #000;
+            line-height: 1.2;
         }
         .company-info {
             font-size: 13px;
             color: #000;
-            font-weight: bold;
-            line-height: 1.6;
+            font-weight: normal;
             margin-top: 4px;
+            line-height: 1.5;
         }
         .doc-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #b91c1c;
-            text-align: right;
-            letter-spacing: 1px;
-        }
-        .doc-number {
-            font-size: 16px;
+            font-size: 22px;
             font-weight: bold;
             color: #000;
-            margin-top: 6px;
+            text-transform: uppercase;
+            text-align: right;
+            line-height: 1.2;
+        }
+        .doc-number {
+            font-size: 14px;
+            font-weight: normal;
+            color: #000;
+            margin-top: 4px;
+            text-align: right;
+            line-height: 1.3;
         }
 
-        .info-section { width: 100%; margin: 20px 0; }
+        .divider {
+            border-top: 1.5px solid #000;
+            margin: 14px 0;
+        }
+
+        /* PURE DIV + CSS GRID INFO SECTION */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 14px 0 18px 0;
+        }
         .info-label {
             color: #000;
             font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
             font-weight: bold;
             margin-bottom: 6px;
+            line-height: 1.2;
         }
-        .info-table { width: 100%; }
-        .info-table td { padding: 3px 0; vertical-align: top; font-size: 13px; color: #000; font-weight: bold; }
-        .info-table .label { width: 100px; color: #000; font-weight: bold; }
+        .info-row {
+            display: flex;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+        .info-row-label {
+            width: 110px;
+            color: #000;
+            font-weight: normal;
+        }
+        .info-row-val {
+            color: #000;
+            font-weight: normal;
+        }
 
-        .buyer-box {
-            border: 2px solid #000;
-            border-radius: 6px;
-            padding: 12px 14px;
+        .party-box {
+            border: 1.5px solid #000;
+            border-radius: 4px;
+            padding: 10px 14px;
+            background: transparent;
         }
-        .buyer-name {
-            font-size: 15px;
+        .party-name {
+            font-size: 13px;
             font-weight: bold;
             color: #000;
-            margin-bottom: 2px;
+            line-height: 1.3;
+            margin-bottom: 4px;
+            text-transform: uppercase;
         }
-        .buyer-detail { font-size: 13px; color: #000; font-weight: bold; line-height: 1.5; }
-
-        .items-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .items-table thead th {
-            background-color: #fff5f5;
+        .party-detail {
+            font-size: 11px;
             color: #000;
-            padding: 10px 8px;
-            font-size: 13px;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+
+        /* PURE DIV + CSS GRID DAFTAR BARANG */
+        .items-header {
+            display: grid;
+            grid-template-columns: 8% 44% 12% 18% 18%;
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
+            padding: 8px 0;
+            color: #000;
+            font-size: 12px;
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            font-weight: bold;
-            border-bottom: 2px solid #000;
         }
-        .items-table tbody td {
-            padding: 9px 8px;
-            font-size: 13px;
-            color: #000;
-            font-weight: bold;
+        .item-row {
+            display: grid;
+            grid-template-columns: 8% 44% 12% 18% 18%;
             border-bottom: 1px solid #ddd;
+            padding: 8px 0;
+            font-size: 13px;
+            font-weight: normal;
+            color: #000;
+            align-items: center;
         }
+        .col-no { text-align: center; }
+        .col-name { text-transform: uppercase; }
+        .col-qty { text-align: center; }
+        .col-price { text-align: right; }
+        .col-subtotal { text-align: right; }
 
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
-        .font-bold { font-weight: bold; }
-
-        .totals-table {
-            width: 260px;
-            float: right;
-            border-collapse: collapse;
+        /* TOTALS GRID */
+        .totals-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
         }
-        .totals-table td { padding: 6px 8px; font-size: 13px; }
-        .totals-table .label-col { text-align: right; color: #000; font-weight: bold; width: 120px; }
-        .totals-table .value-col { text-align: right; color: #000; font-weight: bold; width: 140px; }
-        .grand-total-row { 
-            background-color: #fff5f5; 
+        .totals-box {
+            width: 280px;
         }
-        .grand-total-row td {
-            padding: 10px 8px;
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 13px;
+            font-weight: normal;
+        }
+        .total-row.grand-total {
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
+            padding: 8px 0;
             font-size: 15px;
             font-weight: bold;
-            color: #b91c1c !important;
         }
 
-        .signature-table { width: 100%; margin-top: 50px; text-align: center; }
-        .signature-table td { width: 50%; padding: 10px 30px; vertical-align: bottom; height: 90px; }
-        .sig-title { font-size: 13px; color: #000; font-weight: bold; }
-        .sig-line { width: 70%; margin: 0 auto 5px auto; border-bottom: 2px solid #000; }
-        .sig-name { font-size: 12px; color: #000; font-weight: bold; }
+        .notice-box {
+            clear: both;
+            margin: 24px 0;
+            width: 100%;
+            padding: 10px 14px;
+            border-left: 3px solid #000;
+            background: transparent;
+            font-size: 12px;
+            color: #000;
+            font-weight: normal;
+            line-height: 1.6;
+        }
 
-        .footer-bar { width: 100%; margin-top: 30px; padding-top: 10px; border-top: 1px solid #000; }
-        .footer-text { font-size: 12px; color: #000; font-weight: bold; text-align: center; line-height: 1.5; }
+        /* PURE DIV + CSS GRID SIGNATURES */
+        .sig-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .sig-col {
+            width: 100%;
+        }
+        .sig-title { font-size: 13px; color: #000; font-weight: bold; line-height: 1.2; }
+        .sig-space { height: 55px; }
+        .sig-line { border-bottom: 1.5px solid #000; width: 75%; margin: 0 auto 6px auto; }
+        .sig-name { font-size: 12px; color: #000; font-weight: normal; line-height: 1.2; }
 
-        /* ====== ALIGN LEFT TO 100% WIDTH ====== */
-        .header-content,
-        .info-section,
-        .items-table,
-        .signature-table,
         .footer-bar {
-            width: 100% !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
+            width: 100%;
+            margin: 30px 0 0 0;
+            padding-top: 10px;
+            border-top: 1.5px solid #000;
         }
-        /* Wrap the totals container div so its floated table aligns nicely */
-        div[style*="overflow: hidden"] {
-            width: 100% !important;
-            margin: 0 !important;
+        .footer-text {
+            font-size: 11px;
+            color: #000;
+            font-weight: normal;
+            text-align: center;
+            line-height: 1.5;
         }
-    
-        .print-container {
-            width: 75%;
-            margin: 0 auto;
+
+        /* NO PRINT ACTION BAR */
+        .no-print-bar {
+            background: #1e293b;
+            color: #fff;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .btn-print {
+            background: #b91c1c;
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-close {
+            background: #475569;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            * {
+                color: #000000 !important;
+                border-color: #000000 !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
+            body {
+                padding: 0 !important;
+                margin: 0 !important;
+                background: #fff !important;
+            }
+            .main-container {
+                width: 100% !important;
+                padding: 0 !important;
+            }
         }
     </style>
 </head>
 <body>
-    <div class=print-container>
-    <div style="width: 75%; margin: 0 auto;">
-
-
-
-
-
-    <div class="header-content">
-        <table style="width:100%; table-layout: fixed;">
-            <tr>
-                <td width="55%" style="vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">
-                    <div class="company-name">NEW CITRA INDONESIA</div>
-                    <div class="company-info">
-                        Jl. Rogojembangan Barat 1 No.31<br>
-                        Semarang<br>
-                        Telp: 081225096633, 082133326959, 085866228323
-                    </div>
-                </td>
-                <td width="45%" style="text-align: right; vertical-align: top;">
-                    <div class="doc-title">NOTA PENJUALAN</div>
-                    <div class="doc-number">{{ $directSale->invoice_number }}</div>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-    <table class="info-section">
-        <tr>
-            <td width="50%" style="vertical-align: top; padding-right: 20px;">
-                <div class="info-label">Detail Transaksi</div>
-                <table class="info-table">
-                    <tr>
-                        <td class="label">Tanggal</td>
-                        <td>: {{ \Carbon\Carbon::parse($directSale->sale_date)->format('d F Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Catatan</td>
-                        <td>: {{ $directSale->notes ?? '-' }}</td>
-                    </tr>
-                </table>
-            </td>
-            <td width="50%" style="vertical-align: top;">
-                <div class="info-label">Pembeli</div>
-                <div class="buyer-box">
-                    <div class="buyer-name">
-                        @if($directSale->store_id)
-                            {{ $directSale->store?->name ?? 'Toko Dihapus' }}
-                        @else
-                            {{ $directSale->customer_name }}
-                        @endif
-                    </div>
-                    <div class="buyer-detail">
-                        @if($directSale->store_id)
-                            Kategori: {{ $directSale->store?->category ?? '-' }}<br>
-                            {{ $directSale->store?->address ?? '-' }}<br>
-                            Telp: {{ $directSale->store?->phone_number ?? '-' }}
-                        @else
-                            Pembeli Umum / Walk-in
-                        @endif
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </table>
-
-    <table class="items-table">
-        <thead>
-            <tr>
-                <th width="5%" class="text-center">No</th>
-                <th width="40%" style="text-align: left;">Deskripsi Barang</th>
-                <th width="10%" class="text-center">Qty</th>
-                <th width="20%" class="text-right">Harga (Rp)</th>
-                <th width="25%" class="text-right">Subtotal (Rp)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($directSale->items as $index => $item)
-            <tr>
-                <td class="text-center">{{ $index + 1 }}</td>
-                <td style="font-weight: 600;">{{ strtoupper($item->product->name) }}</td>
-                <td class="text-center" style="font-weight: 600;">{{ $item->quantity }}</td>
-                <td class="text-right">{{ number_format($item->unit_price, 0, ',', '.') }}</td>
-                <td class="text-right" style="font-weight: 600;">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
-            </tr>
-            @endforeach
-            @for($i = count($directSale->items); $i < 3; $i++)
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-            @endfor
-        </tbody>
-    </table>
-
-    <div style="overflow: hidden;">
-        <table class="totals-table">
-            <tr class="grand-total-row">
-                <td style="text-align: right; color: #b91c1c;">GRAND TOTAL</td>
-                <td style="text-align: right; color: #b91c1c;">Rp {{ number_format($directSale->total_amount, 0, ',', '.') }}</td>
-            </tr>
-        </table>
-    </div>
-
-    <table class="signature-table">
-        <tr>
-            <td>
-                <div class="sig-title">Pembeli</div>
-                <div style="margin-top: 55px;">
-                    <div class="sig-line"></div>
-                    <div class="sig-name">( Nama Terang )</div>
-                </div>
-            </td>
-            <td>
-                <div class="sig-title">Hormat Kami,</div>
-                <div style="margin-top: 55px;">
-                    <div class="sig-line"></div>
-                    <div class="sig-name">New Citra Indonesia</div>
-                </div>
-            </td>
-        </tr>
-    </table>
-
-    <div class="footer-bar">
-        <div class="footer-text">
-            * Nota ini adalah bukti transaksi yang sah. Barang yang sudah dibeli tidak dapat dikembalikan kecuali ada perjanjian sebelumnya.<br>
-            © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
+    <!-- NO PRINT ACTION BAR -->
+    <div class="no-print-bar no-print">
+        <div>
+            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Nota Penjualan (Direct HTML Print)</span>
+            <span style="font-size: 13px; color: #cbd5e1; margin-left: 10px;">{{ $directSale->invoice_number }}</span>
+        </div>
+        <div>
+            <button onclick="window.print()" class="btn-print">🖨️ Cetak Dokumen</button>
+            <button onclick="window.close()" class="btn-close" style="margin-left: 8px;">Tutup</button>
         </div>
     </div>
 
+    <div class="main-container">
+        <!-- TOP BLACK BAR -->
+        <div class="top-black-bar"></div>
 
+        <!-- KOP SURAT -->
+        <div class="kop-container">
+            <div>
+                <div class="company-name">NEW CITRA INDONESIA</div>
+                <div class="company-info">
+                    Jl. Rogojembangan Barat 1 No.31<br>
+                    Telp: 081225096633, 082133326959, 085866228323
+                </div>
+            </div>
+            <div>
+                <div class="doc-title">NOTA PENJUALAN</div>
+                <div class="doc-number">{{ $directSale->invoice_number }}</div>
+            </div>
+        </div>
 
+        <div class="divider"></div>
 
+        <!-- DETAIL & PELANGGAN -->
+        <div class="info-grid">
+            <div>
+                <div class="info-label">Detail Transaksi</div>
+                <div class="info-row">
+                    <div class="info-row-label">Tanggal</div>
+                    <div class="info-row-val">: {{ \Carbon\Carbon::parse($directSale->sale_date)->format('d F Y') }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-row-label">Metode Pembayaran</div>
+                    <div class="info-row-val">: {{ strtoupper($directSale->payment_method ?? 'CASH') }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="info-label">Pelanggan</div>
+                <div class="party-box">
+                    @php
+                        $cName = strtoupper($directSale->customer_name ?? ($directSale->store?->name ?? 'PELANGGAN UMUM'));
+                        $cAddr = strtoupper($directSale->store?->address ?? '-');
+                        if ($cAddr && $cAddr !== '-' && str_contains($cAddr, $cName)) {
+                            $cleanCAddr = trim(str_replace($cName, '', $cAddr), " -,\t\n\r\0\x0B");
+                        } else {
+                            $cleanCAddr = ($cAddr !== '-' ? $cAddr : '');
+                        }
+                    @endphp
+                    <div class="party-name">
+                        {{ $cName }}{{ $cleanCAddr ? ' - ' . $cleanCAddr : '' }}
+                    </div>
+                    <div class="party-detail">
+                        Telp: {{ $directSale->store?->phone_number ?? '-' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAFTAR BARANG -->
+        <div class="items-header">
+            <div class="col-no">NO</div>
+            <div class="col-name">NAMA BARANG / PRODUK</div>
+            <div class="col-qty">QTY</div>
+            <div class="col-price">HARGA (RP)</div>
+            <div class="col-subtotal">SUBTOTAL (RP)</div>
+        </div>
+        @foreach($directSale->items as $index => $item)
+        <div class="item-row">
+            <div class="col-no">{{ $index + 1 }}</div>
+            <div class="col-name">{{ strtoupper($item->product->name ?? 'Produk') }}</div>
+            <div class="col-qty">{{ $item->quantity }}</div>
+            <div class="col-price">{{ number_format($item->unit_price, 0, ',', '.') }}</div>
+            <div class="col-subtotal">{{ number_format($item->subtotal, 0, ',', '.') }}</div>
+        </div>
+        @endforeach
+
+        <!-- TOTALS -->
+        <div class="totals-container">
+            <div class="totals-box">
+                <div class="total-row grand-total">
+                    <div>TOTAL BELANJA</div>
+                    <div>Rp {{ number_format($directSale->total_amount, 0, ',', '.') }}</div>
+                </div>
+            </div>
+        </div>
+
+        @if($directSale->notes)
+        <div class="notice-box">
+            * Catatan: {{ $directSale->notes }}
+        </div>
+        @endif
+
+        <!-- TANDA TANGAN -->
+        <div class="sig-container">
+            <div class="sig-col">
+                <div class="sig-title">Kasir / Toko</div>
+                <div class="sig-space"></div>
+                <div class="sig-line"></div>
+                <div class="sig-name">( New Citra Indonesia )</div>
+            </div>
+            <div class="sig-col">
+                <div class="sig-title">Pembeli</div>
+                <div class="sig-space"></div>
+                <div class="sig-line"></div>
+                <div class="sig-name">( {{ $cName }} )</div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer-bar">
+            <div class="footer-text">
+                Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia dan sah tanpa tanda tangan basah.<br>
+                © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
+            </div>
+        </div>
     </div>
-    </div>
+
+    <!-- AUTOMATIC PRINT TRIGGER -->
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                window.print();
+            }, 300);
+        };
+    </script>
 </body>
 </html>

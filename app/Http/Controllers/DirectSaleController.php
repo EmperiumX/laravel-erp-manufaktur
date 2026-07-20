@@ -243,17 +243,7 @@ class DirectSaleController extends Controller
     // FUNGSI BARU: Cetak Nota PDF
     public function print(DirectSale $directSale)
     {
-        // Panggil relasi item belanja dan relasi toko
         $directSale->load('items.product', 'store');
-
-        // Load view khusus PDF dan kirim datanya
-        $pdf = Pdf::loadView('direct_sales.print', compact('directSale'));
-        
-        // Atur ukuran kertas (misal A4 atau setruk kasir), di sini kita pakai A4 portrait
-        $pdf->setPaper('letter', 'portrait');
-
-        // Gunakan stream() agar PDF terbuka di tab baru browser (bisa diprint/didownload manual)
-        // Gunakan download() jika ingin langsung terunduh ke komputer
-        return $pdf->stream('Nota_Penjualan_' . $directSale->invoice_number . '.pdf');
+        return view('direct_sales.print', compact('directSale'));
     }
 }

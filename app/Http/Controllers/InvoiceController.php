@@ -244,9 +244,9 @@ class InvoiceController extends Controller
      */
     public function print(Invoice $invoice)
     {
-        $invoice->load(['store', 'supplier', 'items', 'purchaseOrder', 'consignmentShipment', 'directSale']);
+        $invoice->load(['store', 'supplier', 'items.product', 'items.material', 'purchaseOrder', 'consignmentShipment', 'directSale']);
         
-        $pdf = Pdf::loadView('invoices.print', [
+        return view('invoices.print', [
             'invoice' => $invoice,
             'title' => $invoice->type === 'sales' ? 'INVOICE PENJUALAN' : 'INVOICE PEMBELIAN',
             'partyLabel' => $invoice->type === 'sales' ? 'Kepada' : 'Supplier',
@@ -255,8 +255,5 @@ class InvoiceController extends Controller
             'partyPhone' => $invoice->type === 'sales' ? ($invoice->store->phone_number ?? '-') : ($invoice->supplier->phone_number ?? '-'),
             'reference' => $invoice->purchase_order_id ? ('PO: ' . ($invoice->purchaseOrder->po_number ?? '-')) : ($invoice->consignment_shipment_id ? ('DO: ' . ($invoice->consignmentShipment->shipment_number ?? '-')) : ($invoice->direct_sale_id ? ('Direct Sale: ' . ($invoice->directSale->invoice_number ?? '-')) : '-')),
         ]);
-
-        $pdf->setPaper('A4', 'portrait');
-        return $pdf->stream('Invoice_' . $invoice->invoice_number . '.pdf');
     }
 }
