@@ -11,19 +11,20 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 13px;
-            color: #1e293b;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
             background: #fff;
             padding: 8mm 15mm;
             box-sizing: border-box;
-            line-height: 1.4;
+            line-height: 1.5;
         }
         .main-container {
             width: 100%;
             margin: 0;
         }
         .top-red-bar {
-            border-top: 3px solid #b91c1c;
+            border-top: 4px solid #b91c1c;
             margin-bottom: 15px;
         }
         table {
@@ -32,40 +33,41 @@
             table-layout: fixed;
         }
         .company-name {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             color: #b91c1c;
             letter-spacing: 0.5px;
         }
         .company-info {
-            font-size: 13px;
-            color: #64748b;
+            font-size: 14px;
+            color: #000;
+            font-weight: bold;
             margin-top: 4px;
-            line-height: 1.4;
+            line-height: 1.5;
         }
         .doc-title {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             color: #b91c1c;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
         .doc-number {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             color: #000;
             margin-top: 4px;
             text-align: right;
         }
         .doc-subnumber {
-            font-size: 12px;
-            color: #64748b;
+            font-size: 13px;
+            color: #000;
             font-weight: bold;
-            margin-top: 2px;
+            margin-top: 3px;
             text-align: right;
         }
         .divider {
-            border-top: 1px solid #e2e8f0;
+            border-top: 2px solid #cbd5e1;
             margin: 15px 0;
         }
 
@@ -76,8 +78,8 @@
             border-collapse: collapse;
         }
         .info-label {
-            color: #64748b;
-            font-size: 11px;
+            color: #b91c1c;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: bold;
@@ -88,9 +90,9 @@
             border-collapse: collapse;
         }
         .info-table td {
-            padding: 4px 0;
+            padding: 5px 0;
             vertical-align: top;
-            font-size: 13px;
+            font-size: 14px;
             color: #000;
             font-weight: bold;
         }
@@ -99,37 +101,39 @@
             font-weight: bold;
         }
         .dest-box {
-            border: 1.5px solid #b91c1c;
+            border: 2px solid #b91c1c;
             border-radius: 6px;
-            padding: 10px 14px;
+            padding: 12px 16px;
             background: transparent;
         }
         .dest-name {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: bold;
             color: #b91c1c;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
         .dest-detail {
-            font-size: 13px;
-            color: #475569;
-            line-height: 1.4;
+            font-size: 14px;
+            color: #000;
+            font-weight: bold;
+            line-height: 1.5;
         }
         .mitra-badge {
             display: inline-block;
             background-color: #fef08a;
             color: #854d0e;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
-            padding: 2px 8px;
+            padding: 3px 10px;
             border-radius: 4px;
-            margin-top: 6px;
+            margin-top: 8px;
         }
 
         .items-intro {
-            font-size: 13px;
-            color: #334155;
-            margin: 15px 0 10px 0;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+            margin: 18px 0 12px 0;
         }
         .items-table {
             width: 100%;
@@ -141,7 +145,7 @@
             background: transparent;
             color: #b91c1c;
             padding: 10px 8px;
-            font-size: 12px;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: bold;
@@ -151,11 +155,11 @@
         }
         .items-table tbody td {
             padding: 10px 8px;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: bold;
             color: #000;
             vertical-align: middle;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid #cbd5e1;
         }
         .text-center { text-align: center; }
         .text-right { text-align: right; }
@@ -165,12 +169,12 @@
             clear: both;
             margin: 25px 0;
             width: 100%;
-            padding: 8px 14px;
-            border-left: 3px solid #b91c1c;
+            padding: 10px 14px;
+            border-left: 4px solid #b91c1c;
             background: transparent;
-            font-size: 12px;
-            color: #334155;
-            font-style: italic;
+            font-size: 13px;
+            color: #000;
+            font-weight: bold;
             line-height: 1.6;
         }
 
@@ -184,22 +188,23 @@
             width: 50%;
             padding: 10px 15px;
             vertical-align: bottom;
-            height: 85px;
+            height: 90px;
         }
-        .sig-title { font-size: 13px; color: #000; font-weight: bold; }
-        .sig-name { font-size: 12px; color: #475569; font-weight: bold; }
-        .sig-line { border-bottom: 1px solid #475569; width: 70%; margin: 0 auto 6px auto; }
+        .sig-title { font-size: 14px; color: #000; font-weight: bold; }
+        .sig-name { font-size: 13px; color: #000; font-weight: bold; }
+        .sig-line { border-bottom: 2px solid #000; width: 70%; margin: 0 auto 6px auto; }
 
         .footer-bar {
             width: 100%;
             margin: 30px 0 0 0;
             padding-top: 12px;
             clear: both;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid #cbd5e1;
         }
         .footer-text {
-            font-size: 11px;
-            color: #64748b;
+            font-size: 12px;
+            color: #000;
+            font-weight: bold;
             text-align: center;
             line-height: 1.5;
         }
@@ -289,7 +294,7 @@
             </tbody>
         </table>
 
-        <!-- KETERANGAN (TANPA BACKGROUND) -->
+        <!-- KETERANGAN (TEBAL & JELAS, TANPA BACKGROUND) -->
         <div class="notice-box">
             * Barang-barang di atas telah diterima dalam kondisi baik dan cukup.<br>
             * Surat jalan ini sah sebagai dokumen penagihan sesuai dengan nilai barang yang terjual.<br>
