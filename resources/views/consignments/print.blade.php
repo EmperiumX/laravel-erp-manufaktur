@@ -124,7 +124,7 @@
             text-transform: uppercase;
         }
         .dest-detail {
-            font-size: 13px;
+            font-size: 11px;
             color: #000;
             font-weight: normal; /* SINGLE STRIKE CRISP */
             line-height: 1.5;
