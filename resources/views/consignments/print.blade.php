@@ -2,11 +2,12 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surat Jalan - {{ $consignment->shipment_number }}</title>
     <style>
         @page {
             size: A4;
-            margin: 0;
+            margin: 6mm 15mm;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -21,7 +22,7 @@
         }
         .main-container {
             width: 100%;
-            margin: 0;
+            margin: 0 auto;
         }
         .top-red-bar {
             border-top: 4px solid #b91c1c;
@@ -93,10 +94,6 @@
             padding: 5px 0;
             vertical-align: top;
             font-size: 14px;
-            color: #000;
-            font-weight: bold;
-        }
-        .info-table .label {
             color: #000;
             font-weight: bold;
         }
@@ -208,9 +205,71 @@
             text-align: center;
             line-height: 1.5;
         }
+
+        /* NO PRINT ACTION BAR */
+        .no-print-bar {
+            background: #1e293b;
+            color: #fff;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .btn-print {
+            background: #b91c1c;
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-print:hover {
+            background: #991b1b;
+        }
+        .btn-close {
+            background: #475569;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body {
+                padding: 0 !important;
+                margin: 0 !important;
+                background: #fff !important;
+            }
+            .main-container {
+                width: 100% !important;
+                padding: 0 !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- NO PRINT ACTION BAR -->
+    <div class="no-print-bar no-print">
+        <div>
+            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Langsung HTML (Alternatif 3B)</span>
+            <span style="font-size: 13px; color: #cbd5e1; margin-left: 10px;">Surat Jalan: {{ $consignment->shipment_number }}</span>
+        </div>
+        <div>
+            <button onclick="window.print()" class="btn-print">🖨️ Cetak Dokumen</button>
+            <button onclick="window.close()" class="btn-close" style="margin-left: 8px;">Tutup</button>
+        </div>
+    </div>
+
     <div class="main-container">
         <!-- TOP RED BAR -->
         <div class="top-red-bar"></div>
@@ -294,7 +353,7 @@
             </tbody>
         </table>
 
-        <!-- KETERANGAN (TEBAL & JELAS, TANPA BACKGROUND) -->
+        <!-- KETERANGAN -->
         <div class="notice-box">
             * Barang-barang di atas telah diterima dalam kondisi baik dan cukup.<br>
             * Surat jalan ini sah sebagai dokumen penagihan sesuai dengan nilai barang yang terjual.<br>
@@ -329,5 +388,14 @@
             </div>
         </div>
     </div>
+
+    <!-- AUTOMATIC PRINT TRIGGER -->
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                window.print();
+            }, 300);
+        };
+    </script>
 </body>
 </html>
