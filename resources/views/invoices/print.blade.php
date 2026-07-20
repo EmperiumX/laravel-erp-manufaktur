@@ -84,21 +84,21 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin: 6px 0 12px 0; /* RAISED UPWARDS SLIGHTLY */
+            margin: 2px 0 8px 0; /* NAIK LEBIH TINGGI */
         }
         .info-label {
             color: #000;
             font-size: 12px;
             text-transform: uppercase;
             font-weight: bold;
-            margin-bottom: 5px;
-            line-height: 1.3;
+            margin-bottom: 3px;
+            line-height: 1.2;
         }
         .info-row {
             display: flex;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             font-size: 13px;
-            line-height: 1.5;
+            line-height: 1.3;
         }
         .info-row-label {
             width: 110px;
@@ -113,22 +113,22 @@
         .party-box {
             border: 1.5px solid #000;
             border-radius: 4px;
-            padding: 8px 12px;
+            padding: 6px 12px;
             background: transparent;
         }
         .party-name {
             font-size: 13px;
             font-weight: bold;
             color: #000;
-            line-height: 1.4;
-            margin-bottom: 6px;
+            line-height: 1.3;
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
         .party-detail {
             font-size: 12px;
             color: #000;
             font-weight: normal;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         /* PURE DIV + CSS GRID DAFTAR BARANG */
@@ -160,11 +160,11 @@
         .col-price { text-align: right; }
         .col-subtotal { text-align: right; }
 
-        /* TOTALS GRID */
+        /* TOTALS GRID (OPTIMIZED FOR LX-310 CRISP PRINTING) */
         .totals-container {
             display: flex;
             justify-content: flex-end;
-            margin-top: 15px;
+            margin-top: 10px;
         }
         .totals-box {
             width: 280px;
@@ -172,16 +172,16 @@
         .total-row {
             display: flex;
             justify-content: space-between;
-            padding: 4px 0;
+            padding: 3px 0;
             font-size: 13px;
             font-weight: normal;
         }
         .total-row.grand-total {
-            border-top: 2px solid #000;
-            border-bottom: 2px solid #000;
-            padding: 8px 0;
-            font-size: 15px;
-            font-weight: bold;
+            border-top: 1.5px solid #000;
+            border-bottom: 1.5px solid #000;
+            padding: 5px 0;
+            font-size: 13px;
+            font-weight: normal; /* CRISP SINGLE STRIKE */
         }
 
         .notice-box {
