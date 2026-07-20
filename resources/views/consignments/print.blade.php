@@ -5,7 +5,7 @@
     <title>Surat Jalan - {{ $consignment->shipment_number }}</title>
     <style>
         @page {
-            size: Letter;
+            size: A4;
             margin: 0;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
