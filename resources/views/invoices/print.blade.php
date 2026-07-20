@@ -11,14 +11,14 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 13px;
+            font-size: 14px;
             color: #000;
             background: #fff;
-            padding: 6mm 5mm;
+            padding: 8mm 12mm;
         }
         .main-container {
             width: 100%;
-            max-width: 650px;
+            max-width: 100%;
             margin: 0 auto;
         }
         table {
@@ -35,7 +35,7 @@
             text-transform: uppercase;
         }
         .val-text {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: bold;
             margin-top: 2px;
         }
@@ -46,33 +46,33 @@
         .info-table td {
             vertical-align: top;
             padding: 4px 0;
-            font-size: 13px;
+            font-size: 14px;
         }
         .items-table th {
             text-align: left;
-            padding: 7px 4px;
+            padding: 8px 4px;
             border-top: 1px solid #000;
             border-bottom: 1px solid #000;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
         }
         .items-table td {
-            padding: 6px 4px;
-            font-size: 13px;
+            padding: 7px 4px;
+            font-size: 14px;
             font-weight: bold;
         }
         .text-right { text-align: right; }
         .text-center { text-align: center; }
         .sig-table {
-            margin-top: 30px;
+            margin-top: 35px;
             width: 100%;
             text-align: center;
         }
         .sig-table td {
             width: 50%;
             vertical-align: bottom;
-            height: 65px;
-            font-size: 13px;
+            height: 70px;
+            font-size: 14px;
             font-weight: bold;
         }
         .sig-line {
@@ -87,20 +87,20 @@
         <!-- HEADER GRID (4 COLUMNS) -->
         <table class="header-table">
             <tr>
-                <td width="28%">
+                <td width="26%">
                     <div class="label-title">NO FAKTUR</div>
                     <div class="val-text">{{ $invoice->invoice_number }}</div>
                 </td>
-                <td width="28%">
+                <td width="26%">
                     <div class="label-title">REFERENSI</div>
                     <div class="val-text">{{ $invoice->reference ?? '-' }}</div>
                 </td>
-                <td width="26%">
+                <td width="22%">
                     <div class="label-title">TANGGAL TEMPO</div>
                     <div class="val-text">{{ \Carbon\Carbon::parse($invoice->due_date)->format('d M Y') }}</div>
                 </td>
-                <td width="18%" style="text-align: right;">
-                    <div style="font-size: 17px; font-weight: bold;">INVOICE</div>
+                <td width="26%" style="text-align: right;">
+                    <div style="font-size: 18px; font-weight: bold; white-space: nowrap;">INVOICE</div>
                 </td>
             </tr>
         </table>
@@ -164,8 +164,8 @@
                 <td width="40%">
                     <table style="width: 100%;">
                         <tr>
-                            <td><strong style="font-size: 13px;">Total Tagihan:</strong></td>
-                            <td class="text-right"><strong style="font-size: 13px;">Rp {{ number_format($invoice->total_amount, 0, ',', '.') }}</strong></td>
+                            <td><strong style="font-size: 14px;">Total Tagihan:</strong></td>
+                            <td class="text-right"><strong style="font-size: 14px;">Rp {{ number_format($invoice->total_amount, 0, ',', '.') }}</strong></td>
                         </tr>
                     </table>
                 </td>
