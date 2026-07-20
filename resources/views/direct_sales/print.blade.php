@@ -10,266 +10,178 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: {!! $settings->invoice_font ?? "'Helvetica Neue', Helvetica, Arial, sans-serif" !!};
-            font-size: 13px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
             color: #000;
             background: #fff;
-            padding: 5mm 18mm;
+            padding: 8mm 10mm;
         }
-
-        .header-content {
+        .main-container {
             width: 100%;
-            padding: 20px 0 15px 0;
+            max-width: 580px;
+            margin: 0 auto;
         }
-        .company-name {
-            font-size: 22px;
-            font-weight: bold;
-            color: #b91c1c;
-            letter-spacing: 0.5px;
-        }
-        .company-info {
-            font-size: 13px;
-            color: #000;
-            font-weight: bold;
-            line-height: 1.6;
-            margin-top: 4px;
-        }
-        .doc-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #b91c1c;
-            text-align: right;
-            letter-spacing: 1px;
-        }
-        .doc-number {
-            font-size: 16px;
-            font-weight: bold;
-            color: #000;
-            margin-top: 6px;
-        }
-
-        .info-section { width: 100%; margin: 20px 0; }
-        .info-label {
-            color: #000;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-        .info-table { width: 100%; }
-        .info-table td { padding: 3px 0; vertical-align: top; font-size: 13px; color: #000; font-weight: bold; }
-        .info-table .label { width: 100px; color: #000; font-weight: bold; }
-
-        .buyer-box {
-            border: 2px solid #000;
-            border-radius: 6px;
-            padding: 12px 14px;
-        }
-        .buyer-name {
-            font-size: 15px;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 2px;
-        }
-        .buyer-detail { font-size: 13px; color: #000; font-weight: bold; line-height: 1.5; }
-
-        .items-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .items-table thead th {
-            background-color: #fff5f5;
-            color: #000;
-            padding: 10px 8px;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: bold;
-            border-bottom: 2px solid #000;
-        }
-        .items-table tbody td {
-            padding: 9px 8px;
-            font-size: 13px;
-            color: #000;
-            font-weight: bold;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
-        .font-bold { font-weight: bold; }
-
-        .totals-table {
-            width: 260px;
-            float: right;
+        table {
+            width: 100%;
             border-collapse: collapse;
         }
-        .totals-table td { padding: 6px 8px; font-size: 13px; }
-        .totals-table .label-col { text-align: right; color: #000; font-weight: bold; width: 120px; }
-        .totals-table .value-col { text-align: right; color: #000; font-weight: bold; width: 140px; }
-        .grand-total-row { 
-            background-color: #fff5f5; 
+        .header-table td {
+            vertical-align: top;
+            padding-bottom: 6px;
         }
-        .grand-total-row td {
-            padding: 10px 8px;
-            font-size: 15px;
+        .label-title {
+            font-size: 11px;
             font-weight: bold;
-            color: #b91c1c !important;
+            text-transform: uppercase;
         }
-
-        .signature-table { width: 100%; margin-top: 50px; text-align: center; }
-        .signature-table td { width: 50%; padding: 10px 30px; vertical-align: bottom; height: 90px; }
-        .sig-title { font-size: 13px; color: #000; font-weight: bold; }
-        .sig-line { width: 70%; margin: 0 auto 5px auto; border-bottom: 2px solid #000; }
-        .sig-name { font-size: 12px; color: #000; font-weight: bold; }
-
-        .footer-bar { width: 100%; margin-top: 30px; padding-top: 10px; border-top: 1px solid #000; }
-        .footer-text { font-size: 12px; color: #000; font-weight: bold; text-align: center; line-height: 1.5; }
-
-        /* ====== ALIGN LEFT TO 100% WIDTH ====== */
-        .header-content,
-        .info-section,
-        .items-table,
-        .signature-table,
-        .footer-bar {
-            width: 100% !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
+        .val-text {
+            font-size: 12px;
+            margin-top: 2px;
         }
-        .print-container {
+        .divider {
+            border-top: 1px solid #000;
+            margin: 6px 0;
+        }
+        .info-table td {
+            vertical-align: top;
+            padding: 4px 0;
+        }
+        .items-table th {
+            text-align: left;
+            padding: 6px 4px;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .items-table td {
+            padding: 5px 4px;
+            font-size: 12px;
+        }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        .sig-table {
+            margin-top: 25px;
             width: 100%;
-            max-width: 630px;
-            margin: 0 auto;
+            text-align: center;
+        }
+        .sig-table td {
+            width: 50%;
+            vertical-align: bottom;
+            height: 60px;
+        }
+        .sig-line {
+            border-bottom: 1px solid #000;
+            width: 70%;
+            margin: 0 auto 4px auto;
         }
     </style>
 </head>
 <body>
-    <div class="print-container">
-
-
-
-
-
-    <div class="header-content">
-        <table style="width:100%; table-layout: fixed;">
+    <div class="main-container">
+        <!-- HEADER GRID (4 COLUMNS) -->
+        <table class="header-table">
             <tr>
-                <td width="55%" style="vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">
-                    <div class="company-name">NEW CITRA INDONESIA</div>
-                    <div class="company-info">
-                        Jl. Rogojembangan Barat 1 No.31<br>
-                        Semarang<br>
-                        Telp: 081225096633, 082133326959, 085866228323
-                    </div>
+                <td width="28%">
+                    <div class="label-title">NO NOTA</div>
+                    <div class="val-text">{{ $directSale->invoice_number }}</div>
                 </td>
-                <td width="45%" style="text-align: right; vertical-align: top;">
-                    <div class="doc-title">NOTA PENJUALAN</div>
-                    <div class="doc-number">{{ $directSale->invoice_number }}</div>
+                <td width="28%">
+                    <div class="label-title">TANGGAL</div>
+                    <div class="val-text">{{ \Carbon\Carbon::parse($directSale->sale_date)->format('d M Y') }}</div>
+                </td>
+                <td width="26%">
+                    <div class="label-title">PEMBAYARAN</div>
+                    <div class="val-text">{{ strtoupper($directSale->payment_method ?? 'TUNAI') }}</div>
+                </td>
+                <td width="18%" style="text-align: right;">
+                    <div style="font-size: 15px; font-weight: bold;">NOTA</div>
                 </td>
             </tr>
         </table>
-    </div>
 
-    <table class="info-section">
-        <tr>
-            <td width="50%" style="vertical-align: top; padding-right: 20px;">
-                <div class="info-label">Detail Transaksi</div>
-                <table class="info-table">
-                    <tr>
-                        <td class="label">Tanggal</td>
-                        <td>: {{ \Carbon\Carbon::parse($directSale->sale_date)->format('d F Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Catatan</td>
-                        <td>: {{ $directSale->notes ?? '-' }}</td>
-                    </tr>
-                </table>
-            </td>
-            <td width="50%" style="vertical-align: top;">
-                <div class="info-label">Pembeli</div>
-                <div class="buyer-box">
-                    <div class="buyer-name">
-                        @if($directSale->store_id)
-                            {{ $directSale->store?->name ?? 'Toko Dihapus' }}
-                        @else
-                            {{ $directSale->customer_name }}
-                        @endif
-                    </div>
-                    <div class="buyer-detail">
-                        @if($directSale->store_id)
-                            Kategori: {{ $directSale->store?->category ?? '-' }}<br>
-                            {{ $directSale->store?->address ?? '-' }}<br>
-                            Telp: {{ $directSale->store?->phone_number ?? '-' }}
-                        @else
-                            Pembeli Umum / Walk-in
-                        @endif
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </table>
+        <div class="divider"></div>
 
-    <table class="items-table">
-        <thead>
+        <!-- ADDRESS & OUTLET (2 COLUMNS) -->
+        <table class="info-table">
             <tr>
-                <th width="5%" class="text-center">No</th>
-                <th width="40%" style="text-align: left;">Deskripsi Barang</th>
-                <th width="10%" class="text-center">Qty</th>
-                <th width="20%" class="text-right">Harga (Rp)</th>
-                <th width="25%" class="text-right">Subtotal (Rp)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($directSale->items as $index => $item)
-            <tr>
-                <td class="text-center">{{ $index + 1 }}</td>
-                <td style="font-weight: 600;">{{ strtoupper($item->product->name) }}</td>
-                <td class="text-center" style="font-weight: 600;">{{ $item->quantity }}</td>
-                <td class="text-right">{{ number_format($item->unit_price, 0, ',', '.') }}</td>
-                <td class="text-right" style="font-weight: 600;">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
-            </tr>
-            @endforeach
-            @for($i = count($directSale->items); $i < 3; $i++)
-            <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>
-            @endfor
-        </tbody>
-    </table>
-
-    <div style="overflow: hidden;">
-        <table class="totals-table">
-            <tr class="grand-total-row">
-                <td style="text-align: right; color: #b91c1c;">GRAND TOTAL</td>
-                <td style="text-align: right; color: #b91c1c;">Rp {{ number_format($directSale->total_amount, 0, ',', '.') }}</td>
+                <td width="50%">
+                    <div class="label-title" style="margin-bottom: 4px;">Penjual / Outlet</div>
+                    <div><strong>NEW CITRA INDONESIA</strong></div>
+                    <div>Jl. Rogojembangan Barat 1 No.31, Semarang</div>
+                    <div>Telp: 081225096633</div>
+                </td>
+                <td width="50%">
+                    <div class="label-title" style="margin-bottom: 4px;">Pembeli / Customer</div>
+                    <div><strong>{{ $directSale->customer_name ?? $directSale->store?->name ?? 'Pelanggan Langsung' }}</strong></div>
+                    <div>{{ $directSale->customer_address ?? '-' }}</div>
+                    <div>Telp: {{ $directSale->customer_phone ?? '-' }}</div>
+                </td>
             </tr>
         </table>
-    </div>
 
-    <table class="signature-table">
-        <tr>
-            <td>
-                <div class="sig-title">Pembeli</div>
-                <div style="margin-top: 55px;">
-                    <div class="sig-line"></div>
-                    <div class="sig-name">( Nama Terang )</div>
-                </div>
-            </td>
-            <td>
-                <div class="sig-title">Hormat Kami,</div>
-                <div style="margin-top: 55px;">
-                    <div class="sig-line"></div>
-                    <div class="sig-name">New Citra Indonesia</div>
-                </div>
-            </td>
-        </tr>
-    </table>
+        <div class="divider"></div>
 
-    <div class="footer-bar">
-        <div class="footer-text">
-            * Nota ini adalah bukti transaksi yang sah. Barang yang sudah dibeli tidak dapat dikembalikan kecuali ada perjanjian sebelumnya.<br>
-            © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
-        </div>
-    </div>
+        <!-- ITEMS TABLE -->
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th width="8%">No.</th>
+                    <th width="42%">Deskripsi Barang</th>
+                    <th width="12%" class="text-center">QTY</th>
+                    <th width="18%" class="text-right">Harga</th>
+                    <th width="20%" class="text-right">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($directSale->items as $index => $item)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ strtoupper($item->product->name ?? $item->description) }}</td>
+                    <td class="text-center">{{ $item->quantity }}</td>
+                    <td class="text-right">Rp {{ number_format($item->price, 0, ',', '.') }}</td>
+                    <td class="text-right">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
 
+        <div class="divider"></div>
 
+        <!-- TOTALS SUMMARY -->
+        <table style="width: 100%; margin-top: 4px;">
+            <tr>
+                <td width="60%"></td>
+                <td width="40%">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><strong>Total:</strong></td>
+                            <td class="text-right"><strong>Rp {{ number_format($directSale->total_amount, 0, ',', '.') }}</strong></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
 
-
+        <!-- SIGNATURES -->
+        <table class="sig-table">
+            <tr>
+                <td>
+                    <div>Pembeli</div>
+                    <div style="margin-top: 40px;">
+                        <div class="sig-line"></div>
+                        <div>( Nama Terang & Cap )</div>
+                    </div>
+                </td>
+                <td>
+                    <div>Kasir / Pengirim</div>
+                    <div style="margin-top: 40px;">
+                        <div class="sig-line"></div>
+                        <div>( Nama Terang )</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

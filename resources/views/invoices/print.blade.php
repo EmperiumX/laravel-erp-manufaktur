@@ -2,536 +2,186 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>{{ $title }} - {{ $invoice->invoice_number }}</title>
+    <title>Invoice - {{ $invoice->invoice_number }}</title>
     <style>
         @page {
             size: Letter;
             margin: 0;
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: {!! $settings->invoice_font ?? "'Helvetica Neue', Helvetica, Arial, sans-serif" !!};
-            font-size: 13px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
             color: #000;
             background: #fff;
-            padding: 5mm 18mm;
+            padding: 8mm 10mm;
         }
-
-        /* ====== HEADER ====== */
-        .header-content {
+        .main-container {
             width: 100%;
-            padding: 20px 0 15px 0;
+            max-width: 580px;
+            margin: 0 auto;
         }
-        .header-table {
-            width: 100%;
-            table-layout: fixed;
-        }
-        .company-name {
-            font-size: 22px;
-            font-weight: bold;
-            color: #b91c1c;
-            letter-spacing: 0.5px;
-        }
-        .company-info {
-            font-size: 13px;
-            color: #000;
-            font-weight: bold;
-            line-height: 1.6;
-            margin-top: 4px;
-        }
-        .invoice-title {
-            text-align: right;
-            vertical-align: top;
-        }
-        .invoice-title-text {
-            font-size: 20px;
-            font-weight: bold;
-            color: #a81a1a;
-            letter-spacing: 2px;
-        }
-        .invoice-number-box {
-            font-size: 16px;
-            font-weight: bold;
-            color: #a81a1a;
-            letter-spacing: 0.5px;
-            margin-top: 6px;
-        }
-        .invoice-type-badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 3px;
-            font-size: 10px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            margin-top: 4px;
-        }
-        .badge-purchase {
-            background-color: #fef3c7;
-            color: #92400e;
-        }
-        .badge-sales {
-            background-color: #d1fae5;
-            color: #065f46;
-        }
-        .badge-consignment {
-            background-color: #f3e8ff;
-            color: #6b21a8;
-        }
-
-        /* ====== INFO SECTION ====== */
-        .info-section {
-            width: 100%;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        .info-left {
-            vertical-align: top;
-            width: 50%;
-        }
-        .info-right {
-            vertical-align: top;
-            width: 50%;
-        }
-        .info-label {
-            color: #000;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-        .info-detail-table {
-            width: 100%;
-        }
-        .info-detail-table td {
-            padding: 3px 0;
-            vertical-align: top;
-            font-size: 13px;
-            color: #000;
-            font-weight: bold;
-        }
-        .info-detail-table .label {
-            width: 100px;
-            color: #000;
-            font-weight: bold;
-        }
-        .info-detail-table .value {
-            color: #000;
-        }
-        .party-box {
-            border: 2px solid #000;
-            border-radius: 6px;
-            padding: 12px 14px;
-        }
-        .party-name {
-            font-size: 15px;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 3px;
-        }
-        .party-detail {
-            font-size: 13px;
-            color: #000;
-            font-weight: bold;
-            line-height: 1.5;
-        }
-        .status-badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 3px;
-            font-size: 10px;
-            font-weight: bold;
-        }
-        .status-unpaid { background-color: #fef3c7; color: #92400e; }
-        .status-partial { background-color: #e0e7ff; color: #3730a3; }
-        .status-paid { background-color: #d1fae5; color: #065f46; }
-
-        /* ====== TABLE ITEMS ====== */
-        .items-table {
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 0;
-            margin-top: 10px;
         }
-        .items-table thead th {
-            background-color: #fefaf0;
-            color: #000;
-            padding: 10px 8px;
-            font-size: 12px;
+        .header-table td {
+            vertical-align: top;
+            padding-bottom: 6px;
+        }
+        .label-title {
+            font-size: 11px;
+            font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: bold;
-            border-bottom: 2px solid #000;
         }
-        .items-table tbody td {
-            padding: 9px 8px;
-            font-size: 13px;
-            color: #000;
+        .val-text {
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        .divider {
+            border-top: 1px solid #000;
+            margin: 6px 0;
+        }
+        .info-table td {
+            vertical-align: top;
+            padding: 4px 0;
+        }
+        .items-table th {
+            text-align: left;
+            padding: 6px 4px;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            font-size: 11px;
             font-weight: bold;
-            border-bottom: 1px solid #ddd;
+        }
+        .items-table td {
+            padding: 5px 4px;
+            font-size: 12px;
         }
         .text-right { text-align: right; }
         .text-center { text-align: center; }
-        .text-left { text-align: left; }
-        .font-bold { font-weight: bold; }
-
-        /* ====== TOTALS ====== */
-        .totals-section {
-            width: 100%;
-            margin-top: 0;
-        }
-        .totals-table {
-            width: 280px;
-            float: right;
-            border-collapse: collapse;
-        }
-        .totals-table td {
-            padding: 6px 8px;
-            font-size: 12px;
-        }
-        .totals-table .label-col {
-            text-align: right;
-            color: #000;
-            font-weight: bold;
-            width: 140px;
-        }
-        .totals-table .value-col {
-            text-align: right;
-            color: #000;
-            font-weight: bold;
-            width: 140px;
-        }
-        .grand-total-row {
-            background-color: #fefaf0;
-        }
-        .grand-total-row td {
-            padding: 10px 8px;
-            font-size: 15px;
-            font-weight: bold;
-            color: #a81a1a !important;
-        }
-        .paid-row td {
-            color: #059669;
-            font-weight: bold;
-        }
-        .balance-row td {
-            color: #dc2626;
-            font-weight: bold;
-            font-size: 13px;
-        }
-
-        /* ====== NOTES ====== */
-        .notes-section {
-            clear: both;
+        .sig-table {
             margin-top: 25px;
-            padding: 10px 12px;
-            border-radius: 4px;
-        }
-        .notes-label {
-            font-size: 12px;
-            color: #000;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-        .notes-text {
-            font-size: 13px;
-            color: #000;
-            font-weight: bold;
-        }
-
-        /* ====== PAYMENT INFO ====== */
-        .payment-info {
-            clear: both;
-            margin-top: 20px;
-            padding: 12px 14px;
-            border: 2px solid #000;
-            border-radius: 6px;
-        }
-        .payment-info-title {
-            font-size: 13px;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 4px;
-        }
-        .payment-info-text {
-            font-size: 13px;
-            color: #000;
-            font-weight: bold;
-            line-height: 1.5;
-        }
-
-        /* ====== SIGNATURE ====== */
-        .signature-section {
-            width: 100%;
-            margin-top: 50px;
-        }
-        .signature-table {
             width: 100%;
             text-align: center;
         }
-        .signature-table td {
+        .sig-table td {
             width: 50%;
-            padding: 10px 30px;
             vertical-align: bottom;
-            height: 90px;
-        }
-        .sig-title {
-            font-size: 13px;
-            color: #000;
-            font-weight: bold;
+            height: 60px;
         }
         .sig-line {
+            border-bottom: 1px solid #000;
             width: 70%;
-            margin: 0 auto 5px auto;
-            border-bottom: 2px solid #000;
-        }
-        .sig-name {
-            font-size: 12px;
-            color: #000;
-            font-weight: bold;
-        }
-
-        /* ====== FOOTER ====== */
-        .footer-bar {
-            width: 100%;
-            margin-top: 30px;
-            padding-top: 10px;
-            border-top: 1px solid #000;
-        }
-        .footer-text {
-            font-size: 12px;
-            color: #000;
-            font-weight: bold;
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        /* ====== ALIGN LEFT TO 100% WIDTH ====== */
-        .header-content,
-        .info-section,
-        .items-table,
-        .totals-section,
-        .notes-section,
-        .payment-info,
-        .signature-section,
-        .footer-bar {
-            width: 100% !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-        }
-        .print-container {
-            width: 100%;
-            max-width: 630px;
-            margin: 0 auto;
+            margin: 0 auto 4px auto;
         }
     </style>
 </head>
 <body>
-    <div class="print-container">
-
-
-
-    <!-- Top Color Bar -->
-
-
-    <!-- Header -->
-    <div class="header-content">
+    <div class="main-container">
+        <!-- HEADER GRID (4 COLUMNS) -->
         <table class="header-table">
             <tr>
-                <td width="55%" style="vertical-align: top; word-wrap: break-word; overflow-wrap: break-word;">
-                    <div class="company-name">NEW CITRA INDONESIA</div>
-                    <div class="company-info">
-                        Jl. Rogojembangan Barat 1 No.31<br>
-                        Semarang<br>
-                        Telp: 081225096633, 082133326959, 085866228323
-                    </div>
+                <td width="28%">
+                    <div class="label-title">NO FAKTUR</div>
+                    <div class="val-text">{{ $invoice->invoice_number }}</div>
                 </td>
-                <td width="45%" class="invoice-title">
-                    <div class="invoice-title-text">{{ $title }}</div>
-                    <div class="invoice-number-box">{{ $invoice->invoice_number }}</div>
-                    <br>
-                    @if(isset($typeBadge))
-                        <span class="invoice-type-badge {{ $typeBadgeClass ?? 'badge-purchase' }}">{{ $typeBadge }}</span>
-                    @elseif($invoice->type === 'purchase')
-                        <span class="invoice-type-badge badge-purchase">PEMBELIAN / HUTANG</span>
-                    @else
-                        <span class="invoice-type-badge badge-sales">PENJUALAN / PIUTANG</span>
-                    @endif
+                <td width="28%">
+                    <div class="label-title">REFERENSI</div>
+                    <div class="val-text">{{ $invoice->reference ?? '-' }}</div>
+                </td>
+                <td width="26%">
+                    <div class="label-title">TANGGAL TEMPO</div>
+                    <div class="val-text">{{ \Carbon\Carbon::parse($invoice->due_date)->format('d M Y') }}</div>
+                </td>
+                <td width="18%" style="text-align: right;">
+                    <div style="font-size: 15px; font-weight: bold;">INVOICE</div>
                 </td>
             </tr>
         </table>
-    </div>
 
-    <!-- Info Section -->
-    <table class="info-section">
-        <tr>
-            <td class="info-left" style="padding-right: 20px;">
-                <div class="info-label">Detail Invoice</div>
-                <table class="info-detail-table">
-                    <tr>
-                        <td class="label">Tanggal</td>
-                        <td class="value">: {{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d F Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Jatuh Tempo</td>
-                        <td class="value">: {{ \Carbon\Carbon::parse($invoice->due_date)->format('d F Y') }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Referensi</td>
-                        <td class="value">: {{ $reference ?? '-' }}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Status</td>
-                        <td class="value">:
-                            @if($invoice->status === 'Paid')
-                                <span class="status-badge status-paid">✓ LUNAS</span>
-                            @elseif($invoice->status === 'Partial')
-                                <span class="status-badge status-partial">SEBAGIAN</span>
-                            @else
-                                <span class="status-badge status-unpaid">BELUM DIBAYAR</span>
-                            @endif
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td class="info-right">
-                <div class="info-label">{{ $partyLabel }}</div>
-                <div class="party-box">
-                    <div class="party-name">{{ $partyName }}</div>
-                    <div class="party-detail">
-                        {{ $partyAddress }}<br>
-                        Telp: {{ $partyPhone }}
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </table>
+        <div class="divider"></div>
 
-    <!-- Items Table -->
-    <table class="items-table">
-        <thead>
+        <!-- ADDRESS & OUTLET (2 COLUMNS) -->
+        <table class="info-table">
             <tr>
-                <th width="5%" class="text-center">No</th>
-                <th width="37%" class="text-left">Deskripsi</th>
-                <th width="8%" class="text-center">Qty</th>
-                <th width="10%" class="text-center">Satuan</th>
-                <th width="20%" class="text-right">Harga Satuan (Rp)</th>
-                <th width="20%" class="text-right">Subtotal (Rp)</th>
+                <td width="50%">
+                    <div class="label-title" style="margin-bottom: 4px;">Penjual / Outlet</div>
+                    <div><strong>NEW CITRA INDONESIA</strong></div>
+                    <div>Jl. Rogojembangan Barat 1 No.31, Semarang</div>
+                    <div>Telp: 081225096633</div>
+                </td>
+                <td width="50%">
+                    <div class="label-title" style="margin-bottom: 4px;">Pembeli / Customer</div>
+                    <div><strong>{{ $invoice->store?->name ?? 'Pelanggan Umum' }}</strong></div>
+                    <div>{{ $invoice->store?->address ?? '-' }}</div>
+                    <div>Telp: {{ $invoice->store?->phone_number ?? '-' }}</div>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach($invoice->items as $index => $item)
-            <tr>
-                <td class="text-center">{{ $index + 1 }}</td>
-                <td style="font-weight: 600;">{{ strtoupper($item->description) }}</td>
-                <td class="text-center" style="font-weight: 600;">{{ rtrim(rtrim(number_format($item->quantity, 4, ',', '.'), '0'), ',') }}</td>
-                <td class="text-center">{{ $item->unit }}</td>
-                <td class="text-right">{{ number_format($item->unit_price, 0, ',', '.') }}</td>
-                <td class="text-right" style="font-weight: 600;">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
-            </tr>
-            @endforeach
-            {{-- Empty rows to fill space for short invoices --}}
-            @for($i = count($invoice->items); $i < 3; $i++)
-            <tr>
-                <td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td>
-            </tr>
-            @endfor
-        </tbody>
-    </table>
-
-    <!-- Totals -->
-    <div class="totals-section">
-        <table class="totals-table">
-            <tr>
-                <td class="label-col">Subtotal</td>
-                <td class="value-col">Rp {{ number_format($invoice->subtotal, 0, ',', '.') }}</td>
-            </tr>
-            @if($invoice->tax_amount > 0)
-            <tr>
-                <td class="label-col">PPN</td>
-                <td class="value-col">Rp {{ number_format($invoice->tax_amount, 0, ',', '.') }}</td>
-            </tr>
-            @endif
-            @if($invoice->discount_amount > 0)
-            <tr>
-                <td class="label-col">Diskon</td>
-                <td class="value-col" style="color: #dc2626;">- Rp {{ number_format($invoice->discount_amount, 0, ',', '.') }}</td>
-            </tr>
-            @endif
-            <tr class="grand-total-row">
-                <td style="text-align: right; color: #fff;">TOTAL</td>
-                <td style="text-align: right; color: #fff;">Rp {{ number_format($invoice->total_amount, 0, ',', '.') }}</td>
-            </tr>
-            @if($invoice->paid_amount > 0)
-            <tr class="paid-row">
-                <td class="label-col" style="color: #059669;">Dibayar</td>
-                <td class="value-col" style="color: #059669;">Rp {{ number_format($invoice->paid_amount, 0, ',', '.') }}</td>
-            </tr>
-            <tr class="balance-row">
-                <td class="label-col" style="color: #dc2626;">Sisa Tagihan</td>
-                <td class="value-col" style="color: #dc2626;">Rp {{ number_format($invoice->total_amount - $invoice->paid_amount, 0, ',', '.') }}</td>
-            </tr>
-            @endif
         </table>
-    </div>
 
-    <!-- Notes -->
-    @if($invoice->notes)
-    <div class="notes-section">
-        <div class="notes-label">Catatan</div>
-        <div class="notes-text">{{ $invoice->notes }}</div>
-    </div>
-    @endif
+        <div class="divider"></div>
 
-    <!-- Payment Info Box -->
-    <div class="payment-info">
-        <div class="payment-info-title">INFORMASI PEMBAYARAN</div>
-        <div class="payment-info-text">
-            Pembayaran dapat dilakukan melalui transfer bank ke rekening perusahaan.<br>
-            Mohon cantumkan nomor invoice <strong>{{ $invoice->invoice_number }}</strong> sebagai referensi pembayaran.<br>
-            Jatuh tempo: <strong>{{ \Carbon\Carbon::parse($invoice->due_date)->format('d F Y') }}</strong>
-        </div>
-    </div>
+        <!-- ITEMS TABLE -->
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th width="8%">No.</th>
+                    <th width="42%">Deskripsi Barang</th>
+                    <th width="12%" class="text-center">QTY</th>
+                    <th width="18%" class="text-right">Harga</th>
+                    <th width="20%" class="text-right">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($invoice->items as $index => $item)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ strtoupper($item->product->name ?? $item->description) }}</td>
+                    <td class="text-center">{{ $item->quantity }}</td>
+                    <td class="text-right">Rp {{ number_format($item->unit_price, 0, ',', '.') }}</td>
+                    <td class="text-right">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-    <!-- Signatures -->
-    <div class="signature-section">
-        <table class="signature-table">
+        <div class="divider"></div>
+
+        <!-- TOTALS SUMMARY -->
+        <table style="width: 100%; margin-top: 4px;">
+            <tr>
+                <td width="60%"></td>
+                <td width="40%">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><strong>Total Tagihan:</strong></td>
+                            <td class="text-right"><strong>Rp {{ number_format($invoice->total_amount, 0, ',', '.') }}</strong></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!-- SIGNATURES -->
+        <table class="sig-table">
             <tr>
                 <td>
-                    <div class="sig-title">Penerima</div>
-                    <div style="margin-top: 55px;">
+                    <div>Pembeli</div>
+                    <div style="margin-top: 40px;">
                         <div class="sig-line"></div>
-                        <div class="sig-name">( Nama Terang & Cap )</div>
+                        <div>( Nama Terang & Cap )</div>
                     </div>
                 </td>
                 <td>
-                    <div class="sig-title">Hormat Kami,</div>
-                    <div style="margin-top: 55px;">
+                    <div>Hormat Kami</div>
+                    <div style="margin-top: 40px;">
                         <div class="sig-line"></div>
-                        <div class="sig-name">New Citra Indonesia</div>
+                        <div>( New Citra Indonesia )</div>
                     </div>
                 </td>
             </tr>
         </table>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer-bar">
-        <div class="footer-text">
-            Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia dan sah tanpa tanda tangan basah.<br>
-            © {{ date('Y') }} New Citra Indonesia — Jl. Rogojembangan Barat 1 No.31, Semarang
-        </div>
-    </div>
-
-
-
-
     </div>
 </body>
 </html>
