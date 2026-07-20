@@ -5,7 +5,7 @@
     <title>{{ $title }} - {{ $invoice->invoice_number }}</title>
     <style>
         @page {
-            size: A4;
+            size: Letter;
             margin: 0;
         }
         * {
@@ -312,7 +312,7 @@
             line-height: 1.5;
         }
 
-        /* ====== ALIGN LEFT TO 70% WIDTH ====== */
+        /* ====== ALIGN LEFT TO 100% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
@@ -321,9 +321,9 @@
         .payment-info,
         .signature-section,
         .footer-bar {
-            width: 70% !important;
+            width: 100% !important;
             margin-left: 0 !important;
-            margin-right: auto !important;
+            margin-right: 0 !important;
         }
         .totals-section {
             overflow: hidden;

@@ -5,7 +5,7 @@
     <title>Nota Penjualan - {{ $directSale->invoice_number }}</title>
     <style>
         @page {
-            size: A4;
+            size: Letter;
             margin: 0;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -124,19 +124,19 @@
         .footer-bar { width: 100%; margin-top: 30px; padding-top: 10px; border-top: 1px solid #000; }
         .footer-text { font-size: 12px; color: #000; font-weight: bold; text-align: center; line-height: 1.5; }
 
-        /* ====== ALIGN LEFT TO 70% WIDTH ====== */
+        /* ====== ALIGN LEFT TO 100% WIDTH ====== */
         .header-content,
         .info-section,
         .items-table,
         .signature-table,
         .footer-bar {
-            width: 70% !important;
+            width: 100% !important;
             margin-left: 0 !important;
-            margin-right: auto !important;
+            margin-right: 0 !important;
         }
         /* Wrap the totals container div so its floated table aligns nicely */
         div[style*="overflow: hidden"] {
-            width: 70% !important;
+            width: 100% !important;
             margin: 0 !important;
         }
     </style>
