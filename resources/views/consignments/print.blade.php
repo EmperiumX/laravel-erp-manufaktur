@@ -11,13 +11,13 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
+            font-size: 13px;
             color: #000;
             background: #fff;
-            padding: 8mm 0 8mm 12mm;
+            padding: 6mm 0 6mm 10mm;
         }
         .main-container {
-            width: 175mm;
+            width: 152mm;
             margin: 0;
         }
         table {
@@ -27,36 +27,36 @@
         }
         .divider {
             border-top: 2px solid #000;
-            margin: 8px 0;
+            margin: 6px 0;
         }
         .info-table td {
             vertical-align: top;
-            padding: 4px 0;
-            font-size: 14px;
+            padding: 3px 0;
+            font-size: 13px;
         }
         .items-table th {
             text-align: left;
-            padding: 7px 4px;
+            padding: 6px 3px;
             border-top: 2px solid #000;
             border-bottom: 2px solid #000;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
         }
         .items-table td {
-            padding: 6px 4px;
-            font-size: 14px;
+            padding: 5px 3px;
+            font-size: 13px;
             font-weight: bold;
         }
         .sig-table {
-            margin-top: 30px;
+            margin-top: 25px;
             width: 100%;
             text-align: center;
         }
         .sig-table td {
             width: 50%;
             vertical-align: bottom;
-            height: 65px;
-            font-size: 14px;
+            height: 60px;
+            font-size: 13px;
             font-weight: bold;
         }
         .sig-line {
@@ -68,20 +68,20 @@
 </head>
 <body>
     <div class="main-container">
-        <!-- HEADER (2 COLUMNS - NO SQUEEZING) -->
+        <!-- HEADER (2 COLUMNS) -->
         <table>
             <tr>
-                <td width="60%" style="vertical-align: top;">
-                    <div style="font-size: 20px; font-weight: bold;">NEW CITRA INDONESIA</div>
-                    <div style="font-size: 13px; font-weight: bold; margin-top: 4px; line-height: 1.4;">
+                <td width="56%" style="vertical-align: top;">
+                    <div style="font-size: 18px; font-weight: bold;">NEW CITRA INDONESIA</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 3px; line-height: 1.3;">
                         Jl. Rogojembangan Barat 1 No.31, Semarang<br>
                         Telp: 081225096633, 082133326959
                     </div>
                 </td>
-                <td width="40%" style="vertical-align: top; text-align: right;">
-                    <div style="font-size: 22px; font-weight: bold; white-space: nowrap;">SURAT JALAN</div>
-                    <div style="font-size: 14px; font-weight: bold; margin-top: 6px;">No: {{ $consignment->shipment_number }}</div>
-                    <div style="font-size: 13px; font-weight: bold; margin-top: 2px;">Tgl: {{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d F Y') }}</div>
+                <td width="44%" style="vertical-align: top; text-align: right;">
+                    <div style="font-size: 20px; font-weight: bold; white-space: nowrap;">SURAT JALAN</div>
+                    <div style="font-size: 13px; font-weight: bold; margin-top: 4px; white-space: nowrap;">No: {{ $consignment->shipment_number }}</div>
+                    <div style="font-size: 12px; font-weight: bold; margin-top: 2px; white-space: nowrap;">Tgl: {{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d M Y') }}</div>
                 </td>
             </tr>
         </table>
@@ -91,19 +91,19 @@
         <!-- ADDRESS & OUTLET (2 COLUMNS) -->
         <table class="info-table">
             <tr>
-                <td width="48%" style="vertical-align: top; padding-right: 15px;">
-                    <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 6px;">No. Pesanan / PO</div>
-                    <div style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">{{ $consignment->invoice?->invoice_number ?? '-' }}</div>
+                <td width="48%" style="vertical-align: top; padding-right: 10px;">
+                    <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">No. Pesanan / PO</div>
+                    <div style="font-size: 13px; font-weight: bold; margin-bottom: 8px;">{{ $consignment->invoice?->invoice_number ?? '-' }}</div>
 
-                    <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Pengirim / Outlet</div>
-                    <div style="line-height: 1.4; font-size: 13px;">
+                    <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-bottom: 2px;">Pengirim / Outlet</div>
+                    <div style="line-height: 1.3; font-size: 12px;">
                         <div><strong>NEW CITRA INDONESIA</strong></div>
                         <div>Semarang</div>
                     </div>
                 </td>
-                <td width="52%" style="vertical-align: top; padding-left: 10px;">
-                    <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 6px;">Dikirimkan Ke Alamat</div>
-                    <div style="line-height: 1.4; font-size: 14px;">
+                <td width="52%" style="vertical-align: top; padding-left: 8px;">
+                    <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Dikirimkan Ke Alamat</div>
+                    <div style="line-height: 1.3; font-size: 13px;">
                         <div><strong>{{ $consignment->store?->name ?? 'Toko Dihapus' }}</strong></div>
                         <div>{{ $consignment->store?->address ?? '-' }}</div>
                         <div>Telp: {{ $consignment->store?->phone_number ?? '-' }}</div>
@@ -114,15 +114,15 @@
 
         <div class="divider"></div>
 
-        <!-- ITEMS TABLE -->
+        <!-- ITEMS TABLE WITH INTEGRATED TOTAL JML ROW -->
         <table class="items-table">
             <thead>
                 <tr>
-                    <th width="8%">No.</th>
-                    <th width="18%">SKU</th>
-                    <th width="44%">Deskripsi Barang</th>
-                    <th width="15%" style="text-align: center;">QTY</th>
-                    <th width="15%" style="text-align: center;">Unit</th>
+                    <th width="7%">No.</th>
+                    <th width="16%">SKU</th>
+                    <th width="45%">Deskripsi Barang</th>
+                    <th width="16%" style="text-align: center;">QTY</th>
+                    <th width="16%" style="text-align: center;">Unit</th>
                 </tr>
             </thead>
             <tbody>
@@ -138,27 +138,28 @@
                 </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" style="text-align: right; font-weight: bold; padding: 6px 4px; border-top: 1px solid #000; border-bottom: 1px solid #000;">Total Jumlah</td>
+                    <td style="text-align: center; font-weight: bold; padding: 6px 4px; border-top: 1px solid #000; border-bottom: 1px solid #000;">{{ $totalQty }}</td>
+                    <td style="border-top: 1px solid #000; border-bottom: 1px solid #000;"></td>
+                </tr>
+            </tfoot>
         </table>
-
-        <div class="divider"></div>
-
-        <div style="text-align: right; font-weight: bold; font-size: 14px; margin-top: 6px;">
-            Total Jumlah: {{ $totalQty }}
-        </div>
 
         <!-- SIGNATURES -->
         <table class="sig-table">
             <tr>
                 <td>
                     <div>Penerima / Toko</div>
-                    <div style="margin-top: 45px;">
+                    <div style="margin-top: 35px;">
                         <div class="sig-line"></div>
                         <div>( Nama Terang & Cap )</div>
                     </div>
                 </td>
                 <td>
                     <div>Pengirim / Gudang</div>
-                    <div style="margin-top: 45px;">
+                    <div style="margin-top: 35px;">
                         <div class="sig-line"></div>
                         <div>( Nama Terang )</div>
                     </div>
