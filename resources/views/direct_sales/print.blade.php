@@ -110,17 +110,21 @@
         <!-- ADDRESS & OUTLET (2 COLUMNS) -->
         <table class="info-table">
             <tr>
-                <td width="50%">
-                    <div class="label-title" style="margin-bottom: 4px;">Penjual / Outlet</div>
-                    <div><strong>NEW CITRA INDONESIA</strong></div>
-                    <div>Jl. Rogojembangan Barat 1 No.31, Semarang</div>
-                    <div>Telp: 081225096633</div>
+                <td width="48%" style="vertical-align: top; padding-right: 25px;">
+                    <div class="label-title" style="margin-bottom: 8px;">Penjual / Outlet</div>
+                    <div style="line-height: 1.4;">
+                        <div><strong>NEW CITRA INDONESIA</strong></div>
+                        <div>Jl. Rogojembangan Barat 1 No.31, Semarang</div>
+                        <div>Telp: 081225096633</div>
+                    </div>
                 </td>
-                <td width="50%">
-                    <div class="label-title" style="margin-bottom: 4px;">Pembeli / Customer</div>
-                    <div><strong>{{ $directSale->customer_name ?? $directSale->store?->name ?? 'Pelanggan Langsung' }}</strong></div>
-                    <div>{{ $directSale->customer_address ?? '-' }}</div>
-                    <div>Telp: {{ $directSale->customer_phone ?? '-' }}</div>
+                <td width="52%" style="vertical-align: top; padding-left: 15px;">
+                    <div class="label-title" style="margin-bottom: 8px;">Pembeli / Customer</div>
+                    <div style="line-height: 1.4;">
+                        <div><strong>{{ $directSale->customer_name ?? $directSale->store?->name ?? 'Pelanggan Langsung' }}</strong></div>
+                        <div>{{ $directSale->customer_address ?? '-' }}</div>
+                        <div>Telp: {{ $directSale->customer_phone ?? '-' }}</div>
+                    </div>
                 </td>
             </tr>
         </table>
