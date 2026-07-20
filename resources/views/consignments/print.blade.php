@@ -14,11 +14,11 @@
             font-size: 13px;
             color: #000;
             background: #fff;
-            padding: 6mm 0 6mm 10mm;
+            padding: 6mm 0;
         }
         .main-container {
-            width: 152mm;
-            margin: 0;
+            width: 185mm;
+            margin: 0 auto;
         }
         table {
             width: 100%;
@@ -36,14 +36,14 @@
         }
         .items-table th {
             text-align: left;
-            padding: 6px 3px;
+            padding: 6px 4px;
             border-top: 2px solid #000;
             border-bottom: 2px solid #000;
             font-size: 12px;
             font-weight: bold;
         }
         .items-table td {
-            padding: 5px 3px;
+            padding: 5px 4px;
             font-size: 13px;
             font-weight: bold;
         }
@@ -71,14 +71,14 @@
         <!-- HEADER (2 COLUMNS) -->
         <table>
             <tr>
-                <td width="56%" style="vertical-align: top;">
+                <td width="58%" style="vertical-align: top;">
                     <div style="font-size: 18px; font-weight: bold;">NEW CITRA INDONESIA</div>
                     <div style="font-size: 12px; font-weight: bold; margin-top: 3px; line-height: 1.3;">
                         Jl. Rogojembangan Barat 1 No.31, Semarang<br>
                         Telp: 081225096633, 082133326959
                     </div>
                 </td>
-                <td width="44%" style="vertical-align: top; text-align: right;">
+                <td width="42%" style="vertical-align: top; text-align: right;">
                     <div style="font-size: 20px; font-weight: bold; white-space: nowrap;">SURAT JALAN</div>
                     <div style="font-size: 13px; font-weight: bold; margin-top: 4px; white-space: nowrap;">No: {{ $consignment->shipment_number }}</div>
                     <div style="font-size: 12px; font-weight: bold; margin-top: 2px; white-space: nowrap;">Tgl: {{ \Carbon\Carbon::parse($consignment->shipment_date)->format('d M Y') }}</div>
@@ -91,7 +91,7 @@
         <!-- ADDRESS & OUTLET (2 COLUMNS) -->
         <table class="info-table">
             <tr>
-                <td width="48%" style="vertical-align: top; padding-right: 10px;">
+                <td width="48%" style="vertical-align: top; padding-right: 15px;">
                     <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">No. Pesanan / PO</div>
                     <div style="font-size: 13px; font-weight: bold; margin-bottom: 8px;">{{ $consignment->invoice?->invoice_number ?? '-' }}</div>
 
@@ -101,7 +101,7 @@
                         <div>Semarang</div>
                     </div>
                 </td>
-                <td width="52%" style="vertical-align: top; padding-left: 8px;">
+                <td width="52%" style="vertical-align: top; padding-left: 10px;">
                     <div style="font-size: 11px; font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">Dikirimkan Ke Alamat</div>
                     <div style="line-height: 1.3; font-size: 13px;">
                         <div><strong>{{ $consignment->store?->name ?? 'Toko Dihapus' }}</strong></div>
