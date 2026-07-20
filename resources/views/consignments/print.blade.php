@@ -116,7 +116,7 @@
             background: transparent;
         }
         .dest-name {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: bold;
             color: #b91c1c;
             line-height: 1.3;
@@ -314,11 +314,17 @@
             <div>
                 <div class="info-label">Tujuan Pengiriman</div>
                 <div class="dest-box">
+                    @php
+                        $storeName = strtoupper($consignment->store?->name ?? 'TOKO DIHAPUS');
+                        $rawAddress = strtoupper($consignment->store?->address ?? '');
+                        if ($rawAddress && str_contains($rawAddress, $storeName)) {
+                            $cleanAddress = trim(str_replace($storeName, '', $rawAddress), " -,\t\n\r\0\x0B");
+                        } else {
+                            $cleanAddress = $rawAddress;
+                        }
+                    @endphp
                     <div class="dest-name">
-                        {{ strtoupper($consignment->store?->name ?? 'Toko Dihapus') }}
-                        @if($consignment->store?->address)
-                         - {{ strtoupper($consignment->store->address) }}
-                        @endif
+                        {{ $storeName }}{{ $cleanAddress ? ' - ' . $cleanAddress : '' }}
                     </div>
                     <div class="dest-detail">
                         Telp: {{ $consignment->store?->phone_number ?? '-' }}
