@@ -92,6 +92,7 @@
             color: #b91c1c;
             line-height: 1.2;
             margin-bottom: 4px;
+            text-transform: uppercase;
         }
         .dest-detail {
             font-size: 13px;
@@ -293,9 +294,13 @@
                 <td width="50%" style="vertical-align: top;">
                     <div class="info-label">Tujuan Pengiriman</div>
                     <div class="dest-box">
-                        <div class="dest-name">{{ $consignment->store?->name ?? 'Toko Dihapus' }}</div>
+                        <div class="dest-name">
+                            {{ strtoupper($consignment->store?->name ?? 'Toko Dihapus') }}
+                            @if($consignment->store?->address)
+                             - {{ strtoupper($consignment->store->address) }}
+                            @endif
+                        </div>
                         <div class="dest-detail">
-                            {{ $consignment->store?->address ?? 'Alamat tidak tersedia' }}<br>
                             Telp: {{ $consignment->store?->phone_number ?? '-' }}
                         </div>
                         @if($consignment->store?->type)
@@ -311,15 +316,13 @@
             Bersama dengan ini kami kirimkan sejumlah produk dengan rincian sebagai berikut:
         </div>
 
-        <!-- DAFTAR BARANG -->
+        <!-- DAFTAR BARANG (TANPA HARGA & SUBTOTAL KHUSUS SURAT JALAN) -->
         <table class="items-table">
             <thead>
                 <tr>
-                    <th width="8%" class="text-center">NO</th>
-                    <th width="44%">NAMA BARANG / PRODUK</th>
-                    <th width="12%" class="text-center">QTY</th>
-                    <th width="18%" class="text-right">HARGA JUAL (RP)</th>
-                    <th width="18%" class="text-right">SUBTOTAL (RP)</th>
+                    <th width="10%" class="text-center">NO</th>
+                    <th width="70%">NAMA BARANG / PRODUK</th>
+                    <th width="20%" class="text-center">QTY</th>
                 </tr>
             </thead>
             <tbody>
@@ -328,8 +331,6 @@
                     <td class="text-center">{{ $index + 1 }}</td>
                     <td>{{ strtoupper($item->product->name) }}</td>
                     <td class="text-center font-bold">{{ $item->quantity }}</td>
-                    <td class="text-right">{{ number_format($item->price, 0, ',', '.') }}</td>
-                    <td class="text-right font-bold">{{ number_format($item->subtotal, 0, ',', '.') }}</td>
                 </tr>
                 @endforeach
             </tbody>
