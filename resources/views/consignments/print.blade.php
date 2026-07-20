@@ -81,10 +81,9 @@
             color: #000;
         }
         .dest-box {
-            border: 1px solid #cbd5e1;
+            border: 2px solid #000;
             border-radius: 6px;
             padding: 10px 12px;
-            background-color: #fafafa;
         }
         .dest-name {
             font-size: 15px;
