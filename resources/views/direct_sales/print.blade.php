@@ -14,7 +14,7 @@
             font-size: 13px;
             color: #000;
             background: #fff;
-            padding: 5mm 13mm;
+            padding: 5mm 7mm;
         }
 
         .header-content {
