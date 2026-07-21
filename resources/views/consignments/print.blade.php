@@ -358,7 +358,7 @@
         <div class="item-row">
             <div class="col-no">{{ $index + 1 }}</div>
             <div class="col-name">{{ strtoupper($item->product->name) }}</div>
-            <div class="col-qty">{{ $item->quantity }}</div>
+            <div class="col-qty">{{ (int) $item->quantity }}</div>
         </div>
         @endforeach
 

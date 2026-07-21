@@ -369,7 +369,7 @@
         <div class="item-row">
             <div class="col-no">{{ $index + 1 }}</div>
             <div class="col-name">{{ strtoupper($item->product->name ?? 'Produk') }}</div>
-            <div class="col-qty">{{ $item->quantity }}</div>
+            <div class="col-qty">{{ (int) $item->quantity }}</div>
             <div class="col-price">{{ number_format($item->unit_price, 0, ',', '.') }}</div>
             <div class="col-subtotal">{{ number_format($item->subtotal, 0, ',', '.') }}</div>
         </div>
