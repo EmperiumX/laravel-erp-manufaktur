@@ -29,7 +29,7 @@
             margin-bottom: 14px;
         }
 
-        /* PURE DIV + CSS GRID KOP SURAT (IDENTIK SURAT JALAN) */
+        /* PURE DIV + CSS GRID KOP SURAT — IDENTIK SURAT JALAN */
         .kop-container {
             display: flex;
             justify-content: space-between;
@@ -45,7 +45,7 @@
         .company-info {
             font-size: 13px;
             color: #000;
-            font-weight: normal;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
             margin-top: 4px;
             line-height: 1.5;
         }
@@ -59,7 +59,7 @@
         }
         .doc-number {
             font-size: 14px;
-            font-weight: normal;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
             color: #000;
             margin-top: 4px;
             text-align: right;
@@ -68,7 +68,7 @@
         .doc-subnumber {
             font-size: 13px;
             color: #000;
-            font-weight: normal;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
             margin-top: 4px;
             text-align: right;
             line-height: 1.3;
@@ -79,26 +79,25 @@
             margin: 14px 0;
         }
 
-        /* PURE DIV + CSS GRID INFO SECTION (IDENTIK SURAT JALAN) */
+        /* PURE DIV + CSS GRID INFO SECTION — IDENTIK SURAT JALAN */
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin: 6px 0 12px 0;
+            margin: 14px 0 18px 0;
         }
         .info-label {
             color: #000;
             font-size: 12px;
             text-transform: uppercase;
             font-weight: bold;
-            margin-bottom: 5px;
-            line-height: 1.3;
+            margin-bottom: 6px;
+            line-height: 1.2;
         }
         .info-row {
             display: flex;
             margin-bottom: 4px;
             font-size: 13px;
-            line-height: 1.4;
         }
         .info-row-label {
             width: 110px;
@@ -113,21 +112,21 @@
         .dest-box {
             border: 1.5px solid #000;
             border-radius: 4px;
-            padding: 8px 12px;
+            padding: 10px 14px;
             background: transparent;
         }
         .dest-name {
             font-size: 13px;
             font-weight: bold;
             color: #000;
-            line-height: 1.4;
+            line-height: 1.3;
             margin-bottom: 4px;
             text-transform: uppercase;
         }
         .dest-detail {
-            font-size: 12px;
+            font-size: 11px;
             color: #000;
-            font-weight: normal;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
             line-height: 1.5;
         }
 
@@ -139,10 +138,12 @@
             line-height: 1.4;
         }
 
-        /* PURE DIV + CSS GRID DAFTAR BARANG (SAMA SEPERTI SURAT JALAN: GARIS HANYA HEADER) */
+        /* PURE DIV + CSS GRID DAFTAR BARANG — GARIS HANYA PADA HEADER */
+        /* Surat Jalan: 10% 70% 20% (3 kolom) */
+        /* Invoice: 10% 40% 14% 18% 18% (5 kolom, tambah HARGA & SUBTOTAL) */
         .items-header {
             display: grid;
-            grid-template-columns: 8% 46% 12% 17% 17%;
+            grid-template-columns: 10% 40% 14% 18% 18%;
             border-top: 2px solid #000;
             border-bottom: 2px solid #000;
             padding: 8px 0;
@@ -154,11 +155,11 @@
         }
         .item-row {
             display: grid;
-            grid-template-columns: 8% 46% 12% 17% 17%;
-            border-bottom: none !important; /* TANPA GARIS PER BARIS SAMA SEPERTI SURAT JALAN */
+            grid-template-columns: 10% 40% 14% 18% 18%;
+            border-bottom: none !important; /* TIDAK ADA GARIS PADA BARIS PRODUK */
             padding: 8px 0;
             font-size: 13px;
-            font-weight: normal;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
             color: #000;
             align-items: center;
         }
@@ -168,7 +169,7 @@
         .col-price { text-align: right; }
         .col-subtotal { text-align: right; }
 
-        /* TOTALS CONTAINER */
+        /* TOTALS — RATA KANAN */
         .totals-container {
             display: flex;
             justify-content: flex-end;
@@ -177,23 +178,23 @@
             padding-top: 8px;
         }
         .totals-box {
-            width: 280px;
+            width: 260px;
         }
         .total-row {
             display: flex;
             justify-content: space-between;
             padding: 3px 0;
             font-size: 13px;
-            font-weight: normal;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
         }
         .total-row.grand-total {
             border-top: 1.5px solid #000;
-            border-bottom: 1.5px solid #000;
             padding: 5px 0;
             font-size: 13px;
-            font-weight: normal;
+            font-weight: bold;
         }
 
+        /* NOTICE BOX — IDENTIK SURAT JALAN */
         .notice-box {
             clear: both;
             margin: 24px 0;
@@ -203,11 +204,11 @@
             background: transparent;
             font-size: 13px;
             color: #000;
-            font-weight: normal;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
             line-height: 1.6;
         }
 
-        /* PURE DIV + CSS GRID SIGNATURES (IDENTIK SURAT JALAN) */
+        /* PURE DIV + CSS GRID SIGNATURES — IDENTIK SURAT JALAN */
         .sig-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -232,12 +233,12 @@
         .footer-text {
             font-size: 13px;
             color: #000;
-            font-weight: normal;
+            font-weight: normal; /* SINGLE STRIKE CRISP */
             text-align: center;
             line-height: 1.5;
         }
 
-        /* NO PRINT ACTION BAR */
+        /* NO PRINT ACTION BAR — IDENTIK SURAT JALAN */
         .no-print-bar {
             background: #1e293b;
             color: #fff;
@@ -270,14 +271,9 @@
             cursor: pointer;
         }
 
+        /* PRINT MEDIA — IDENTIK SURAT JALAN */
         @media print {
-            .no-print, .no-print-bar {
-                display: none !important;
-                visibility: hidden !important;
-                height: 0 !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
+            .no-print { display: none !important; }
             * {
                 color: #000000 !important;
                 border-color: #000000 !important;
@@ -301,7 +297,7 @@
     <!-- NO PRINT ACTION BAR -->
     <div class="no-print-bar no-print">
         <div>
-            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak {{ $title }}</span>
+            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak {{ $title }} (Single-Strike Crisp Dot-Matrix)</span>
             <span style="font-size: 13px; color: #cbd5e1; margin-left: 10px;">{{ $invoice->invoice_number }}</span>
         </div>
         <div>
@@ -314,7 +310,7 @@
         <!-- TOP BLACK BAR -->
         <div class="top-red-bar"></div>
 
-        <!-- KOP SURAT -->
+        <!-- KOP SURAT (PURE DIV + FLEX) -->
         <div class="kop-container">
             <div>
                 <div class="company-name">NEW CITRA INDONESIA</div>
@@ -334,7 +330,7 @@
 
         <div class="divider"></div>
 
-        <!-- DETAIL & TUJUAN (SAMA SEPERTI SURAT JALAN) -->
+        <!-- DETAIL & TUJUAN (PURE DIV + CSS GRID) -->
         <div class="info-grid">
             <div>
                 <div class="info-label">Detail Invoice</div>
@@ -373,13 +369,18 @@
             </div>
         </div>
 
-        <!-- DAFTAR BARANG (SAMA SEPERTI SURAT JALAN) -->
+        <!-- INTRO BARANG -->
+        <div class="items-intro">
+            Bersama dengan ini kami sampaikan invoice dengan rincian sebagai berikut:
+        </div>
+
+        <!-- DAFTAR BARANG (PURE DIV + CSS GRID — GARIS HANYA PADA HEADER) -->
         <div class="items-header">
             <div class="col-no">NO</div>
-            <div class="col-name">NAMA BARANG / DESKRIPSI</div>
+            <div class="col-name">NAMA BARANG</div>
             <div class="col-qty">QTY</div>
-            <div class="col-price">HARGA (RP)</div>
-            <div class="col-subtotal">SUBTOTAL (RP)</div>
+            <div class="col-price">HARGA</div>
+            <div class="col-subtotal">SUBTOTAL</div>
         </div>
         @foreach($invoice->items as $index => $item)
         <div class="item-row">
@@ -391,7 +392,7 @@
         </div>
         @endforeach
 
-        <!-- TOTALS CONTAINER -->
+        <!-- TOTALS -->
         <div class="totals-container">
             <div class="totals-box">
                 <div class="total-row">
@@ -427,13 +428,14 @@
             </div>
         </div>
 
-        @if($invoice->notes)
+        <!-- KETERANGAN -->
         <div class="notice-box">
-            * Catatan: {{ $invoice->notes }}
+            * Invoice ini sah sebagai bukti tagihan resmi dari New Citra Indonesia.<br>
+            * Pembayaran dapat dilakukan sebelum tanggal jatuh tempo yang tertera di atas.
+            @if($invoice->notes)<br>* Catatan: {{ $invoice->notes }}@endif
         </div>
-        @endif
 
-        <!-- TANDA TANGAN (IDENTIK SURAT JALAN) -->
+        <!-- TANDA TANGAN (PURE DIV + CSS GRID) -->
         <div class="sig-container">
             <div class="sig-col">
                 <div class="sig-title">Hormat Kami</div>
@@ -449,7 +451,7 @@
             </div>
         </div>
 
-        <!-- FOOTER (IDENTIK SURAT JALAN) -->
+        <!-- FOOTER -->
         <div class="footer-bar">
             <div class="footer-text">
                 Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia dan sah tanpa tanda tangan basah.<br>

@@ -207,9 +207,9 @@ class ConsignmentController extends Controller
     public function printInvoice(ConsignmentShipment $consignment)
     {
         $consignment->load('items.product', 'store');
-        $invoice = Invoice::with('items')->where('consignment_shipment_id', $consignment->id)->firstOrFail();
+        $invoice = Invoice::with('items.product', 'items.material')->where('consignment_shipment_id', $consignment->id)->firstOrFail();
 
-        $pdf = Pdf::loadView('invoices.print', [
+        return view('invoices.print', [
             'invoice' => $invoice,
             'title' => 'INVOICE PENJUALAN',
             'partyLabel' => 'Kepada',
@@ -218,9 +218,6 @@ class ConsignmentController extends Controller
             'partyPhone' => $consignment->store->phone_number ?? '-',
             'reference' => 'DO: ' . $consignment->shipment_number,
         ]);
-
-        $pdf->setPaper('letter', 'portrait');
-        return $pdf->stream('Invoice_' . $invoice->invoice_number . '.pdf');
     }
 
     // Edit Surat Jalan
