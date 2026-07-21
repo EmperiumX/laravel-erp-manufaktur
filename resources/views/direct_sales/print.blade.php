@@ -24,12 +24,12 @@
             width: 100%;
             margin: 0 auto;
         }
-        .top-black-bar {
+        .top-red-bar {
             border-top: 3px solid #000;
             margin-bottom: 14px;
         }
 
-        /* PURE DIV + CSS GRID KOP SURAT */
+        /* PURE DIV + CSS GRID KOP SURAT (IDENTIK SURAT JALAN) */
         .kop-container {
             display: flex;
             justify-content: space-between;
@@ -71,25 +71,26 @@
             margin: 14px 0;
         }
 
-        /* PURE DIV + CSS GRID INFO SECTION */
+        /* PURE DIV + CSS GRID INFO SECTION (IDENTIK SURAT JALAN) */
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin: 14px 0 18px 0;
+            margin: 6px 0 12px 0;
         }
         .info-label {
             color: #000;
             font-size: 12px;
             text-transform: uppercase;
             font-weight: bold;
-            margin-bottom: 6px;
-            line-height: 1.2;
+            margin-bottom: 5px;
+            line-height: 1.3;
         }
         .info-row {
             display: flex;
             margin-bottom: 4px;
             font-size: 13px;
+            line-height: 1.4;
         }
         .info-row-label {
             width: 110px;
@@ -101,31 +102,39 @@
             font-weight: normal;
         }
 
-        .party-box {
+        .dest-box {
             border: 1.5px solid #000;
             border-radius: 4px;
-            padding: 10px 14px;
+            padding: 8px 12px;
             background: transparent;
         }
-        .party-name {
+        .dest-name {
             font-size: 13px;
             font-weight: bold;
             color: #000;
-            line-height: 1.3;
+            line-height: 1.4;
             margin-bottom: 4px;
             text-transform: uppercase;
         }
-        .party-detail {
-            font-size: 11px;
+        .dest-detail {
+            font-size: 12px;
             color: #000;
             font-weight: normal;
             line-height: 1.5;
         }
 
-        /* PURE DIV + CSS GRID DAFTAR BARANG */
+        .items-intro {
+            font-size: 13px;
+            font-weight: normal;
+            color: #000;
+            margin: 16px 0 10px 0;
+            line-height: 1.4;
+        }
+
+        /* PURE DIV + CSS GRID DAFTAR BARANG (SAMA SEPERTI SURAT JALAN: GARIS HANYA HEADER) */
         .items-header {
             display: grid;
-            grid-template-columns: 8% 44% 12% 18% 18%;
+            grid-template-columns: 8% 46% 12% 17% 17%;
             border-top: 2px solid #000;
             border-bottom: 2px solid #000;
             padding: 8px 0;
@@ -137,8 +146,8 @@
         }
         .item-row {
             display: grid;
-            grid-template-columns: 8% 44% 12% 18% 18%;
-            border-bottom: 1px solid #ddd;
+            grid-template-columns: 8% 46% 12% 17% 17%;
+            border-bottom: none !important; /* TANPA GARIS PER BARIS SAMA SEPERTI SURAT JALAN */
             padding: 8px 0;
             font-size: 13px;
             font-weight: normal;
@@ -151,11 +160,13 @@
         .col-price { text-align: right; }
         .col-subtotal { text-align: right; }
 
-        /* TOTALS GRID */
+        /* TOTALS CONTAINER */
         .totals-container {
             display: flex;
             justify-content: flex-end;
-            margin-top: 15px;
+            margin-top: 10px;
+            border-top: 1.5px solid #000;
+            padding-top: 8px;
         }
         .totals-box {
             width: 280px;
@@ -163,16 +174,16 @@
         .total-row {
             display: flex;
             justify-content: space-between;
-            padding: 4px 0;
+            padding: 3px 0;
             font-size: 13px;
             font-weight: normal;
         }
         .total-row.grand-total {
-            border-top: 2px solid #000;
-            border-bottom: 2px solid #000;
-            padding: 8px 0;
-            font-size: 15px;
-            font-weight: bold;
+            border-top: 1.5px solid #000;
+            border-bottom: 1.5px solid #000;
+            padding: 5px 0;
+            font-size: 13px;
+            font-weight: normal;
         }
 
         .notice-box {
@@ -188,7 +199,7 @@
             line-height: 1.6;
         }
 
-        /* PURE DIV + CSS GRID SIGNATURES */
+        /* PURE DIV + CSS GRID SIGNATURES (IDENTIK SURAT JALAN) */
         .sig-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -252,7 +263,13 @@
         }
 
         @media print {
-            .no-print { display: none !important; }
+            .no-print, .no-print-bar {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
             * {
                 color: #000000 !important;
                 border-color: #000000 !important;
@@ -276,7 +293,7 @@
     <!-- NO PRINT ACTION BAR -->
     <div class="no-print-bar no-print">
         <div>
-            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Nota Penjualan (Direct HTML Print)</span>
+            <span style="font-size: 16px; font-weight: bold;">🖨️ Cetak Nota Penjualan</span>
             <span style="font-size: 13px; color: #cbd5e1; margin-left: 10px;">{{ $directSale->invoice_number }}</span>
         </div>
         <div>
@@ -287,7 +304,7 @@
 
     <div class="main-container">
         <!-- TOP BLACK BAR -->
-        <div class="top-black-bar"></div>
+        <div class="top-red-bar"></div>
 
         <!-- KOP SURAT -->
         <div class="kop-container">
@@ -306,7 +323,7 @@
 
         <div class="divider"></div>
 
-        <!-- DETAIL & PELANGGAN -->
+        <!-- DETAIL & PELANGGAN (IDENTIK SURAT JALAN) -->
         <div class="info-grid">
             <div>
                 <div class="info-label">Detail Transaksi</div>
@@ -321,7 +338,7 @@
             </div>
             <div>
                 <div class="info-label">Pelanggan</div>
-                <div class="party-box">
+                <div class="dest-box">
                     @php
                         $cName = strtoupper($directSale->customer_name ?? ($directSale->store?->name ?? 'PELANGGAN UMUM'));
                         $cAddr = strtoupper($directSale->store?->address ?? '-');
@@ -331,17 +348,17 @@
                             $cleanCAddr = ($cAddr !== '-' ? $cAddr : '');
                         }
                     @endphp
-                    <div class="party-name">
+                    <div class="dest-name">
                         {{ $cName }}{{ $cleanCAddr ? ' - ' . $cleanCAddr : '' }}
                     </div>
-                    <div class="party-detail">
+                    <div class="dest-detail">
                         Telp: {{ $directSale->store?->phone_number ?? '-' }}
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- DAFTAR BARANG -->
+        <!-- DAFTAR BARANG (IDENTIK SURAT JALAN) -->
         <div class="items-header">
             <div class="col-no">NO</div>
             <div class="col-name">NAMA BARANG / PRODUK</div>
@@ -375,7 +392,7 @@
         </div>
         @endif
 
-        <!-- TANDA TANGAN -->
+        <!-- TANDA TANGAN (IDENTIK SURAT JALAN) -->
         <div class="sig-container">
             <div class="sig-col">
                 <div class="sig-title">Kasir / Toko</div>
@@ -391,7 +408,7 @@
             </div>
         </div>
 
-        <!-- FOOTER -->
+        <!-- FOOTER (IDENTIK SURAT JALAN) -->
         <div class="footer-bar">
             <div class="footer-text">
                 Dokumen ini dicetak secara otomatis oleh Sistem ERP New Citra Indonesia dan sah tanpa tanda tangan basah.<br>
